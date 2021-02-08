@@ -1,7 +1,10 @@
+# OVH provider
 ovh_endpoint = "ovh-eu"
 #ovh_application_key = "toComplete"
 #ovh_application_secret = "toComplete"
 #ovh_consumer_key = "toComplete"
+
+# DNS config
 dns_zone = "jediholo.net"
 dns_records = [
   { name = "",                      ttl = 0,     type = "A",      target = "5.39.85.174" },
@@ -33,3 +36,14 @@ dns_records = [
   { name = "www",                   ttl = 1800,  type = "CNAME",  target = "srv01" },
   { name = "www.dev",               ttl = 300,   type = "A",      target = "127.0.0.11" },
 ]
+
+# GCP provider
+#gcp_credentials = "toComplete"
+gcp_project_id = "jediholo-net"
+gcp_region = "europe-west1"
+
+# Discord interaction
+#discord_client_public_key = "toComplete"
+#discord_webhook_id = "toComplete"
+#discord_webhook_token = "toComplete"
+#discord_admin_role_id = "toComplete"
