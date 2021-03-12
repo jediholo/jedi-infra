@@ -42,3 +42,9 @@ resource "google_cloudfunctions_function_iam_member" "discord_interaction_functi
   role   = "roles/cloudfunctions.invoker"
   member = "allUsers"
 }
+
+// Interaction URL (output)
+output "discord_interaction_https_url" {
+  value       = google_cloudfunctions_function.discord_interaction_function.https_trigger_url
+  description = "Discord interaction URL"
+}
