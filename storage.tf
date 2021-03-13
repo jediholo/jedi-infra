@@ -8,6 +8,13 @@ resource "google_storage_bucket" "gcs_bucket_project" {
 }
 
 // GCS buckets for backups
+resource "google_storage_bucket" "gcs_bucket_backups" {
+  name                        = "${var.gcp_project_id}-backups"
+  project                     = var.gcp_project_id
+  location                    = var.gcp_region
+  storage_class               = "COLDLINE"
+  uniform_bucket_level_access = true
+}
 resource "google_storage_bucket" "gcs_bucket_gamerepo_default" {
   name                        = "${var.gcp_project_id}-gamerepo-default"
   project                     = var.gcp_project_id
