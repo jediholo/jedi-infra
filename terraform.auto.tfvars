@@ -4,6 +4,17 @@ ovh_endpoint = "ovh-eu"
 #ovh_application_secret = "toComplete"
 #ovh_consumer_key = "toComplete"
 
+# GCP provider
+#gcp_credentials = "toComplete"
+gcp_project_id = "jediholo-net"
+gcp_region = "europe-west1"
+
+# Kubernetes provider
+k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
+#k8s_client_cert = "toComplete"
+#k8s_client_key = "toComplete"
+#k8s_ca_cert = "toComplete"
+
 # DNS config
 dns_zone = "jediholo.net"
 dns_records = [
@@ -37,13 +48,27 @@ dns_records = [
   { name = "www.dev",               ttl = 300,   type = "A",      target = "127.0.0.11" },
 ]
 
-# GCP provider
-#gcp_credentials = "toComplete"
-gcp_project_id = "jediholo-net"
-gcp_region = "europe-west1"
-
 # Discord interaction
 #discord_client_public_key = "toComplete"
 #discord_webhook_id = "toComplete"
 #discord_webhook_token = "toComplete"
 #discord_admin_role_id = "toComplete"
+
+# Jedi Academy
+jka_image_name = "docker.crespel.me/jediholo/jka-server"
+jka_image_tag = "master"
+jka_external_ip = "37.187.118.231"
+jka_deployments_scale_sa_name = "jediholo-net"
+jka_deployments_scale_sa_namespace = "domain-jediholo-net"
+#jka_server_password = {
+#  "jedi-demo" = "toComplete"
+#}
+#jka_rcon_password = {
+#  "default" = "toComplete"
+#}
+#jka_am_password = {
+#  "jedi-temple"  = "toComplete"
+#  "jedi-grounds" = "toComplete"
+#  "jedi-demo"    = "toComplete"
+#  "jedi-galaxy"  = "toComplete"
+#}

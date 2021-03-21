@@ -1,0 +1,26 @@
+fullnameOverride: jedi-temple
+
+service:
+  port: 29070
+  nodePort: 30070
+  alternatePort: 29170
+  alternateNodePort: 30170
+
+podSecurityContext:
+  runAsUser: 1101
+  runAsGroup: 1100
+
+jka:
+  homepath: /home/jka/jedi-temple
+  cvars:
+    sv_hostname: "^7The ^5::^7JEDI^5:: ^7Temple - www.jediholo.net"
+    g_motd: "Welcome to the ::JEDI:: Temple"
+    rp_motd: "^5::^7JEDI^5:: ^7Temple\\nwww.jediholo.net\\n\\n^1Strict Roleplaying Environment\\n^7Please respect the ^3rules^7, be ^3respectful^7,\\ndownload the ^3RPMod Client^7\\nand have fun!"
+    rp_accounts_AM_enabled: "1"
+    rp_accounts_AM_serviceUsername: "temple.jediholo.net@29070"
+    rp_locks_title: "^5:: Temple Security ::"
+    rp_adminRank_cmds1: "35844950773703"
+    rp_adminRank_cmds2: "55644752117703"
+    rp_adminRank_cmds3: "55644752117703"
+    rp_adminRank_cmds4: "70368152780679"
+    rp_adminRank_cmds5: "70368739983359"

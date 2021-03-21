@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "jka.fullname" . }}-config
+  labels:
+    {{- include "jka.labels" . | nindent 4 }}
+stringData:
+  server.cfg: |
+    exec server_defaults
+    exec server_cvars
+    vstr lastmap
+    exec vstr
+  server_cvars.cfg: |
+    {{- range $key, $value := .Values.jka.cvars }}
+    set {{ tpl $key $ }} "{{ tpl (print $value) $ }}"
+    {{- end }}

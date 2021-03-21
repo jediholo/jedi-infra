@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jka.fullname" . }}
+  labels:
+    {{- include "jka.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "jka.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "jka.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "jka.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: jka
+              containerPort: 29070
+              protocol: UDP
+          {{- if .Values.env }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: "{{ tpl $key $ }}"
+              value: "{{ tpl (print $value) $ }}"
+            {{- end }}
+          {{- end }}
+          {{- if .Values.envFromSecret }}
+          envFrom:
+            - secretRef:
+                name: {{ tpl .Values.envFromSecret . }}
+          {{- end }}
+          startupProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 12
+            exec:
+              command: ['/opt/openjk/healthcheck.sh']
+          livenessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 6
+            exec:
+              command: ['/opt/openjk/healthcheck.sh']
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 6
+            exec:
+              command: ['/opt/openjk/healthcheck.sh']
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
+            - mountPath: /opt/openjk/basepath
+              name: basepath
+              readOnly: true
+            - mountPath: /opt/openjk/homepath
+              name: homepath
+            - mountPath: /opt/openjk/homepath/rpmod/server.cfg
+              name: config
+              subPath: server.cfg
+              readOnly: true
+            - mountPath: /opt/openjk/homepath/rpmod/server_cvars.cfg
+              name: config
+              subPath: server_cvars.cfg
+              readOnly: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- toYaml .Values.volumes | nindent 8 }}
+        - name: basepath
+          hostPath:
+            path: {{ .Values.jka.basepath }}
+        - name: homepath
+          hostPath:
+            path: {{ .Values.jka.homepath }}
+        - name: config
+          secret:
+            secretName: {{ include "jka.fullname" . }}-config
