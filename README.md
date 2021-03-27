@@ -15,15 +15,15 @@ The main infrastructure components are:
 
 The main underlying provider is currently [OVH](https://www.ovh.com). Some resources are hosted or backed up on [Google Cloud Platform (GCP)](https://cloud.google.com).
 
-## Development
+## Deployment
 
-For local development, download and install [Terraform CLI](https://www.terraform.io/downloads.html) version 0.14 or higher.
+For development and deployment, download and install [Terraform CLI](https://www.terraform.io/downloads.html) version 0.14 or higher.
 
-Create a `terraform.tfvars` file to customize variables marked as `"toComplete"` in `terrafom.auto.tfvars`. See `variables.tf` for more information.
+Create a `terraform.tfvars` file to customize sensitive variables marked as `"toComplete"` in `terrafom.auto.tfvars`. See `variables.tf` for more information.
 
 When done, you may execute the following commands in this repository:
 ```
-# Download plugins
+# Download plugins and current state
 terraform init
 
 # Preview infrastructure changes
@@ -32,6 +32,8 @@ terraform plan
 # Apply infrastructure changes
 terraform apply
 ```
+
+The Terraform state is stored in a [Terraform Cloud](https://app.terraform.io/app/jediholo/workspaces/jedi-infra) workspace.
 
 ## Credits
 
