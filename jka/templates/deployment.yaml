@@ -71,7 +71,6 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            {{- toYaml .Values.volumeMounts | nindent 12 }}
             - mountPath: /opt/openjk/basepath
               name: basepath
               readOnly: true
@@ -85,6 +84,9 @@ spec:
               name: config
               subPath: server_cvars.cfg
               readOnly: true
+            {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -98,7 +100,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        {{- toYaml .Values.volumes | nindent 8 }}
         - name: basepath
           hostPath:
             path: {{ .Values.jka.basepath }}
@@ -108,3 +109,6 @@ spec:
         - name: config
           secret:
             secretName: {{ include "jka.fullname" . }}-config
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
