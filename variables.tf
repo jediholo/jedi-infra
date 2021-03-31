@@ -15,6 +15,24 @@ variable "ovh_consumer_key" {
   sensitive   = true
 }
 
+// OpenStack provider
+variable "os_auth_url" {
+  description = "OpenStack authentication URL"
+}
+variable "os_region" {
+  description = "OpenStack region name"
+}
+variable "os_tenant" {
+  description = "OpenStack tenant name"
+}
+variable "os_username" {
+  description = "OpenStack username"
+}
+variable "os_password" {
+  description = "OpenStack password"
+  sensitive   = true
+}
+
 // Google Cloud provider
 variable "gcp_credentials" {
   description = "Terraform service account credentials JSON file"

@@ -4,6 +4,13 @@ ovh_endpoint = "ovh-eu"
 #ovh_application_secret = "toComplete"
 #ovh_consumer_key = "toComplete"
 
+# OpenStack provider
+os_auth_url = "https://auth.cloud.ovh.net/v3/"
+os_region = "GRA"
+#os_tenant = "toComplete"
+#os_username = "toComplete"
+#os_password = "toComplete"
+
 # GCP provider
 #gcp_credentials = "toComplete"
 gcp_project_id = "jediholo-net"

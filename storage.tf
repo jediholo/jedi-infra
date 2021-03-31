@@ -1,3 +1,20 @@
+// Swift containers for assets
+resource "openstack_objectstorage_container_v1" "os_container_gamerepo_default" {
+  name           = "gamerepo-default"
+  container_read = ".r:*,.rlistings" # public
+}
+resource "openstack_objectstorage_container_v1" "os_container_gamerepo_jedi_downloads" {
+  name           = "gamerepo-jedi-downloads"
+  container_read = ".r:*,.rlistings" # public
+}
+resource "openstack_objectstorage_container_v1" "os_container_gamerepo_jedi_private" {
+  name           = "gamerepo-jedi-private"
+}
+resource "openstack_objectstorage_container_v1" "os_container_gamerepo_jedi_skins" {
+  name           = "gamerepo-jedi-skins"
+  container_read = ".r:*,.rlistings" # public
+}
+
 // GCS bucket for project files
 resource "google_storage_bucket" "gcs_bucket_project" {
   name                        = var.gcp_project_id
