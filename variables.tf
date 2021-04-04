@@ -128,3 +128,10 @@ variable "jka_am_password" {
   description = "JKA AccountManager password (rp_accounts_AM_servicePassword)"
   sensitive   = true
 }
+
+// Uptime checks
+variable "uptime_check_urls" {
+  default     = []
+  type        = list(string)
+  description = "Uptime check HTTPS URLs"
+}

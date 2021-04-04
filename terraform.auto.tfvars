@@ -79,3 +79,13 @@ jka_deployments_scale_sa_namespace = "domain-jediholo-net"
 #  "jedi-demo"    = "toComplete"
 #  "jedi-galaxy"  = "toComplete"
 #}
+
+# Uptime checks
+uptime_check_urls = [
+  "https://comport.jediholo.net/",
+  "https://files.jediholo.net/",
+  "https://rpmod.jediholo.net/",
+  "https://services.jediholo.net/",
+  "https://static.jediholo.net/",
+  "https://www.jediholo.net/",
+]
