@@ -1,0 +1,31 @@
+fullnameOverride: php
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+env:
+  SERVER_ENV: production
+  APPLICATION_ENV: production
+
+volumes:
+  sessions:
+    hostPath:
+      path: /home/domains/jediholo.net/php/sessions
+      type: DirectoryOrCreate
+  logs:
+    hostPath:
+      path: /home/domains/jediholo.net/php/logs
+      type: DirectoryOrCreate
+  apps:
+    hostPath:
+      path: /home/domains/jediholo.net/apps
+      type: DirectoryOrCreate
+  subdomains:
+    hostPath:
+      path: /home/domains/jediholo.net/sd
+      type: DirectoryOrCreate

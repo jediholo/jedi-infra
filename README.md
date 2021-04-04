@@ -9,7 +9,7 @@ All resources in this repository are managed by [Terraform](https://www.terrafor
 The main infrastructure components are:
 - DNS records (`dns.tf`)
 - JKA servers (`jka.tf`)
-- Web hosting (`web.tf`) - *Not available yet*
+- Web hosting (`web.tf`)
 - Cloud storage buckets for assets and backups (`storage.tf`)
 - Discord [interaction](https://discord.com/developers/docs/interactions/slash-commands) used on the official JEDI Discord channel (`discord-interaction.tf`)
 - Uptime checks (`uptime.tf`)

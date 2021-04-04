@@ -1,0 +1,124 @@
+fullnameOverride: apache
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 300m
+  hosts:
+    - host: "jediholo.net"
+      paths:
+        - path: "/"
+    - host: "*.jediholo.net"
+      paths:
+        - path: "/"
+    - host: "services.jediholo.net"
+      paths:
+        - path: "/"
+
+env:
+  SERVER_ENV: production
+  SERVER_NAME: srv01.jediholo.net
+
+volumes:
+  logs:
+    hostPath:
+      path: /home/domains/jediholo.net/httpd/logs
+      type: DirectoryOrCreate
+  apps:
+    hostPath:
+      path: /home/domains/jediholo.net/apps
+      type: DirectoryOrCreate
+  subdomains:
+    hostPath:
+      path: /home/domains/jediholo.net/sd
+      type: DirectoryOrCreate
+
+vhosts:
+  vhost.inc: |
+    ServerAdmin webmaster@jediholo.net
+    Include /etc/apache2/mod_autoindex-defaults-oxygen.conf
+    IncludeOptional /etc/apache2/vhosts.d/common?inc
+  _default_.conf: |
+    <VirtualHost _default_:8080>
+      ServerName jediholo.net
+      DocumentRoot /srv/www/sd/www/htdocs/
+      Redirect permanent / https://www.jediholo.net/
+      ErrorLog /srv/www/sd/www/logs/error_log
+      CustomLog /srv/www/sd/www/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  comport.conf: |
+    <VirtualHost _default_:8080>
+      ServerName comport.jediholo.net
+      DocumentRoot /srv/www/sd/comport/htdocs/
+      ErrorLog /srv/www/sd/comport/logs/error_log
+      CustomLog /srv/www/sd/comport/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  discord.conf: |
+    <VirtualHost _default_:8080>
+      ServerName discord.jediholo.net
+      DocumentRoot /srv/www/sd/discord/htdocs/
+      Redirect / https://discord.gg/XwX5q6KNEX
+      ErrorLog /srv/www/sd/discord/logs/error_log
+      CustomLog /srv/www/sd/discord/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  files.conf: |
+    <VirtualHost _default_:8080>
+      ServerName files.jediholo.net
+      DocumentRoot /srv/www/sd/files/htdocs/
+      ErrorLog /srv/www/sd/files/logs/error_log
+      CustomLog /srv/www/sd/files/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  id.conf: |
+    <VirtualHost _default_:8080>
+      ServerName id.jediholo.net
+      DocumentRoot /srv/www/sd/id/htdocs/
+      ErrorLog /srv/www/sd/id/logs/error_log
+      CustomLog /srv/www/sd/id/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  rpmod.conf: |
+    <VirtualHost _default_:8080>
+      ServerName rpmod.jediholo.net
+      DocumentRoot /srv/www/sd/rpmod/htdocs/
+      RedirectMatch "^/server/([^/]+)/name/jedi-(temple|galaxy|grounds)-eu(/.*)?$" "/server/$1/name/jedi-$2$3"
+      ErrorLog /srv/www/sd/rpmod/logs/error_log
+      CustomLog /srv/www/sd/rpmod/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  services.conf: |
+    <VirtualHost _default_:8080>
+      ServerName services.jediholo.net
+      DocumentRoot /srv/www/sd/services/htdocs/
+      Redirect permanent /kibana https://kibana.fabinfra.net
+      ErrorLog /srv/www/sd/services/logs/error_log
+      CustomLog /srv/www/sd/services/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  static.conf: |
+    <VirtualHost _default_:8080>
+      ServerName static.jediholo.net
+      DocumentRoot /srv/www/sd/static/htdocs/
+      ErrorLog /srv/www/sd/static/logs/error_log
+      CustomLog /srv/www/sd/static/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>
+  www.conf: |
+    <VirtualHost _default_:8080>
+      ServerName www.jediholo.net
+      DocumentRoot /srv/www/sd/www/htdocs/
+      ErrorLog /srv/www/sd/www/logs/error_log
+      CustomLog /srv/www/sd/www/logs/access_log combined
+      Include /etc/apache2/vhosts.d/vhost.inc
+    </VirtualHost>

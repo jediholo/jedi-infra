@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "activemq.fullname" . }}
+  labels:
+    {{- include "activemq.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    {{- if .Values.service.port.mqtt }}
+    - port: {{ .Values.service.port.mqtt }}
+      targetPort: mqtt
+      protocol: TCP
+      name: mqtt
+    {{- end }}
+    {{- if .Values.service.port.amqp }}
+    - port: {{ .Values.service.port.amqp }}
+      targetPort: amqp
+      protocol: TCP
+      name: amqp
+    {{- end }}
+    {{- if .Values.service.port.http }}
+    - port: {{ .Values.service.port.http }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    {{- end }}
+    {{- if .Values.service.port.stomp }}
+    - port: {{ .Values.service.port.stomp }}
+      targetPort: stomp
+      protocol: TCP
+      name: stomp
+    {{- end }}
+    {{- if .Values.service.port.ws }}
+    - port: {{ .Values.service.port.ws }}
+      targetPort: ws
+      protocol: TCP
+      name: ws
+    {{- end }}
+    {{- if .Values.service.port.openwire }}
+    - port: {{ .Values.service.port.openwire }}
+      targetPort: openwire
+      protocol: TCP
+      name: openwire
+    {{- end }}
+  selector:
+    {{- include "activemq.selectorLabels" . | nindent 4 }}

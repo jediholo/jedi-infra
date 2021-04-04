@@ -1,0 +1,22 @@
+fullnameOverride: ldap
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+env:
+  OPENLDAP_DB_SUFFIX: dc=jediholo,dc=net
+
+secrets:
+  root:
+    username: cn=Administrator,dc=jediholo,dc=net
+
+volumes:
+  data:
+    hostPath:
+      path: /home/domains/jediholo.net/ldap
+      type: DirectoryOrCreate

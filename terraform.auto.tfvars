@@ -62,10 +62,11 @@ dns_records = [
 #discord_admin_role_id = "toComplete"
 
 # Jedi Academy
+jka_namespace = "jka"
 jka_image_name = "docker.crespel.me/jediholo/jka-server"
 jka_image_tag = "master"
 jka_external_ip = "37.187.118.231"
-jka_deployments_scale_sa_name = "jediholo-net"
+jka_deployments_scale_sa_name = "php"
 jka_deployments_scale_sa_namespace = "domain-jediholo-net"
 jka_server_hostport = {
   "jedi-temple"  = "temple.jediholo.net:29070"
@@ -85,6 +86,12 @@ jka_server_hostport = {
 #  "jedi-demo"    = "toComplete"
 #  "jedi-galaxy"  = "toComplete"
 #}
+
+# Web
+web_namespace = "domain-jediholo-net"
+#web_activemq_admin_password = "toComplete"
+#web_ldap_root_password = "toComplete"
+#web_mailserver_dkim_private_key = "toComplete"
 
 # Uptime checks
 uptime_check_urls = [
