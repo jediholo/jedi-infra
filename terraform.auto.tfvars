@@ -89,3 +89,4 @@ uptime_check_urls = [
   "https://static.jediholo.net/",
   "https://www.jediholo.net/",
 ]
+uptime_check_notification_email = "webmaster@jediholo.net"
