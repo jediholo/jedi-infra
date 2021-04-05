@@ -67,7 +67,12 @@ jka_image_tag = "master"
 jka_external_ip = "37.187.118.231"
 jka_deployments_scale_sa_name = "jediholo-net"
 jka_deployments_scale_sa_namespace = "domain-jediholo-net"
-jka_server_names = ["jedi-temple", "jedi-grounds", "jedi-demo", "jedi-galaxy"]
+jka_server_hostport = {
+  "jedi-temple"  = "temple.jediholo.net:29070"
+  "jedi-grounds" = "grounds.jediholo.net:29071"
+  "jedi-demo"    = "demo.jediholo.net:29072"
+  "jedi-galaxy"  = "galaxy.jediholo.net:29073"
+}
 #jka_server_password = {
 #  "jedi-demo" = "toComplete"
 #}

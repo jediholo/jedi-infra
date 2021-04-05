@@ -113,9 +113,9 @@ variable "jka_deployments_scale_sa_name" {
 variable "jka_deployments_scale_sa_namespace" {
   description = "JKA deployments scale service account namespace"
 }
-variable "jka_server_names" {
-  type        = list(string)
-  description = "JKA server short names (jedi-temple, etc.)"
+variable "jka_server_hostport" {
+  type        = map(string)
+  description = "JKA server host:port"
 }
 variable "jka_server_password" {
   type        = map(string)
