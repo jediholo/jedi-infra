@@ -49,6 +49,15 @@ resource "kubernetes_network_policy" "web_network_policy_ingress_nginx" {
   }
 }
 
+// Cron jobs
+resource "helm_release" "web_jobs" {
+  name      = "jobs"
+  chart     = "${path.module}/web/charts/jobs"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/jobs.yaml")]
+}
+
 // ActiveMQ broker
 resource "helm_release" "web_activemq" {
   name      = "activemq"

@@ -27,15 +27,18 @@ resource "kubernetes_role_binding" "jka_rolebinding_deployments_scale" {
     name      = "rolebinding-deployments-scale"
     namespace = kubernetes_namespace.jka_ns.metadata[0].name
   }
-  subject {
-    kind      = "ServiceAccount"
-    name      = var.jka_deployments_scale_sa_name
-    namespace = var.jka_deployments_scale_sa_namespace
-  }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
     name      = kubernetes_role.jka_role_deployments_scale.metadata[0].name
+  }
+  dynamic "subject" {
+    for_each = { for sa in var.jka_deployments_scale_sa : sha1("${sa.name}_${sa.namespace}") => sa }
+    content {
+      kind      = "ServiceAccount"
+      name      = subject.value.name
+      namespace = subject.value.namespace
+    }
   }
 }
 

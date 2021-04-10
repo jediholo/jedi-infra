@@ -67,8 +67,10 @@ jka_namespace = "jka"
 jka_image_name = "docker.crespel.me/jediholo/jka-server"
 jka_image_tag = "master"
 jka_external_ip = "37.187.118.231"
-jka_deployments_scale_sa_name = "php"
-jka_deployments_scale_sa_namespace = "domain-jediholo-net"
+jka_deployments_scale_sa = [
+  { name = "php",  "namespace" = "domain-jediholo-net" },
+  { name = "jobs", "namespace" = "domain-jediholo-net" },
+]
 jka_server_hostport = {
   "jedi-temple"  = "temple.jediholo.net:29070"
   "jedi-grounds" = "grounds.jediholo.net:29071"

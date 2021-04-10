@@ -104,11 +104,13 @@ variable "jka_image_tag" {
 variable "jka_external_ip" {
   description = "External IP address"
 }
-variable "jka_deployments_scale_sa_name" {
-  description = "JKA deployments scale service account name"
-}
-variable "jka_deployments_scale_sa_namespace" {
-  description = "JKA deployments scale service account namespace"
+variable "jka_deployments_scale_sa" {
+  default = []
+  type = list(object({
+    name      = string
+    namespace = string
+  }))
+  description = "JKA deployments scale service account(s)"
 }
 variable "jka_server_hostport" {
   type        = map(string)
