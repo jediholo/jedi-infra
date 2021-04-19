@@ -25,6 +25,7 @@ spec:
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
               args: ['/usr/bin/php', '/srv/www/sd/www/htdocs/wp-cli.phar', 'cron', 'event', 'run', '--due-now']
+              workingDir: /srv/www/sd/www/htdocs
               volumeMounts:
                 {{- if .Values.volumes.subdomains }}
                 - mountPath: /srv/www/sd
