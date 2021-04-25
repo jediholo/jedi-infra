@@ -89,6 +89,8 @@ jka_server_hostport = {
 #  "jedi-demo"    = "toComplete"
 #  "jedi-galaxy"  = "toComplete"
 #}
+#jka_backups_openrc = "toComplete"
+#jka_backups_sa = "toComplete"
 
 # Web
 web_namespace = "domain-jediholo-net"

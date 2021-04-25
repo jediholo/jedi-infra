@@ -1,0 +1,65 @@
+# Default values for backups.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+backoffLimit: 0
+
+image:
+  repository: fcrespel/backuptools
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: opensuse15
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+nodeSelector:
+  server-role-jka: "true"
+
+tolerations:
+  - key: dedicated-server
+    operator: Exists
+    effect: NoSchedule
+
+affinity: {}
+
+env: {}
+  # BACKUP_BACKEND: multi
+  # BACKUP_BACKENDS: swift,gcs
+  # BACKUP_BUCKET: example-org-backups
+
+schedules: {}
+  # files: "0 6 * * *"
+
+secrets:
+  swift:
+    openrc: ""
+  gcs:
+    sa: ""
+
+volumes:
+  data: {}
+    # hostPath:
+    #   path: /home/jka
+    #   type: DirectoryOrCreate

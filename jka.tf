@@ -77,6 +77,24 @@ resource "helm_release" "jka_server" {
   }
 }
 
+// Backups
+resource "helm_release" "jka_backups" {
+  name      = "backups"
+  chart     = "${path.module}/jka/charts/backups"
+  namespace = kubernetes_namespace.jka_ns.metadata[0].name
+
+  values = [file("${path.module}/jka/values/backups.yaml")]
+
+  set_sensitive {
+    name  = "secrets.swift.openrc"
+    value = var.jka_backups_openrc
+  }
+  set_sensitive {
+    name  = "secrets.gcs.sa"
+    value = base64encode(var.jka_backups_sa)
+  }
+}
+
 // Uptime checks
 resource "google_monitoring_uptime_check_config" "jka_uptime_check" {
   for_each     = toset(values(var.jka_server_hostport))
