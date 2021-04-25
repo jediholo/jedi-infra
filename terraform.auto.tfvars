@@ -92,6 +92,12 @@ jka_server_hostport = {
 
 # Web
 web_namespace = "domain-jediholo-net"
+#web_backups_openrc = "toComplete"
+#web_backups_sa = "toComplete"
+#web_backups_ftp_username = "toComplete"
+#web_backups_ftp_password = "toComplete"
+#web_backups_mysql_username = "toComplete"
+#web_backups_mysql_password = "toComplete"
 #web_activemq_admin_password = "toComplete"
 #web_ldap_root_password = "toComplete"
 #web_mailserver_dkim_private_key = "toComplete"

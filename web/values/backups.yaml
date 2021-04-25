@@ -1,0 +1,39 @@
+fullnameOverride: backups
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+schedules:
+  files: "30 5 * * *"
+  ldap: "0 5 * * *"
+  mysql: "0 5 * * *"
+  sync: "0 6 * * *"
+
+env:
+  BACKUP_BACKEND: multi
+  BACKUP_BACKENDS: swift,gcs,ftp
+  BACKUP_GCS_BUCKET: jediholo-net-backups
+  BACKUP_FTP_HOST: ftpback-rbx3-173.ovh.net
+  BACKUP_FTP_DIR: jediholo.net
+  BACKUP_SYNC_BACKENDS: swift,gcs
+  BACKUP_SYNC_ARGS: |
+    pcs:gamerepo-default gcs:jediholo-net-gamerepo-default
+    pcs:gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads
+    pcs:gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private
+    pcs:gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins
+  MYSQL_HOST: mysql-slave
+
+volumes:
+  domain:
+    hostPath:
+      path: /home/domains/jediholo.net
+      type: DirectoryOrCreate
+  ldap:
+    hostPath:
+      path: /home/domains/jediholo.net/ldap
+      type: DirectoryOrCreate

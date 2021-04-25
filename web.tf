@@ -49,6 +49,40 @@ resource "kubernetes_network_policy" "web_network_policy_ingress_nginx" {
   }
 }
 
+// Backups
+resource "helm_release" "web_backups" {
+  name      = "backups"
+  chart     = "${path.module}/web/charts/backups"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/backups.yaml")]
+
+  set_sensitive {
+    name  = "secrets.swift.openrc"
+    value = var.web_backups_openrc
+  }
+  set_sensitive {
+    name  = "secrets.gcs.sa"
+    value = base64encode(var.web_backups_sa)
+  }
+  set_sensitive {
+    name  = "secrets.ftp.username"
+    value = var.web_backups_ftp_username
+  }
+  set_sensitive {
+    name  = "secrets.ftp.password"
+    value = var.web_backups_ftp_password
+  }
+  set_sensitive {
+    name  = "secrets.mysql.username"
+    value = var.web_backups_mysql_username
+  }
+  set_sensitive {
+    name  = "secrets.mysql.password"
+    value = var.web_backups_mysql_password
+  }
+}
+
 // Cron jobs
 resource "helm_release" "web_jobs" {
   name      = "jobs"
