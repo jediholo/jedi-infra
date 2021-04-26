@@ -31,8 +31,8 @@ spec:
                 - name: HOME
                   value: /home/backups
                 {{- range $key, $value := .Values.env }}
-                - name: "{{ tpl $key $ }}"
-                  value: "{{ tpl (print $value) $ }}"
+                - name: {{ tpl $key $ | quote }}
+                  value: {{ tpl $value $ | quote }}
                 {{- end }}
                 {{- if .Values.secrets.ftp.username }}
                 - name: BACKUP_FTP_USER
