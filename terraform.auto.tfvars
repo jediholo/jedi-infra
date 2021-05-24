@@ -103,6 +103,7 @@ web_namespace = "domain-jediholo-net"
 #web_activemq_admin_password = "toComplete"
 #web_ldap_root_password = "toComplete"
 #web_mailserver_dkim_private_key = "toComplete"
+#web_mysql_root_password = "toComplete"
 
 # Uptime checks
 uptime_check_urls = [

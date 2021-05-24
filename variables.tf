@@ -178,6 +178,10 @@ variable "web_mailserver_dkim_private_key" {
   description = "DKIM private key (PEM-encoded)"
   sensitive   = true
 }
+variable "web_mysql_root_password" {
+  description = "MySQL root password"
+  sensitive   = true
+}
 
 // Uptime checks
 variable "uptime_check_urls" {

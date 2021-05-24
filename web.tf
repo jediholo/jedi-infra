@@ -159,6 +159,11 @@ resource "helm_release" "web_mysql" {
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
   values = [file("${path.module}/web/values/mysql.yaml")]
+
+  set_sensitive {
+    name  = "secrets.root.password"
+    value = var.web_mysql_root_password
+  }
 }
 resource "helm_release" "web_mysql_slave" {
   name      = "mysql-slave"
