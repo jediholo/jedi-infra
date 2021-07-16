@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: RollingUpdate
 
 image:
-  repository: fcrespel/apache
+  repository: ghcr.io/fab-infra/apache
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: 2.4-opensuse15

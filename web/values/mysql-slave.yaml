@@ -1,7 +1,7 @@
 fullnameOverride: mysql-slave
 
 image:
-  repository: fcrespel/mariadb-slave
+  repository: ghcr.io/fab-infra/mariadb-slave
 
 podSecurityContext:
   runAsUser: 1004

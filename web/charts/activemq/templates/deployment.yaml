@@ -10,7 +10,7 @@ spec:
     matchLabels:
       {{- include "activemq.selectorLabels" . | nindent 6 }}
   strategy:
-    type: Recreate
+    type: {{ .Values.strategy }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
