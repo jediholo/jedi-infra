@@ -52,14 +52,6 @@ resource "helm_release" "jka_server" {
   values = [file("${path.module}/jka/values/${each.value}.yaml")]
 
   set {
-    name  = "image.repository"
-    value = var.jka_image_name
-  }
-  set {
-    name  = "image.tag"
-    value = var.jka_image_tag
-  }
-  set {
     name  = "service.externalIPs[0]"
     value = var.jka_external_ip
   }

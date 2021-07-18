@@ -64,8 +64,6 @@ dns_records = [
 
 # Jedi Academy
 jka_namespace = "jka"
-jka_image_name = "docker.crespel.me/jediholo/jka-server"
-jka_image_tag = "master"
 jka_external_ip = "37.187.118.231"
 jka_deployments_scale_sa = [
   { name = "php",  "namespace" = "domain-jediholo-net" },

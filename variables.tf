@@ -95,12 +95,6 @@ variable "discord_admin_role_id" {
 variable "jka_namespace" {
   description = "JKA Kubernetes namespace"
 }
-variable "jka_image_name" {
-  description = "JKA container image name"
-}
-variable "jka_image_tag" {
-  description = "JKA container image tag"
-}
 variable "jka_external_ip" {
   description = "External IP address"
 }

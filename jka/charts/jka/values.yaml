@@ -3,9 +3,10 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
+strategy: Recreate
 
 image:
-  repository: jediholo/jka-server
+  repository: ghcr.io/jediholo/jka-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: master
