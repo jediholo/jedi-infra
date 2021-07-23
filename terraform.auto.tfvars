@@ -87,6 +87,9 @@ jka_server_hostport = {
 #  "jedi-demo"    = "toComplete"
 #  "jedi-galaxy"  = "toComplete"
 #}
+#jka_ftp_password = {
+#  "default" = "toComplete"
+#}
 #jka_backups_openrc = "toComplete"
 #jka_backups_sa = "toComplete"
 

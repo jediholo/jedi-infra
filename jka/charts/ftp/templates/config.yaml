@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "ftp.fullname" . }}-config
+  labels:
+    {{- include "ftp.labels" . | nindent 4 }}
+stringData:
+  {{- if .Values.ftp.home }}
+  FTP_HOME: "{{ .Values.ftp.home }}"
+  {{- end }}
+  {{- if .Values.ftp.uid }}
+  FTP_UID: "{{ .Values.ftp.uid }}"
+  {{- end }}
+  {{- if .Values.ftp.gid }}
+  FTP_GID: "{{ .Values.ftp.gid }}"
+  {{- end }}
+  {{- if .Values.ftp.users }}
+  FTP_USERS: "{{ .Values.ftp.users }}"
+  {{- end }}
+  {{- if .Values.ftp.passiveAddress }}
+  VSFTPD_pasv_address: "{{ .Values.ftp.passiveAddress }}"
+  {{- end }}
+  VSFTPD_pasv_min_port: "{{ .Values.ftp.passivePortMin }}"
+  VSFTPD_pasv_max_port: "{{ .Values.ftp.passivePortMax }}"
+  {{- range $key, $value := .Values.ftp.options }}
+  VSFTPD_{{ tpl $key $ }}: "{{ tpl (print $value) $ }}"
+  {{- end }}

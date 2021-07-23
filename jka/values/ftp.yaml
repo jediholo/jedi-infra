@@ -1,0 +1,16 @@
+fullnameOverride: ftp
+
+volumes:
+  - name: jka
+    hostPath:
+      path: /home/jka
+volumeMounts:
+  - mountPath: /home/jka
+    name: jka
+
+ftp:
+  home: /home/jka
+  uid: 1100
+  gid: 1100
+  options:
+    log_ftp_protocol: "YES"

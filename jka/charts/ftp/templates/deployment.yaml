@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ftp.fullname" . }}
+  labels:
+    {{- include "ftp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "ftp.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: {{ .Values.strategy }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ftp.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ftp.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: ftp
+              containerPort: 21
+              protocol: TCP
+          {{- range untilStep (.Values.ftp.passivePortMin | int) (.Values.ftp.passivePortMax | int) 1 }}
+            - name: pasv{{ . }}
+              containerPort: {{ . }}
+              protocol: TCP
+          {{- end }}
+          {{- if .Values.env }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: "{{ tpl $key $ }}"
+              value: "{{ tpl (print $value) $ }}"
+            {{- end }}
+          {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ include "ftp.fullname" . }}-config
+            {{- if .Values.envFromSecret }}
+            - secretRef:
+                name: {{ tpl .Values.envFromSecret . }}
+            {{- end }}
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            tcpSocket:
+              port: ftp
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            tcpSocket:
+              port: ftp
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}

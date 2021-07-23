@@ -87,6 +87,28 @@ resource "helm_release" "jka_backups" {
   }
 }
 
+// FTP server
+resource "helm_release" "jka_ftp" {
+  name      = "ftp"
+  chart     = "${path.module}/jka/charts/ftp"
+  namespace = kubernetes_namespace.jka_ns.metadata[0].name
+
+  values = [file("${path.module}/jka/values/ftp.yaml")]
+
+  set {
+    name  = "service.externalIPs[0]"
+    value = var.jka_external_ip
+  }
+  set {
+    name  = "ftp.passiveAddress"
+    value = var.jka_external_ip
+  }
+  set_sensitive {
+    name  = "ftp.users"
+    value = join(" ", [ for server in keys(var.jka_server_hostport) : "${server}:${lookup(var.jka_ftp_password, server, lookup(var.jka_ftp_password, "default", ""))}" ])
+  }
+}
+
 // Uptime checks
 resource "google_monitoring_uptime_check_config" "jka_uptime_check" {
   for_each     = toset(values(var.jka_server_hostport))
