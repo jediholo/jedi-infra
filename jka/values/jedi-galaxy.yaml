@@ -7,7 +7,7 @@ service:
   alternateNodePort: 30173
 
 podSecurityContext:
-  runAsUser: 1104
+  runAsUser: 1100
   runAsGroup: 1100
 
 volumes:
