@@ -1,0 +1,116 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "logstash.fullname" . }}-pipeline
+  labels:
+    {{- include "logstash.labels" . | nindent 4 }}
+type: Opaque
+stringData:
+  jka.conf: |
+    input {
+      # JKA Server Log
+      file {
+        id => "jka-games"
+        tags => [ "jka-games" ]
+        path => "/home/jka/*/*/games.log"
+      }
+      # JKA Player Stats
+      file {
+        id => "jka-playerstats"
+        tags => [ "jka-playerstats" ]
+        path => "/home/jka/*/*/playerstats.log"
+      }
+      # JKA Server Stats
+      file {
+        id => "jka-serverstats"
+        tags => [ "jka-serverstats" ]
+        path => "/home/jka/*/*/serverstats.log"
+      }
+    }
+    filter {
+      # JKA Server Log
+      if "jka-games" in [tags] {
+        grok {
+          match => [ "message", "\[%{TIMESTAMP_ISO8601:timestamp} \| %{DATA} \| %{NUMBER:uptime}\] %{GREEDYDATA:logmsg}" ]
+        }
+        grok {
+          match => [ "logmsg", "Admin Command %{WORD:commandname} used by (?:client %{NUMBER:clientnum} \(%{DATA:playername}\)|server \(or Rcon\)), %{GREEDYDATA:commandargs}" ]
+          add_field => [ "commandtype", "admin" ]
+        }
+        grok {
+          match => [
+            "logmsg", "(?<commandname>say(?:_\w+)?): %{DATA:playername}\^7: \^\d%{GREEDYDATA:commandargs}",
+            "logmsg", "(?<commandname>say_emote): %{DATA:playername}\^7 %{GREEDYDATA:commandargs}",
+            "logmsg", "(?<commandname>tell): %{DATA:playername}\^7 to %{DATA:targetname}\^7: \^6%{GREEDYDATA:commandargs}",
+            "logmsg", "(?<commandname>comm): %{DATA:playername}\^7 to %{DATA:targetname}\^7: %{GREEDYDATA:commandargs}"
+          ]
+          add_field => [ "commandtype", "normal" ]
+        }
+        grok {
+          match => [
+            "logmsg", "(?<eventname>Client(?:Begin|Disconnect)): %{NUMBER:clientnum} \(%{DATA:playername}\)",
+            "logmsg", "(?<eventname>ClientConnect): %{NUMBER:clientnum} \(IP: %{IP:clientip}, name: %{DATA:playername}\)",
+            "logmsg", "(?<eventname>ClientUserinfoChanged): %{DATA:playername}\^7 renamed to %{GREEDYDATA:playername}"
+          ]
+          add_field => [ "eventtype", "client" ]
+        }
+        grok {
+          match => [
+            "logmsg", "(?<eventname>Account login) \(adminRank %{NUMBER:adminrank}: %{DATA}, username: %{DATA:username}\^7\): client %{NUMBER:clientnum} \(%{DATA:playername}\)",
+            "logmsg", "(?<eventname>Account logout): client %{NUMBER:clientnum} \(%{DATA:playername}\)",
+            "logmsg", "(?<eventname>Account %{DATA}): %{GREEDYDATA:eventargs}"
+          ]
+          add_field => [ "eventtype", "account" ]
+        }
+      # JKA Player Stats
+      } else if "jka-playerstats" in [tags] {
+        grok {
+          match => [ "message", "%{TIMESTAMP_ISO8601:timestamp};\"%{DATA:playername}\";%{NUMBER:playerping};%{NUMBER:playerscore}" ]
+        }
+      # JKA Server Stats
+      } else if "jka-serverstats" in [tags] {
+        grok {
+          match => [ "message", "%{TIMESTAMP_ISO8601:timestamp};%{DATA:mapname};%{NUMBER:playercount};%{NUMBER:playermax}" ]
+        }
+      }
+      # JKA All Logs
+      if "jka-games" in [tags] or "jka-playerstats" in [tags] or "jka-serverstats" in [tags] {
+        grok {
+          match => [ "path", "/(?<servername>[^/]+)/(?<modname>[^/]+)/[^/]+\.log" ]
+          remove_field => [ "path" ]
+        }
+        date {
+          match => [ "timestamp", "yyyy-MM-dd HH:mm:ss" ]
+          timezone => "UTC"
+          remove_field => [ "timestamp" ]
+        }
+        mutate {
+          gsub => [
+            "playername", "\^[0-9a-zA-Z]", "",
+            "targetname", "\^[0-9a-zA-Z]", ""
+          ]
+          convert => [
+            "playerping", "integer",
+            "playerscore", "integer",
+            "playercount", "integer",
+            "playermax", "integer"
+          ]
+        }
+        geoip {
+          source => "clientip"
+          target => "geoip"
+        }
+      }
+    }
+  elasticsearch.conf: |
+    output {
+      elasticsearch {
+        hosts => "${ELASTICSEARCH_HOSTS:http://elasticsearch:9200}"
+        user => "${ELASTICSEARCH_USERNAME:}"
+        password => "${ELASTICSEARCH_PASSWORD:}"
+        cacert => "${ELASTICSEARCH_CACERT:}"
+      }
+    }
+  {{- if .Values.pipeline }}
+  {{- toYaml .Values.pipeline | nindent 2 }}
+  {{- end }}

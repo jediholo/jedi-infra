@@ -90,6 +90,8 @@ jka_server_hostport = {
 #jka_ftp_password = {
 #  "default" = "toComplete"
 #}
+#jka_logstash_elasticsearch_ca = "toComplete"
+#jka_logstash_elasticsearch_password = "toComplete"
 #jka_backups_openrc = "toComplete"
 #jka_backups_sa = "toComplete"
 
@@ -103,6 +105,8 @@ web_namespace = "domain-jediholo-net"
 #web_backups_mysql_password = "toComplete"
 #web_activemq_admin_password = "toComplete"
 #web_ldap_root_password = "toComplete"
+#web_logstash_elasticsearch_ca = "toComplete"
+#web_logstash_elasticsearch_password = "toComplete"
 #web_mailserver_dkim_private_key = "toComplete"
 #web_mysql_root_password = "toComplete"
 

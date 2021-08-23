@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "logstash.fullname" . }}-pipeline
+  labels:
+    {{- include "logstash.labels" . | nindent 4 }}
+type: Opaque
+stringData:
+  domains.conf: |
+    input {
+      # Apache access log
+      file {
+        id => "apache-access"
+        tags => [ "apache-access" ]
+        path => "/home/domains/*/sd/*/logs/access_log"
+        start_position => "end"
+      }
+      # Apache error log
+      file {
+        id => "apache-error"
+        tags => [ "apache-error" ]
+        path => "/home/domains/*/sd/*/logs/error_log"
+        start_position => "end"
+      }
+    }
+    filter {
+      # Apache access log
+      if "apache-access" in [tags] {
+        grok {
+          match => [
+            "message", "%{COMBINEDAPACHELOG}",
+            "path", "/domains/(?<domain>[^/]+)/sd/(?<subdomain>[^/]+)/"
+          ]
+          break_on_match => false
+        }
+        date {
+          match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+        }
+        geoip {
+          source => "clientip"
+          target => "geoip"
+        }
+      # Apache error log
+      } else if "apache-error" in [tags] {
+        grok {
+          match => [
+            "message", "\[(?<timestamp>%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR})\] \[((?<module>\w*):)?%{WORD:severity}\] (\[pid %{INT:pid}:tid %{INT:tid}\] )?(\(%{INT:errcode}\)%{DATA:errmsg}: )?(\[client %{IPORHOST:clientip}(:%{NONNEGINT})?\] )?%{DATA:logmsg}(, referer: %{URI:referrer})?$",
+            "path", "/domains/(?<domain>[^/]+)/sd/(?<subdomain>[^/]+)/"
+          ]
+          break_on_match => false
+        }
+        date {
+          match => [ "timestamp", "EEE MMM dd HH:mm:ss.SSSSSS yyyy", "EEE MMM dd HH:mm:ss yyyy" ]
+        }
+        geoip {
+          source => "clientip"
+          target => "geoip"
+        }
+      }
+    }
+  elasticsearch.conf: |
+    output {
+      elasticsearch {
+        hosts => "${ELASTICSEARCH_HOSTS:http://elasticsearch:9200}"
+        user => "${ELASTICSEARCH_USERNAME:}"
+        password => "${ELASTICSEARCH_PASSWORD:}"
+        cacert => "${ELASTICSEARCH_CACERT:}"
+      }
+    }
+  {{- if .Values.pipeline }}
+  {{- toYaml .Values.pipeline | nindent 2 }}
+  {{- end }}

@@ -27,7 +27,7 @@ resource "kubernetes_network_policy" "web_network_policy_same_ns" {
   }
 }
 
-// Network policy for ingress
+// Network policy for ingress nginx
 resource "kubernetes_network_policy" "web_network_policy_ingress_nginx" {
   metadata {
     name      = "allow-ingress-nginx"
@@ -42,6 +42,36 @@ resource "kubernetes_network_policy" "web_network_policy_ingress_nginx" {
         namespace_selector {
           match_labels = {
             "name" = "ingress-nginx"
+          }
+        }
+      }
+    }
+  }
+}
+
+// Network policy for ActiveMQ from JKA Logstash
+resource "kubernetes_network_policy" "web_network_policy_activemq_jka_logstash" {
+  metadata {
+    name      = "allow-activemq-from-jka-logstash"
+    namespace = kubernetes_namespace.web_ns.metadata[0].name
+  }
+  spec {
+    policy_types = ["Ingress"]
+    pod_selector {
+      match_labels = {
+        "app.kubernetes.io/name" = "activemq"
+      }
+    }
+    ingress {
+      from {
+        namespace_selector {
+          match_labels = {
+            "name" = var.jka_namespace
+          }
+        }
+        pod_selector {
+          match_labels = {
+            "app.kubernetes.io/name" = "logstash"
           }
         }
       }
@@ -126,6 +156,24 @@ resource "helm_release" "web_ldap" {
   set_sensitive {
     name  = "secrets.root.password"
     value = var.web_ldap_root_password
+  }
+}
+
+// Logstash
+resource "helm_release" "web_logstash" {
+  name       = "logstash"
+  chart     = "${path.module}/web/charts/logstash"
+  namespace  = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/logstash.yaml")]
+
+  set_sensitive {
+    name  = "env.ELASTICSEARCH_PASSWORD"
+    value = var.web_logstash_elasticsearch_password
+  }
+  set_sensitive {
+    name  = "secret.elasticsearch-ca\\.crt"
+    value = var.web_logstash_elasticsearch_ca
   }
 }
 

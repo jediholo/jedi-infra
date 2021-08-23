@@ -109,6 +109,24 @@ resource "helm_release" "jka_ftp" {
   }
 }
 
+// Logstash
+resource "helm_release" "jka_logstash" {
+  name       = "logstash"
+  chart     = "${path.module}/jka/charts/logstash"
+  namespace  = kubernetes_namespace.jka_ns.metadata[0].name
+
+  values = [file("${path.module}/jka/values/logstash.yaml")]
+
+  set_sensitive {
+    name  = "env.ELASTICSEARCH_PASSWORD"
+    value = var.jka_logstash_elasticsearch_password
+  }
+  set_sensitive {
+    name  = "secret.elasticsearch-ca\\.crt"
+    value = var.jka_logstash_elasticsearch_ca
+  }
+}
+
 // Uptime checks
 resource "google_monitoring_uptime_check_config" "jka_uptime_check" {
   for_each     = toset(values(var.jka_server_hostport))

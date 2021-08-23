@@ -1,0 +1,28 @@
+fullnameOverride: logstash
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+env:
+  ELASTICSEARCH_CACERT: /usr/share/logstash/secret/elasticsearch-ca.crt
+  ELASTICSEARCH_HOSTS: https://infra-es-http.infra.svc:9200
+  ELASTICSEARCH_USERNAME: elastic
+  LS_JAVA_OPTS: -Xms512m -Xmx512m
+  XPACK_MONITORING_ENABLED: "false"
+
+volumes:
+  - name: data
+    hostPath:
+      path: /home/domains/jediholo.net/logstash/data
+      type: DirectoryOrCreate
+  - name: domain
+    hostPath:
+      path: /home/domains/jediholo.net
+      type: DirectoryOrCreate
+volumeMounts:
+  - mountPath: /usr/share/logstash/data
+    name: data
+  - mountPath: /home/domains/jediholo.net
+    name: domain
+    readOnly: true
