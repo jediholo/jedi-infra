@@ -109,6 +109,15 @@ resource "helm_release" "jka_ftp" {
   }
 }
 
+// Cron jobs
+resource "helm_release" "jka_jobs" {
+  name      = "jobs"
+  chart     = "${path.module}/jka/charts/jobs"
+  namespace = kubernetes_namespace.jka_ns.metadata[0].name
+
+  values = [file("${path.module}/jka/values/jobs.yaml")]
+}
+
 // Logstash
 resource "helm_release" "jka_logstash" {
   name       = "logstash"

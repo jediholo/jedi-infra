@@ -4,14 +4,9 @@ volumes:
   - name: jka
     hostPath:
       path: /home/jka
-  - name: letsencrypt
-    hostPath:
-      path: /etc/letsencrypt
 volumeMounts:
   - mountPath: /home/jka
     name: jka
-  - mountPath: /etc/letsencrypt
-    name: letsencrypt
 
 ftp:
   home: /home/jka
@@ -19,6 +14,6 @@ ftp:
   gid: 1100
   options:
     log_ftp_protocol: "YES"
-    rsa_cert_file: "/etc/letsencrypt/live/jediholo.net/fullchain.pem"
-    rsa_private_key_file: "/etc/letsencrypt/live/jediholo.net/privkey.pem"
+    rsa_cert_file: "/home/jka/.letsencrypt/config/live/jediholo.net/fullchain.pem"
+    rsa_private_key_file: "/home/jka/.letsencrypt/config/live/jediholo.net/privkey.pem"
     ssl_enable: "YES"

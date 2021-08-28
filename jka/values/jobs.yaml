@@ -1,0 +1,14 @@
+fullnameOverride: jobs
+
+podSecurityContext:
+  runAsUser: 1100
+  runAsGroup: 1100
+
+schedules:
+  certbot-renew: "30 2 * * *"
+
+volumes:
+  letsencrypt:
+    hostPath:
+      path: /home/jka/.letsencrypt
+      type: DirectoryOrCreate
