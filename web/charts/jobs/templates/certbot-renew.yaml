@@ -1,0 +1,55 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "jobs.fullname" . }}-certbot-renew
+  labels:
+    {{- include "jobs.labels" . | nindent 4 }}
+spec:
+  schedule: {{ index .Values.schedules "certbot-renew" | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "jobs.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: certbot
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "certbot/dns-ovh:latest"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              args: ['renew']
+              volumeMounts:
+                - mountPath: /etc/letsencrypt
+                  name: letsencrypt
+                  subPath: config
+                - mountPath: /var/lib/letsencrypt
+                  name: letsencrypt
+                  subPath: work
+                - mountPath: /var/log/letsencrypt
+                  name: letsencrypt
+                  subPath: logs
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          volumes:
+            {{- with .Values.volumes.letsencrypt }}
+            - name: letsencrypt
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
