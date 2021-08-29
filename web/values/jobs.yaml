@@ -11,6 +11,7 @@ nodeSelector:
 schedules:
   certbot-renew: "30 2 * * *"
   jedi-id: "0 * * * *"
+  jedi-skinpack: "0 5 * * *"
   piwik-archive: "27 * * * *"
   rpmod-web: "*/5 * * * *"
   wordpress: "7/30 * * * *"
