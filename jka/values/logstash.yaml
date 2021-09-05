@@ -2,7 +2,7 @@ fullnameOverride: logstash
 
 env:
   ELASTICSEARCH_CACERT: /usr/share/logstash/secret/elasticsearch-ca.crt
-  ELASTICSEARCH_HOSTS: https://infra-es-http.infra.svc:9200
+  ELASTICSEARCH_HOSTS: https://elasticsearch-es-http.infra.svc:9200
   ELASTICSEARCH_USERNAME: elastic
   LOGSTASH_PLUGINS: logstash-output-stomp
   LS_JAVA_OPTS: -Xms512m -Xmx512m

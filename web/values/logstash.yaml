@@ -6,7 +6,7 @@ nodeSelector:
 
 env:
   ELASTICSEARCH_CACERT: /usr/share/logstash/secret/elasticsearch-ca.crt
-  ELASTICSEARCH_HOSTS: https://infra-es-http.infra.svc:9200
+  ELASTICSEARCH_HOSTS: https://elasticsearch-es-http.infra.svc:9200
   ELASTICSEARCH_USERNAME: elastic
   LS_JAVA_OPTS: -Xms512m -Xmx512m
   XPACK_MONITORING_ENABLED: "false"
