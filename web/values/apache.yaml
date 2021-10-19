@@ -80,14 +80,6 @@ vhosts:
       CustomLog /srv/www/sd/files/logs/access_log combined
       Include /etc/apache2/vhosts.d/vhost.inc
     </VirtualHost>
-  id.conf: |
-    <VirtualHost _default_:8080>
-      ServerName id.jediholo.net
-      DocumentRoot /srv/www/sd/id/htdocs/
-      ErrorLog /srv/www/sd/id/logs/error_log
-      CustomLog /srv/www/sd/id/logs/access_log combined
-      Include /etc/apache2/vhosts.d/vhost.inc
-    </VirtualHost>
   rpmod.conf: |
     <VirtualHost _default_:8080>
       ServerName rpmod.jediholo.net
