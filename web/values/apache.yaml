@@ -11,6 +11,7 @@ nodeSelector:
 ingress:
   enabled: true
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
   hosts:
     - host: "jediholo.net"
@@ -19,9 +20,16 @@ ingress:
     - host: "*.jediholo.net"
       paths:
         - path: "/"
-    - host: "services.jediholo.net"
-      paths:
-        - path: "/"
+  tls:
+    - secretName: apache-tls
+      hosts:
+        - "jediholo.net"
+        - "comport.jediholo.net"
+        - "discord.jediholo.net"
+        - "files.jediholo.net"
+        - "rpmod.jediholo.net"
+        - "services.jediholo.net"
+        - "www.jediholo.net"
 
 env:
   SERVER_ENV: production
