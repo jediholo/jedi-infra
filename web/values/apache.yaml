@@ -17,10 +17,22 @@ ingress:
     - host: "jediholo.net"
       paths:
         - path: "/"
-    - host: "*.jediholo.net"
+    - host: "comport.jediholo.net"
+      paths:
+        - path: "/"
+    - host: "discord.jediholo.net"
+      paths:
+        - path: "/"
+    - host: "files.jediholo.net"
       paths:
         - path: "/"
     - host: "rpmod.jediholo.net"
+      paths:
+        - path: "/"
+    - host: "services.jediholo.net"
+      paths:
+        - path: "/"
+    - host: "www.jediholo.net"
       paths:
         - path: "/"
   tls:
