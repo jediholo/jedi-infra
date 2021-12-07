@@ -25,7 +25,7 @@ k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
 # DNS config
 dns_zone = "jediholo.net"
 dns_records = [
-  { name = "",                      ttl = 0,     type = "A",      target = "5.39.85.174" },
+  { name = "",                      ttl = 0,     type = "A",      target = "51.255.79.178" },
   { name = "",                      ttl = 0,     type = "AAAA",   target = "2001:41d0:8:97ae::1" },
   { name = "",                      ttl = 0,     type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 0,     type = "MX",     target = "1 mx4.mail.ovh.net." },
