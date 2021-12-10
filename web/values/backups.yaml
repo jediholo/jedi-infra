@@ -18,7 +18,7 @@ env:
   BACKUP_BACKEND: multi
   BACKUP_BACKENDS: swift,gcs,ftp
   BACKUP_GCS_BUCKET: jediholo-net-backups
-  BACKUP_FTP_HOST: ftpback-rbx3-173.ovh.net
+  BACKUP_FTP_HOST: ftpback-rbx2-155.ovh.net
   BACKUP_FTP_DIR: jediholo.net
   BACKUP_SYNC_BACKENDS: swift,gcs
   BACKUP_SYNC_ARGS: |
