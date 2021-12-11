@@ -42,7 +42,6 @@ affinity: {}
 schedules: {}
   # certbot-renew: "0 2 * * *"
   # build-skinpack: "0 5 * * *"
-  # jedi-id: "0 * * * *"
   # jedi-skinpack: "0 5 * * *"
   # piwik-archive: "0 * * * *"
   # rpmod-web: "*/5 * * * *"
