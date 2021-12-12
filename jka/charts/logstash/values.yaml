@@ -6,7 +6,7 @@ image:
   repository: docker.elastic.co/logstash/logstash
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 7.14.1
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
