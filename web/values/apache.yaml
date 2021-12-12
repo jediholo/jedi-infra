@@ -116,7 +116,7 @@ vhosts:
     <VirtualHost _default_:8080>
       ServerName services.jediholo.net
       DocumentRoot /srv/www/sd/services/htdocs/
-      Redirect permanent /kibana https://kibana.fabinfra.net
+      Redirect permanent /kibana https://kibana.fabinfra.net/s/jedi
       ErrorLog /srv/www/sd/services/logs/error_log
       CustomLog /srv/www/sd/services/logs/access_log combined
       Include /etc/apache2/vhosts.d/vhost.inc
