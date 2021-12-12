@@ -40,7 +40,6 @@ tolerations: []
 affinity: {}
 
 schedules: {}
-  # certbot-renew: "0 2 * * *"
   # build-skinpack: "0 5 * * *"
   # jedi-skinpack: "0 5 * * *"
   # piwik-archive: "0 * * * *"
@@ -55,8 +54,4 @@ volumes:
   subdomains: {}
     # hostPath:
     #   path: /home/domains/example.org/sd
-    #   type: DirectoryOrCreate
-  letsencrypt: {}
-    # hostPath:
-    #   path: /home/domains/example.org/letsencrypt
     #   type: DirectoryOrCreate
