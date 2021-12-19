@@ -73,10 +73,8 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 10
             timeoutSeconds: 10
-            httpGet:
-              path: /index.html
+            tcpSocket:
               port: http
-              scheme: HTTP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
