@@ -9,7 +9,7 @@ image:
   repository: ghcr.io/fab-infra/mariadb
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 10.4-opensuse15
+  tag: 10.5-opensuse15
 
 imagePullSecrets: []
 nameOverride: ""

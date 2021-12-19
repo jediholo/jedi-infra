@@ -9,7 +9,7 @@ image:
   repository: ghcr.io/fab-infra/postfix
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 3.4-opensuse15
+  tag: 3.5-opensuse15
 
 imagePullSecrets: []
 nameOverride: ""
