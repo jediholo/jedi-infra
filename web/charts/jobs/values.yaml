@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: ghcr.io/fab-infra/php
+  repository: ghcr.io/fab-infra/php-cli
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: 7.4-opensuse15
