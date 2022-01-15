@@ -28,7 +28,7 @@ stringData:
       if "apache-access" in [tags] {
         grok {
           match => [
-            "message", "%{COMBINEDAPACHELOG}",
+            "message", "%{HTTPD_COMBINEDLOG}",
             "path", "/domains/(?<domain>[^/]+)/sd/(?<subdomain>[^/]+)/"
           ]
           break_on_match => false
@@ -44,7 +44,7 @@ stringData:
       } else if "apache-error" in [tags] {
         grok {
           match => [
-            "message", "\[(?<timestamp>%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR})\] \[((?<module>\w*):)?%{WORD:severity}\] (\[pid %{INT:pid}:tid %{INT:tid}\] )?(\(%{INT:errcode}\)%{DATA:errmsg}: )?(\[client %{IPORHOST:clientip}(:%{NONNEGINT})?\] )?%{DATA:logmsg}(, referer: %{URI:referrer})?$",
+            "message", "\[%{HTTPDERROR_DATE:timestamp}\] \[%{WORD:module}:%{LOGLEVEL:loglevel}\] \[pid %{INT:pid}(:tid %{INT:tid})?\]( \(%{INT:proxy_errorcode}\)%{DATA:proxy_message}:)?( \[client %{IPORHOST:clientip}:%{INT:clientport}\])?( %{DATA:errorcode}:)? %{GREEDYDATA:logmsg}",
             "path", "/domains/(?<domain>[^/]+)/sd/(?<subdomain>[^/]+)/"
           ]
           break_on_match => false
