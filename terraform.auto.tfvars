@@ -64,8 +64,7 @@ dns_records = [
 jka_namespace = "jka"
 jka_external_ip = "37.187.118.231"
 jka_deployments_scale_sa = [
-  { name = "php",  "namespace" = "domain-jediholo-net" },
-  { name = "jobs", "namespace" = "domain-jediholo-net" },
+  { name = "rpmod", "namespace" = "domain-jediholo-net" },
 ]
 jka_server_hostport = {
   "jedi-temple"  = "temple.jediholo.net:29070"
