@@ -11,7 +11,6 @@ nodeSelector:
 schedules:
   jedi-skinpack: "0 5 * * *"
   piwik-archive: "27 * * * *"
-  rpmod-web: "*/5 * * * *"
   wordpress: "7/30 * * * *"
 
 volumes:

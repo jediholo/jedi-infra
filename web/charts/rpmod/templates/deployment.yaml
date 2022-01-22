@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rpmod.fullname" . }}
+  labels:
+    {{- include "rpmod.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rpmod.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: {{ .Values.strategy }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rpmod.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "rpmod.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SERVER_ENV
+              value: {{ .Values.config.environment }}
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /srv/www/apps/RPMod-Web/application/configs/certs
+              name: certs
+              readOnly: true
+            - mountPath: /srv/www/apps/RPMod-Web/application/configs/application.local.ini
+              name: configs
+              subPath: application.local.ini
+              readOnly: true
+            {{- if .Values.volumes.data }}
+            - mountPath: /srv/www/apps/RPMod-Web/data
+              name: data
+            {{- end }}
+            {{- if .Values.volumes.downloads }}
+            - mountPath: /srv/www/apps/RPMod-Web/public/downloads
+              name: downloads
+            {{- end }}
+            {{- if .Values.volumes.logs }}
+            - mountPath: /var/log/apache2
+              name: logs
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: certs
+          secret:
+            secretName: {{ include "rpmod.fullname" . }}-certs
+        - name: configs
+          secret:
+            secretName: {{ include "rpmod.fullname" . }}-configs
+        {{- with .Values.volumes.data }}
+        - name: data
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.volumes.downloads }}
+        - name: downloads
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.volumes.logs }}
+        - name: logs
+          {{- toYaml . | nindent 10 }}
+        {{- end }}

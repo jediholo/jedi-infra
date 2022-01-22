@@ -107,6 +107,12 @@ web_namespace = "domain-jediholo-net"
 #web_logstash_elasticsearch_password = "toComplete"
 #web_mailserver_dkim_private_key = "toComplete"
 #web_mysql_root_password = "toComplete"
+#web_rpmod_application_config = "toComplete"
+#web_rpmod_gameasset_private_key = "toComplete"
+#web_rpmod_gameasset_public_key = "toComplete"
+#web_rpmod_oidc_jwks = "toComplete"
+#web_rpmod_oidc_private_key = "toComplete"
+#web_rpmod_oidc_public_key = "toComplete"
 
 # Uptime checks
 uptime_check_urls = [

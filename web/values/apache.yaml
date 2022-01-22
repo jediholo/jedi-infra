@@ -26,9 +26,6 @@ ingress:
     - host: "files.jediholo.net"
       paths:
         - path: "/"
-    - host: "rpmod.jediholo.net"
-      paths:
-        - path: "/"
     - host: "services.jediholo.net"
       paths:
         - path: "/"
@@ -42,7 +39,6 @@ ingress:
         - "comport.jediholo.net"
         - "discord.jediholo.net"
         - "files.jediholo.net"
-        - "rpmod.jediholo.net"
         - "services.jediholo.net"
         - "www.jediholo.net"
 
@@ -101,15 +97,6 @@ vhosts:
       DocumentRoot /srv/www/sd/files/htdocs/
       ErrorLog /srv/www/sd/files/logs/error_log
       CustomLog /srv/www/sd/files/logs/access_log combined
-      Include /etc/apache2/vhosts.d/vhost.inc
-    </VirtualHost>
-  rpmod.conf: |
-    <VirtualHost _default_:8080>
-      ServerName rpmod.jediholo.net
-      DocumentRoot /srv/www/sd/rpmod/htdocs/
-      RedirectMatch "^/server/([^/]+)/name/jedi-(temple|galaxy|grounds)-eu(/.*)?$" "/server/$1/name/jedi-$2$3"
-      ErrorLog /srv/www/sd/rpmod/logs/error_log
-      CustomLog /srv/www/sd/rpmod/logs/access_log combined
       Include /etc/apache2/vhosts.d/vhost.inc
     </VirtualHost>
   services.conf: |

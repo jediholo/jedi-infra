@@ -1,0 +1,82 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "rpmod.fullname" . }}-cron
+  labels:
+    {{- include "rpmod.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.cron.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "rpmod.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: {{ .Chart.Name }}-cron
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              args: ['/srv/www/apps/RPMod-Web/scripts/cron.sh']
+              env:
+                - name: APPLICATION_ENV
+                  value: {{ .Values.config.environment }}
+              volumeMounts:
+                - mountPath: /srv/www/apps/RPMod-Web/application/configs/certs
+                  name: certs
+                  readOnly: true
+                - mountPath: /srv/www/apps/RPMod-Web/application/configs/application.local.ini
+                  name: configs
+                  subPath: application.local.ini
+                  readOnly: true
+                {{- if .Values.volumes.data }}
+                - mountPath: /srv/www/apps/RPMod-Web/data
+                  name: data
+                {{- end }}
+                {{- if .Values.volumes.downloads }}
+                - mountPath: /srv/www/apps/RPMod-Web/public/downloads
+                  name: downloads
+                {{- end }}
+                {{- if .Values.volumes.logs }}
+                - mountPath: /var/log/apache2
+                  name: logs
+                {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          volumes:
+            - name: certs
+              secret:
+                secretName: {{ include "rpmod.fullname" . }}-certs
+            - name: configs
+              secret:
+                secretName: {{ include "rpmod.fullname" . }}-configs
+            {{- with .Values.volumes.data }}
+            - name: data
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- with .Values.volumes.downloads }}
+            - name: downloads
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- with .Values.volumes.logs }}
+            - name: logs
+              {{- toYaml . | nindent 14 }}
+            {{- end }}

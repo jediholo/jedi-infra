@@ -1,0 +1,38 @@
+fullnameOverride: rpmod
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: 300m
+  hosts:
+    - host: "rpmod.jediholo.net"
+      paths:
+        - path: "/"
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: rpmod-tls
+      hosts:
+        - "rpmod.jediholo.net"
+
+volumes:
+  data:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/RPMod-Web/data
+      type: DirectoryOrCreate
+  downloads:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/RPMod-Web/public/downloads
+      type: DirectoryOrCreate
+  logs:
+    hostPath:
+      path: /home/domains/jediholo.net/sd/rpmod/logs
+      type: DirectoryOrCreate

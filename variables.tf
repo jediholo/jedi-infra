@@ -197,6 +197,30 @@ variable "web_mysql_root_password" {
   description = "MySQL root password"
   sensitive   = true
 }
+variable "web_rpmod_application_config" {
+  description = "RPMod Web application configuration (INI format)"
+  sensitive   = true
+}
+variable "web_rpmod_gameasset_private_key" {
+  description = "RPMod Web GameAsset private key (PEM-encoded)"
+  sensitive   = true
+}
+variable "web_rpmod_gameasset_public_key" {
+  description = "RPMod Web GameAsset public key (PEM-encoded)"
+  sensitive   = true
+}
+variable "web_rpmod_oidc_jwks" {
+  description = "RPMod Web OpenID Connect JSON Web Key Set (JWKS)"
+  sensitive   = true
+}
+variable "web_rpmod_oidc_private_key" {
+  description = "RPMod Web OpenID Connect private key (PEM-encoded)"
+  sensitive   = true
+}
+variable "web_rpmod_oidc_public_key" {
+  description = "RPMod Web OpenID Connect public key (PEM-encoded)"
+  sensitive   = true
+}
 
 // Uptime checks
 variable "uptime_check_urls" {

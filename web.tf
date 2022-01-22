@@ -229,3 +229,37 @@ resource "helm_release" "web_php" {
 
   values = [file("${path.module}/web/values/php.yaml")]
 }
+
+// RPMod Web
+resource "helm_release" "web_rpmod" {
+  name      = "rpmod"
+  chart     = "${path.module}/web/charts/rpmod"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/rpmod.yaml")]
+
+  set_sensitive {
+    name  = "config.application"
+    value = var.web_rpmod_application_config
+  }
+  set_sensitive {
+    name  = "certificates.gameasset.privateKey"
+    value = var.web_rpmod_gameasset_private_key
+  }
+  set_sensitive {
+    name  = "certificates.gameasset.publicKey"
+    value = var.web_rpmod_gameasset_public_key
+  }
+  set_sensitive {
+    name  = "certificates.oidc.jwks"
+    value = base64encode(var.web_rpmod_oidc_jwks)
+  }
+  set_sensitive {
+    name  = "certificates.oidc.privateKey"
+    value = var.web_rpmod_oidc_private_key
+  }
+  set_sensitive {
+    name  = "certificates.oidc.publicKey"
+    value = var.web_rpmod_oidc_public_key
+  }
+}
