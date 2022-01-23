@@ -12,7 +12,8 @@ schedules:
   files: "30 5 * * *"
   ldap: "0 5 * * *"
   mysql: "0 5 * * *"
-  sync: "0 6 * * *"
+  skinpack: "15 5 * * *"
+  sync: "0 5 * * *"
 
 env:
   BACKUP_BACKEND: multi
@@ -26,6 +27,7 @@ env:
     pcs:gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads
     pcs:gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private
     pcs:gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins
+    pcs:gamerepo-jedi-skins/assets/ /srv/www/sd/files/htdocs/repos/jedi-skins/assets/
   MYSQL_HOST: mysql-slave
 
 volumes:

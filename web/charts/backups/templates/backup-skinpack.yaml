@@ -1,43 +1,43 @@
+{{- if .Values.schedules.skinpack -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ include "jobs.fullname" . }}-jedi-skinpack
+  name: {{ include "backups.fullname" . }}-skinpack
   labels:
-    {{- include "jobs.labels" . | nindent 4 }}
+    {{- include "backups.labels" . | nindent 4 }}
 spec:
-  schedule: {{ index .Values.schedules "jedi-skinpack" | quote }}
+  schedule: {{ .Values.schedules.skinpack | quote }}
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
+      backoffLimit: {{ .Values.backoffLimit }}
       template:
         spec:
           {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          serviceAccountName: {{ include "jobs.serviceAccountName" . }}
+          serviceAccountName: {{ include "backups.serviceAccountName" . }}
           securityContext:
             {{- toYaml .Values.podSecurityContext | nindent 12 }}
           containers:
-            - name: php
+            - name: backuptools
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
-              image: "ghcr.io/fab-infra/backuptools:opensuse15"
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
-              args: ['/srv/www/apps/RPMod-Web/scripts/build-pack.sh', 'JEDI_Skins', '/srv/www/sd/files/htdocs/repos/jedi-skins/assets', '/srv/www/sd/files/htdocs/downloads']
+              args: ['/home/backups/backup-archive.sh', 'JEDI_Skins', '/srv/www/sd/files/htdocs/repos/jedi-skins/assets', '*.pk3']
               env:
                 - name: HOME
                   value: /home/backups
-                - name: RCLONE_PATH
-                  value: pcs:gamerepo-jedi-skins/assets
+                - name: BACKUP_DIR
+                  value: /srv/www/sd/files/htdocs
+                - name: BACKUP_SUBDIR
+                  value: downloads
               volumeMounts:
-                {{- if .Values.volumes.apps }}
-                - mountPath: /srv/www/apps
-                  name: apps
-                {{- end }}
-                {{- if .Values.volumes.subdomains }}
-                - mountPath: /srv/www/sd
-                  name: subdomains
+                {{- if .Values.volumes.domain }}
+                - mountPath: /srv/www
+                  name: domain
                 {{- end }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
@@ -53,11 +53,8 @@ spec:
           {{- end }}
           restartPolicy: Never
           volumes:
-            {{- with .Values.volumes.apps }}
-            - name: apps
+            {{- with .Values.volumes.domain }}
+            - name: domain
               {{- toYaml . | nindent 14 }}
             {{- end }}
-            {{- with .Values.volumes.subdomains }}
-            - name: subdomains
-              {{- toYaml . | nindent 14 }}
-            {{- end }}
+{{- end }}

@@ -40,8 +40,6 @@ tolerations: []
 affinity: {}
 
 schedules: {}
-  # build-skinpack: "0 5 * * *"
-  # jedi-skinpack: "0 5 * * *"
   # piwik-archive: "0 * * * *"
   # wordpress: "0 * * * *"
 

@@ -9,7 +9,6 @@ nodeSelector:
   domain-jediholo-net: "true"
 
 schedules:
-  jedi-skinpack: "0 5 * * *"
   piwik-archive: "27 * * * *"
   wordpress: "7/30 * * * *"
 

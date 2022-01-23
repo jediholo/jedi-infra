@@ -59,6 +59,10 @@ spec:
                   subPath: backup-sa.json
                   readOnly: true
                 {{- end }}
+                {{- if .Values.volumes.domain }}
+                - mountPath: /srv/www
+                  name: domain
+                {{- end }}
           {{- with .Values.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 12 }}
@@ -82,5 +86,9 @@ spec:
             - name: backup-sa
               secret:
                 secretName: {{ include "backups.fullname" . }}-sa
+            {{- end }}
+            {{- with .Values.volumes.domain }}
+            - name: domain
+              {{- toYaml . | nindent 14 }}
             {{- end }}
 {{- end }}
