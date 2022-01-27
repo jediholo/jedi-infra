@@ -23,7 +23,7 @@ spec:
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              imagePullPolicy: IfNotPresent
               args: ['/srv/www/apps/RPMod-Web/scripts/cron.sh']
               env:
                 - name: APPLICATION_ENV
