@@ -230,6 +230,15 @@ resource "helm_release" "web_php" {
   values = [file("${path.module}/web/values/php.yaml")]
 }
 
+// phpMyAdmin
+resource "helm_release" "web_phpmyadmin" {
+  name      = "phpmyadmin"
+  chart     = "${path.module}/web/charts/phpmyadmin"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/phpmyadmin.yaml")]
+}
+
 // RPMod Web
 resource "helm_release" "web_rpmod" {
   name      = "rpmod"
