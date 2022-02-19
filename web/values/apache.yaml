@@ -17,21 +17,27 @@ ingress:
     - host: "jediholo.net"
       paths:
         - path: "/"
+          pathType: ImplementationSpecific
     - host: "comport.jediholo.net"
       paths:
         - path: "/"
+          pathType: ImplementationSpecific
     - host: "discord.jediholo.net"
       paths:
         - path: "/"
+          pathType: ImplementationSpecific
     - host: "files.jediholo.net"
       paths:
         - path: "/"
+          pathType: ImplementationSpecific
     - host: "services.jediholo.net"
       paths:
         - path: "/"
+          pathType: ImplementationSpecific
     - host: "www.jediholo.net"
       paths:
         - path: "/"
+          pathType: ImplementationSpecific
   tls:
     - secretName: apache-tls
       hosts:
