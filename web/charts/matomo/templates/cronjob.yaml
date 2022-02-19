@@ -1,0 +1,70 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "matomo.fullname" . }}-archive
+  labels:
+    {{- include "matomo.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.cron.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "matomo.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          initContainers:
+            - name: create-config
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              args: ['/bin/sh', '-c', 'cp /config/config.ini.php /var/www/html/config/config.ini.php && chown www-data:www-data /var/www/html/config/config.ini.php']
+              volumeMounts:
+                - mountPath: /var/www/html
+                  name: www
+                - mountPath: /config
+                  name: config
+                  readOnly: true
+              {{- if .Values.volumes.tmp }}
+                - mountPath: /var/www/html/tmp
+                  name: tmp
+              {{- end }}
+          containers:
+            - name: {{ .Chart.Name }}
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              args: ['/usr/local/bin/php', '/var/www/html/console', 'core:archive']
+              volumeMounts:
+                - mountPath: /var/www/html
+                  name: www
+              {{- if .Values.volumes.tmp }}
+                - mountPath: /var/www/html/tmp
+                  name: tmp
+              {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          volumes:
+            - name: www
+              emptyDir: {}
+            - name: config
+              secret:
+                secretName: {{ include "matomo.fullname" . }}-config
+          {{- with .Values.volumes.tmp }}
+            - name: tmp
+              {{- toYaml . | nindent 14 }}
+          {{- end }}

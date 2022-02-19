@@ -191,6 +191,28 @@ resource "helm_release" "web_mailserver" {
   }
 }
 
+// Matomo
+resource "helm_release" "web_matomo" {
+  name      = "matomo"
+  chart     = "${path.module}/web/charts/matomo"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/matomo.yaml")]
+
+  set_sensitive {
+    name  = "config.database.username"
+    value = var.web_matomo_db_username
+  }
+  set_sensitive {
+    name  = "config.database.password"
+    value = var.web_matomo_db_password
+  }
+  set_sensitive {
+    name  = "config.General.salt"
+    value = var.web_matomo_salt
+  }
+}
+
 // Memcached cache server
 resource "helm_release" "web_memcached" {
   name      = "memcached"

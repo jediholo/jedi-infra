@@ -1,0 +1,51 @@
+fullnameOverride: matomo
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header X-Forwarded-Uri "/piwik";
+  hosts:
+    - host: "services.jediholo.net"
+      paths:
+        - path: "/piwik(/|$)(.*)"
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: apache-tls
+      hosts:
+        - "services.jediholo.net"
+
+cron:
+  schedule: "27 * * * *"
+
+config:
+  database:
+    host: db01
+    dbname: jedi-piwik
+    tables_prefix: piwik_
+    schema: Myisam
+    charset: utf8mb4
+  General:
+    assume_secure_protocol: 1
+    force_ssl: 1
+    proxy_client_headers: ["HTTP_X_FORWARDED_FOR"]
+    proxy_host_headers: ["HTTP_X_FORWARDED_HOST"]
+    proxy_uri_header: 1
+    trusted_hosts: ["services.jediholo.net"]
+  Tracker:
+    ignore_visits_cookie_name: piwik_ignore
+  mail:
+    transport: smtp
+    port: 587
+    host: mailserver
+
+volumes:
+  tmp:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/matomo/tmp
+      type: DirectoryOrCreate

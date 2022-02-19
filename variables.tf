@@ -193,6 +193,17 @@ variable "web_mailserver_dkim_private_key" {
   description = "DKIM private key (PEM-encoded)"
   sensitive   = true
 }
+variable "web_matomo_db_username" {
+  description = "Matomo database username"
+}
+variable "web_matomo_db_password" {
+  description = "Matomo database password"
+  sensitive   = true
+}
+variable "web_matomo_salt" {
+  description = "Matomo authentication salt"
+  sensitive   = true
+}
 variable "web_mysql_root_password" {
   description = "MySQL root password"
   sensitive   = true

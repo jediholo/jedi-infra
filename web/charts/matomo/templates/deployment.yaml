@@ -1,0 +1,141 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "matomo.fullname" . }}
+  labels:
+    {{- include "matomo.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "matomo.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: {{ .Values.strategy }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "matomo.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "matomo.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: create-config
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ['/bin/sh', '-c', 'cp /config/config.ini.php /var/www/html/config/config.ini.php && chown www-data:www-data /var/www/html/config/config.ini.php']
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: www
+            - mountPath: /config
+              name: config
+              readOnly: true
+          {{- if .Values.volumes.tmp }}
+            - mountPath: /var/www/html/tmp
+              name: tmp
+          {{- end }}
+        - name: create-security-files
+          securityContext:
+            runAsUser: 33
+            runAsGroup: 33
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ['/usr/local/bin/php', '/var/www/html/console', 'core:create-security-files']
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: www
+          {{- if .Values.volumes.tmp }}
+            - mountPath: /var/www/html/tmp
+              name: tmp
+          {{- end }}
+        - name: download-geoip
+          securityContext:
+            runAsUser: 33
+            runAsGroup: 33
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ['/usr/local/bin/php', '/var/www/html/console', 'scheduled-tasks:run', 'Piwik\Plugins\GeoIp2\GeoIP2AutoUpdater.update']
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: www
+          {{- if .Values.volumes.tmp }}
+            - mountPath: /var/www/html/tmp
+              name: tmp
+          {{- end }}
+        - name: update-database
+          securityContext:
+            runAsUser: 33
+            runAsGroup: 33
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ['/usr/local/bin/php', '/var/www/html/console', 'core:update', '--yes']
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: www
+          {{- if .Values.volumes.tmp }}
+            - mountPath: /var/www/html/tmp
+              name: tmp
+          {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: www
+          {{- if .Values.volumes.tmp }}
+            - mountPath: /var/www/html/tmp
+              name: tmp
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: www
+          emptyDir: {}
+        - name: config
+          secret:
+            secretName: {{ include "matomo.fullname" . }}-config
+      {{- with .Values.volumes.tmp }}
+        - name: tmp
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
