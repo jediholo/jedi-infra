@@ -270,8 +270,20 @@ resource "helm_release" "web_rpmod" {
   values = [file("${path.module}/web/values/rpmod.yaml")]
 
   set_sensitive {
-    name  = "config.application"
-    value = var.web_rpmod_application_config
+    name  = "config.application.production.resources\\.doctrine\\.connections\\.rpmod\\.dsn"
+    value = var.web_rpmod_db_url
+  }
+  set_sensitive {
+    name  = "config.application.production.discord\\.pubkey"
+    value = var.web_rpmod_discord_pubkey
+  }
+  set_sensitive {
+    name  = "config.application.production.recaptcha\\.pubkey"
+    value = var.web_rpmod_recaptcha_pubkey
+  }
+  set_sensitive {
+    name  = "config.application.production.recaptcha\\.privkey"
+    value = var.web_rpmod_recaptcha_privkey
   }
   set_sensitive {
     name  = "certificates.gameasset.privateKey"

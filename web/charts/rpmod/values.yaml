@@ -100,7 +100,13 @@ certificates:
     publicKey: ""
 
 config:
-  application: ""
+  application:
+    development: {}
+    production: {}
+      # "resources.doctrine.connections.rpmod.dsn": "mysql://user:pass@dbhost/dbname"
+      # "discord.pubkey": "toComplete"
+      # "recaptcha.pubkey": "toComplete"
+      # "recaptcha.privkey": "toComplete"
   environment: production
 
 cron:

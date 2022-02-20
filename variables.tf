@@ -208,8 +208,12 @@ variable "web_mysql_root_password" {
   description = "MySQL root password"
   sensitive   = true
 }
-variable "web_rpmod_application_config" {
-  description = "RPMod Web application configuration (INI format)"
+variable "web_rpmod_db_url" {
+  description = "RPMod Web database URL (e.g. mysql://user:pass@dbhost/dbname)"
+  sensitive   = true
+}
+variable "web_rpmod_discord_pubkey" {
+  description = "RPMod Web Discord interaction public key"
   sensitive   = true
 }
 variable "web_rpmod_gameasset_private_key" {
@@ -230,6 +234,14 @@ variable "web_rpmod_oidc_private_key" {
 }
 variable "web_rpmod_oidc_public_key" {
   description = "RPMod Web OpenID Connect public key (PEM-encoded)"
+  sensitive   = true
+}
+variable "web_rpmod_recaptcha_pubkey" {
+  description = "RPMod Web reCAPTCHA public key"
+  sensitive   = true
+}
+variable "web_rpmod_recaptcha_privkey" {
+  description = "RPMod Web reCAPTCHA private key"
   sensitive   = true
 }
 
