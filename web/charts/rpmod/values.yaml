@@ -110,4 +110,5 @@ config:
   environment: production
 
 cron:
+  enabled: true
   schedule: "*/5 * * * *"
