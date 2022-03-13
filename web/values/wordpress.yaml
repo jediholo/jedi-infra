@@ -1,0 +1,60 @@
+fullnameOverride: wordpress
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite ^/comport/(.*)$ https://comport.jediholo.net/$1 redirect;
+      rewrite ^/resources/documents/(.*)$ https://files.jediholo.net/documents/$1 redirect;
+      rewrite ^/resources/downloads/(.*)$ https://files.jediholo.net/downloads/$1 redirect;
+      rewrite ^/resources/skins/(.*)$ https://files.jediholo.net/skins/$1 redirect;
+      rewrite ^/resources/(.*)$ https://files.jediholo.net/resources/$1 redirect;
+      rewrite ^/RPMod/(.*)$ https://rpmod.jediholo.net/$1 redirect;
+  hosts:
+    - host: "jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: "www.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: wordpress-tls
+      hosts:
+        - "jediholo.net"
+        - "www.jediholo.net"
+
+env:
+  WORDPRESS_DB_HOST: mysql
+  WORDPRESS_DB_NAME: jedi-wordpress
+  WORDPRESS_CONFIG_EXTRA: |
+    /* Additional wp-config.php settings */
+    define( 'DISABLE_WP_CRON', true );
+    define( 'WP_AUTO_UPDATE_CORE', false );
+    define( 'WP_CACHE', true );
+    define( 'WPCACHEHOME', '/var/www/html/wp-content/plugins/wp-super-cache/' );
+
+config:
+  php:
+    max_execution_time: 300
+    max_input_time: 300
+    memory_limit: 128M
+    post_max_size: 128M
+    upload_max_filesize: 100M
+
+cron:
+  enabled: true
+  schedule: "0/15 * * * *"
+
+volumes:
+  content:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/wordpress/wp-content
+      type: DirectoryOrCreate

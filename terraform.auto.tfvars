@@ -115,6 +115,16 @@ web_namespace = "domain-jediholo-net"
 #web_rpmod_oidc_jwks = "toComplete"
 #web_rpmod_oidc_private_key = "toComplete"
 #web_rpmod_oidc_public_key = "toComplete"
+#web_wordpress_db_username = "toComplete"
+#web_wordpress_db_password = "toComplete"
+#web_wordpress_auth_key = "toComplete"
+#web_wordpress_secure_auth_key = "toComplete"
+#web_wordpress_logged_in_key = "toComplete"
+#web_wordpress_nonce_key = "toComplete"
+#web_wordpress_auth_salt = "toComplete"
+#web_wordpress_secure_auth_salt = "toComplete"
+#web_wordpress_logged_in_salt = "toComplete"
+#web_wordpress_nonce_salt = "toComplete"
 
 # Uptime checks
 uptime_check_urls = [

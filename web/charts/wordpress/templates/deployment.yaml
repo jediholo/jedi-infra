@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wordpress.fullname" . }}
+  labels:
+    {{- include "wordpress.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "wordpress.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: {{ .Values.strategy }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "wordpress.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "wordpress.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          {{- if .Values.env }}
+          envFrom:
+            - secretRef:
+                name: {{ include "wordpress.fullname" . }}-env
+          {{- end }}
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /usr/local/etc/php/conf.d/custom.ini
+              name: config
+              subPath: php.ini
+            - mountPath: /var/www/html
+              name: www
+          {{- if .Values.config.multisite }}
+            - mountPath: /var/www/html/.htaccess
+              name: config
+              subPath: multisite.htaccess
+          {{- end }}
+          {{- if .Values.volumes.content }}
+            - mountPath: /var/www/html/wp-content
+              name: content
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "wordpress.fullname" . }}-config
+        - name: www
+          emptyDir: {}
+      {{- with .Values.volumes.content }}
+        - name: content
+          {{- toYaml . | nindent 10 }}
+      {{- end }}

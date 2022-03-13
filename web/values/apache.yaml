@@ -14,10 +14,6 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
   hosts:
-    - host: "jediholo.net"
-      paths:
-        - path: "/"
-          pathType: ImplementationSpecific
     - host: "comport.jediholo.net"
       paths:
         - path: "/"
@@ -34,19 +30,13 @@ ingress:
       paths:
         - path: "/"
           pathType: ImplementationSpecific
-    - host: "www.jediholo.net"
-      paths:
-        - path: "/"
-          pathType: ImplementationSpecific
   tls:
     - secretName: apache-tls
       hosts:
-        - "jediholo.net"
         - "comport.jediholo.net"
         - "discord.jediholo.net"
         - "files.jediholo.net"
         - "services.jediholo.net"
-        - "www.jediholo.net"
 
 env:
   SERVER_ENV: production
@@ -120,13 +110,5 @@ vhosts:
       DocumentRoot /srv/www/sd/static/htdocs/
       ErrorLog /srv/www/sd/static/logs/error_log
       CustomLog /srv/www/sd/static/logs/access_log combined
-      Include /etc/apache2/vhosts.d/vhost.inc
-    </VirtualHost>
-  www.conf: |
-    <VirtualHost _default_:8080>
-      ServerName www.jediholo.net
-      DocumentRoot /srv/www/sd/www/htdocs/
-      ErrorLog /srv/www/sd/www/logs/error_log
-      CustomLog /srv/www/sd/www/logs/access_log combined
       Include /etc/apache2/vhosts.d/vhost.inc
     </VirtualHost>
