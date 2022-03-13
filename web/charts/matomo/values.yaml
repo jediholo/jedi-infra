@@ -81,10 +81,11 @@ config: {}
   #   force_ssl: 1
 
 cron:
+  enabled: true
   schedule: "0 * * * *"
 
 volumes:
   tmp: {}
     # hostPath:
-    #   path: /home/domains/example.org/matomo/tmp
+    #   path: /home/domains/example.org/apps/matomo/tmp
     #   type: DirectoryOrCreate

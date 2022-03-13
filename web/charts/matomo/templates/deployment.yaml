@@ -44,8 +44,12 @@ spec:
           {{- end }}
         - name: create-security-files
           securityContext:
+          {{- if .Values.securityContext }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- else }}
             runAsUser: 33
             runAsGroup: 33
+          {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ['/usr/local/bin/php', '/var/www/html/console', 'core:create-security-files']
@@ -58,8 +62,12 @@ spec:
           {{- end }}
         - name: download-geoip
           securityContext:
+          {{- if .Values.securityContext }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- else }}
             runAsUser: 33
             runAsGroup: 33
+          {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ['/usr/local/bin/php', '/var/www/html/console', 'scheduled-tasks:run', 'Piwik\Plugins\GeoIp2\GeoIP2AutoUpdater.update']
@@ -72,8 +80,12 @@ spec:
           {{- end }}
         - name: update-database
           securityContext:
+          {{- if .Values.securityContext }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- else }}
             runAsUser: 33
             runAsGroup: 33
+          {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ['/usr/local/bin/php', '/var/www/html/console', 'core:update', '--yes']
