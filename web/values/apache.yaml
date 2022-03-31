@@ -44,10 +44,6 @@ env:
   APACHE_SERVERADMIN: webmaster@jediholo.net
 
 volumes:
-  logs:
-    hostPath:
-      path: /home/domains/jediholo.net/httpd/logs
-      type: DirectoryOrCreate
   apps:
     hostPath:
       path: /home/domains/jediholo.net/apps
