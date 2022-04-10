@@ -181,14 +181,6 @@ variable "web_ldap_root_password" {
   description = "LDAP root password"
   sensitive   = true
 }
-variable "web_logstash_elasticsearch_ca" {
-  description = "Logstash Elasticsearch certificate authority (PEM-encoded)"
-  sensitive   = true
-}
-variable "web_logstash_elasticsearch_password" {
-  description = "Logstash Elasticsearch password"
-  sensitive   = true
-}
 variable "web_mailserver_dkim_private_key" {
   description = "DKIM private key (PEM-encoded)"
   sensitive   = true

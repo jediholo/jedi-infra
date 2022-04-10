@@ -150,24 +150,6 @@ resource "helm_release" "web_ldap" {
   }
 }
 
-// Logstash
-resource "helm_release" "web_logstash" {
-  name       = "logstash"
-  chart     = "${path.module}/web/charts/logstash"
-  namespace  = kubernetes_namespace.web_ns.metadata[0].name
-
-  values = [file("${path.module}/web/values/logstash.yaml")]
-
-  set_sensitive {
-    name  = "env.ELASTICSEARCH_PASSWORD"
-    value = var.web_logstash_elasticsearch_password
-  }
-  set_sensitive {
-    name  = "secret.elasticsearch-ca\\.crt"
-    value = var.web_logstash_elasticsearch_ca
-  }
-}
-
 // Mail server (outbound only)
 resource "helm_release" "web_mailserver" {
   name      = "mailserver"
