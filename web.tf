@@ -216,6 +216,15 @@ resource "helm_release" "web_mysql_slave" {
   values = [file("${path.module}/web/values/mysql-slave.yaml")]
 }
 
+// Nginx error pages
+resource "helm_release" "web_nginx_errors" {
+  name      = "nginx-errors"
+  chart     = "${path.module}/web/charts/nginx-errors"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/nginx-errors.yaml")]
+}
+
 // PHP server
 resource "helm_release" "web_php" {
   name      = "php"

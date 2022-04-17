@@ -1,0 +1,5 @@
+fullnameOverride: nginx-errors
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"

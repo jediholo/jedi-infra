@@ -12,6 +12,7 @@ ingress:
   enabled: true
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/default-backend: nginx-errors
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
   hosts:
     - host: "comport.jediholo.net"
