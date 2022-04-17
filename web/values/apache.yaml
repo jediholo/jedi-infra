@@ -50,11 +50,6 @@ volumes:
       type: DirectoryOrCreate
 
 vhosts:
-  comport.conf: |
-    <VirtualHost _default_:8080>
-      ServerName comport.jediholo.net
-      DocumentRoot /srv/www/sd/comport/htdocs/
-    </VirtualHost>
   discord.conf: |
     <VirtualHost _default_:8080>
       ServerName discord.jediholo.net

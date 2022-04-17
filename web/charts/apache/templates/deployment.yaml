@@ -67,10 +67,6 @@ spec:
               name: vhosts
               readOnly: true
             {{- end }}
-            {{- if .Values.volumes.logs }}
-            - mountPath: /var/log/apache2
-              name: logs
-            {{- end }}
             {{- if .Values.volumes.apps }}
             - mountPath: /srv/www/apps
               name: apps
@@ -96,10 +92,6 @@ spec:
         - name: vhosts
           secret:
             secretName: {{ include "apache.fullname" . }}-vhosts
-        {{- end }}
-        {{- with .Values.volumes.logs }}
-        - name: logs
-          {{- toYaml . | nindent 10 }}
         {{- end }}
         {{- with .Values.volumes.apps }}
         - name: apps

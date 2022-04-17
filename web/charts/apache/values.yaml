@@ -79,12 +79,9 @@ affinity: {}
 env: {}
   # SERVER_ENV: production
   # SERVER_NAME: srv01.example.org
+  # APACHE_SERVERADMIN: webmaster@example.org
 
 volumes:
-  logs: {}
-    # hostPath:
-    #   path: /home/domains/example.org/httpd/logs
-    #   type: DirectoryOrCreate
   apps: {}
     # hostPath:
     #   path: /home/domains/example.org/apps
@@ -95,15 +92,8 @@ volumes:
     #   type: DirectoryOrCreate
 
 vhosts: {}
-  # vhost.inc: |
-  #   ServerAdmin webmaster@example.org
-  #   Include /etc/apache2/mod_autoindex-defaults-oxygen.conf
-  #   IncludeOptional /etc/apache2/vhosts.d/common?inc
   # www.conf: |
   #   <VirtualHost _default_:8080>
   #     ServerName www.example.org
   #     DocumentRoot /srv/www/sd/www/htdocs/
-  #     ErrorLog /srv/www/sd/www/logs/error_log
-  #     CustomLog /srv/www/sd/www/logs/access_log combined
-  #     Include /etc/apache2/vhosts.d/vhost.inc
   #   </VirtualHost>
