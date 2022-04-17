@@ -72,10 +72,6 @@ spec:
             - mountPath: /srv/www/apps/RPMod-Web/public/downloads
               name: downloads
             {{- end }}
-            {{- if .Values.volumes.logs }}
-            - mountPath: /var/log/apache2
-              name: logs
-            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -101,9 +97,5 @@ spec:
         {{- end }}
         {{- with .Values.volumes.downloads }}
         - name: downloads
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
-        {{- with .Values.volumes.logs }}
-        - name: logs
           {{- toYaml . | nindent 10 }}
         {{- end }}

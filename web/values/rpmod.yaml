@@ -33,7 +33,3 @@ volumes:
     hostPath:
       path: /home/domains/jediholo.net/apps/RPMod-Web/public/downloads
       type: DirectoryOrCreate
-  logs:
-    hostPath:
-      path: /home/domains/jediholo.net/sd/rpmod/logs
-      type: DirectoryOrCreate

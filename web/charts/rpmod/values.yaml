@@ -85,10 +85,6 @@ volumes:
     # hostPath:
     #   path: /home/domains/example.org/apps/RPMod-Web/public/downloads
     #   type: DirectoryOrCreate
-  logs: {}
-    # hostPath:
-    #   path: /home/domains/example.org/sd/rpmod/logs
-    #   type: DirectoryOrCreate
 
 certificates:
   gameasset:
