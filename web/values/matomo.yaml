@@ -25,7 +25,7 @@ cron:
 
 config:
   database:
-    host: db01
+    host: mysql
     dbname: jedi-piwik
     tables_prefix: piwik_
     schema: Myisam
