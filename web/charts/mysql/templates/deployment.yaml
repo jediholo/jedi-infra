@@ -13,10 +13,11 @@ spec:
     type: {{ .Values.strategy }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "mysql.selectorLabels" . | nindent 8 }}
     spec:
@@ -37,22 +38,10 @@ spec:
             - name: tcp
               containerPort: 3306
               protocol: TCP
-          env:
-            {{- if .Values.secrets.root.password }}
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "mysql.fullname" . }}-root-secret
-                  key: password
-            {{- end }}
-            {{- range $key, $value := .Values.env }}
-            - name: "{{ tpl $key $ }}"
-              value: "{{ tpl (print $value) $ }}"
-            {{- end }}
-          {{- if .Values.envFromSecret }}
+          {{- if .Values.env }}
           envFrom:
             - secretRef:
-                name: {{ tpl .Values.envFromSecret . }}
+                name: {{ include "mysql.fullname" . }}-env
           {{- end }}
           livenessProbe:
             initialDelaySeconds: 3

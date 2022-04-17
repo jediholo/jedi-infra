@@ -94,7 +94,7 @@ volumes:
     #   path: /home/domains/example.org/sd
     #   type: DirectoryOrCreate
 
-vhosts:
+vhosts: {}
   # vhost.inc: |
   #   ServerAdmin webmaster@example.org
   #   Include /etc/apache2/mod_autoindex-defaults-oxygen.conf

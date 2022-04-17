@@ -62,11 +62,7 @@ tolerations: []
 affinity: {}
 
 env: {}
-envFromSecret: ""
-
-secrets:
-  root: {}
-    # password: 
+  # MYSQL_ROOT_PASSWORD: toComplete
 
 volumes:
   data: {}

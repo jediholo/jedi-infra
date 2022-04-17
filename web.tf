@@ -204,7 +204,7 @@ resource "helm_release" "web_mysql" {
   values = [file("${path.module}/web/values/mysql.yaml")]
 
   set_sensitive {
-    name  = "secrets.root.password"
+    name  = "env.MYSQL_ROOT_PASSWORD"
     value = var.web_mysql_root_password
   }
 }
