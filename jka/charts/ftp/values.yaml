@@ -70,10 +70,6 @@ tolerations:
 
 affinity: {}
 
-# Environment variables
-env: {}
-envFromSecret: ""
-
 # Volumes
 volumes: []
 volumeMounts: []
@@ -88,3 +84,12 @@ ftp:
   passivePortMin: 20000
   passivePortMax: 20020
   options: {}
+
+# Certificate configuration
+cert:
+  enabled: false
+  dnsNames: []
+    # - example.org
+  issuerRef: {}
+    # name: letsencrypt-prod
+    # kind: ClusterIssuer

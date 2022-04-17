@@ -22,6 +22,11 @@ stringData:
   {{- end }}
   VSFTPD_pasv_min_port: "{{ .Values.ftp.passivePortMin }}"
   VSFTPD_pasv_max_port: "{{ .Values.ftp.passivePortMax }}"
+  {{- if .Values.cert.enabled }}
+  VSFTPD_rsa_cert_file: "/etc/vsftpd/ssl/tls.crt"
+  VSFTPD_rsa_private_key_file: "/etc/vsftpd/ssl/tls.key"
+  VSFTPD_ssl_enable: "YES"
+  {{- end }}
   {{- range $key, $value := .Values.ftp.options }}
   VSFTPD_{{ tpl $key $ }}: "{{ tpl (print $value) $ }}"
   {{- end }}

@@ -1,0 +1,14 @@
+{{- if .Values.cert.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "ftp.fullname" . }}-tls
+  labels:
+    {{- include "ftp.labels" . | nindent 4 }}
+spec:
+  secretName: {{ include "ftp.fullname" . }}-tls
+  dnsNames:
+    {{- toYaml .Values.cert.dnsNames | nindent 4 }}
+  issuerRef:
+    {{- toYaml .Values.cert.issuerRef | nindent 4 }}
+{{- end }}
