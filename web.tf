@@ -225,15 +225,6 @@ resource "helm_release" "web_nginx_errors" {
   values = [file("${path.module}/web/values/nginx-errors.yaml")]
 }
 
-// PHP server
-resource "helm_release" "web_php" {
-  name      = "php"
-  chart     = "${path.module}/web/charts/php"
-  namespace = kubernetes_namespace.web_ns.metadata[0].name
-
-  values = [file("${path.module}/web/values/php.yaml")]
-}
-
 // phpBB
 resource "helm_release" "web_phpbb" {
   name      = "phpbb"

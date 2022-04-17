@@ -1,6 +1,0 @@
-apiVersion: v2
-name: php
-description: PHP server
-type: application
-version: 0.1.5
-appVersion: "7.4"
