@@ -200,6 +200,13 @@ variable "web_mysql_root_password" {
   description = "MySQL root password"
   sensitive   = true
 }
+variable "web_phpbb_db_username" {
+  description = "phpBB database username"
+}
+variable "web_phpbb_db_password" {
+  description = "phpBB database password"
+  sensitive   = true
+}
 variable "web_rpmod_db_url" {
   description = "RPMod Web database URL (e.g. mysql://user:pass@dbhost/dbname)"
   sensitive   = true

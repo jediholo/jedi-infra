@@ -15,10 +15,6 @@ ingress:
     nginx.ingress.kubernetes.io/default-backend: nginx-errors
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
   hosts:
-    - host: "comport.jediholo.net"
-      paths:
-        - path: "/"
-          pathType: ImplementationSpecific
     - host: "discord.jediholo.net"
       paths:
         - path: "/"
@@ -34,7 +30,6 @@ ingress:
   tls:
     - secretName: apache-tls
       hosts:
-        - "comport.jediholo.net"
         - "discord.jediholo.net"
         - "files.jediholo.net"
         - "services.jediholo.net"

@@ -1,0 +1,48 @@
+fullnameOverride: phpbb
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/default-backend: nginx-errors
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+  hosts:
+    - host: "comport.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: phpbb-tls
+      hosts:
+        - "comport.jediholo.net"
+
+env:
+  PHPBB_COOKIE_SECURE: "true"
+  PHPBB_DATABASE_HOST: mysql
+  PHPBB_DATABASE_NAME: jedi-comport
+  PHPBB_DISABLE_SESSION_VALIDATION: "true"
+  PHPBB_EMAIL: council@jediholo.net
+  PHPBB_FORUM_DESCRIPTION: The JEDI HoloNet Communications Port
+  PHPBB_FORUM_NAME: JEDI Comport
+  PHPBB_FORUM_SERVER_PORT: 443
+  PHPBB_FORUM_SERVER_PROTOCOL: https://
+  PHPBB_HOST: comport.jediholo.net
+  PHPBB_SKIP_BOOTSTRAP: "true"
+  PHPBB_SMTP_HOST: mailserver
+  PHPBB_SMTP_PORT: 587
+  PHP_ENABLE_OPCACHE: 1
+  PHP_MAX_EXECUTION_TIME: 300
+  PHP_MAX_INPUT_TIME: 300
+  PHP_MEMORY_LIMIT: 256M
+  PHP_POST_MAX_SIZE: 128M
+  PHP_UPLOAD_MAX_FILESIZE: 100M
+
+volumes:
+  data:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/phpbb
+      type: DirectoryOrCreate

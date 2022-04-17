@@ -234,6 +234,24 @@ resource "helm_release" "web_php" {
   values = [file("${path.module}/web/values/php.yaml")]
 }
 
+// phpBB
+resource "helm_release" "web_phpbb" {
+  name      = "phpbb"
+  chart     = "${path.module}/web/charts/phpbb"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/phpbb.yaml")]
+
+  set_sensitive {
+    name  = "env.PHPBB_DATABASE_USER"
+    value = var.web_phpbb_db_username
+  }
+  set_sensitive {
+    name  = "env.PHPBB_DATABASE_PASSWORD"
+    value = var.web_phpbb_db_password
+  }
+}
+
 // phpMyAdmin
 resource "helm_release" "web_phpmyadmin" {
   name      = "phpmyadmin"
