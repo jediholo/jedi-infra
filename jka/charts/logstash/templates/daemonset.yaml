@@ -11,10 +11,12 @@ spec:
       {{- include "logstash.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/pipeline: {{ include (print $.Template.BasePath "/pipeline.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "logstash.selectorLabels" . | nindent 8 }}
     spec:
@@ -36,9 +38,11 @@ spec:
             - name: http
               containerPort: 9600
               protocol: TCP
+          {{- if .Values.env }}
           envFrom:
             - secretRef:
                 name: {{ include "logstash.fullname" . }}-env
+          {{- end }}
           startupProbe:
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -66,9 +70,11 @@ spec:
             - mountPath: /usr/share/logstash/pipeline
               name: pipeline
               readOnly: true
+            {{- if .Values.secret }}
             - mountPath: /usr/share/logstash/secret
               name: secret
               readOnly: true
+            {{- end }}
             {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -88,9 +94,11 @@ spec:
         - name: pipeline
           secret:
             secretName: {{ include "logstash.fullname" . }}-pipeline
+        {{- if .Values.secret }}
         - name: secret
           secret:
             secretName: {{ include "logstash.fullname" . }}-secret
+        {{- end }}
         {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

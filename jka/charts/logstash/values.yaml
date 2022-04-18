@@ -4,7 +4,7 @@
 
 image:
   repository: docker.elastic.co/logstash/logstash
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
@@ -64,6 +64,9 @@ env: {}
 
 # Additional pipeline configuration files
 pipeline: {}
+
+# Additional secret data
+secret: {}
 
 # Volumes
 volumes: []
