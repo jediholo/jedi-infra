@@ -1,0 +1,31 @@
+fullnameOverride: default-backend
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/server-snippet: |
+      if ($host = 'discord.jediholo.net') {
+        rewrite ^/$ https://discord.gg/XwX5q6KNEX redirect;
+      }
+      if ($host = 'services.jediholo.net') {
+        rewrite ^/kibana(/.*)?$ https://kibana.fabinfra.net/s/jedi$1 redirect;
+      }
+  hosts:
+    - host: "discord.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: "services.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: default-backend-tls
+      hosts:
+        - "discord.jediholo.net"
+        - "services.jediholo.net"

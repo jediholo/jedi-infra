@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "nginx-errors.fullname" . }}
+  name: {{ include "default-backend.fullname" . }}
   labels:
-    {{- include "nginx-errors.labels" . | nindent 4 }}
+    {{- include "default-backend.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "nginx-errors.selectorLabels" . | nindent 6 }}
+      {{- include "default-backend.selectorLabels" . | nindent 6 }}
   strategy:
     type: {{ .Values.strategy }}
   template:
@@ -19,13 +19,13 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "nginx-errors.selectorLabels" . | nindent 8 }}
+        {{- include "default-backend.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "nginx-errors.serviceAccountName" . }}
+      serviceAccountName: {{ include "default-backend.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -66,4 +66,4 @@ spec:
       volumes:
         - name: pages
           configMap:
-            name: {{ include "nginx-errors.fullname" . }}-pages
+            name: {{ include "default-backend.fullname" . }}-pages

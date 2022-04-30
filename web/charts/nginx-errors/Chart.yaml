@@ -1,6 +1,0 @@
-apiVersion: v2
-name: nginx-errors
-description: Nginx error pages for use as default backend
-type: application
-version: 0.1.0
-appVersion: "0.49.0"

@@ -12,27 +12,17 @@ ingress:
   enabled: true
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/default-backend: nginx-errors
+    nginx.ingress.kubernetes.io/default-backend: default-backend
     nginx.ingress.kubernetes.io/proxy-body-size: 300m
   hosts:
-    - host: "discord.jediholo.net"
-      paths:
-        - path: "/"
-          pathType: ImplementationSpecific
     - host: "files.jediholo.net"
-      paths:
-        - path: "/"
-          pathType: ImplementationSpecific
-    - host: "services.jediholo.net"
       paths:
         - path: "/"
           pathType: ImplementationSpecific
   tls:
     - secretName: apache-tls
       hosts:
-        - "discord.jediholo.net"
         - "files.jediholo.net"
-        - "services.jediholo.net"
 
 env:
   SERVER_ENV: production
@@ -50,19 +40,8 @@ volumes:
       type: DirectoryOrCreate
 
 vhosts:
-  discord.conf: |
-    <VirtualHost _default_:8080>
-      ServerName discord.jediholo.net
-      Redirect / https://discord.gg/XwX5q6KNEX
-    </VirtualHost>
   files.conf: |
     <VirtualHost _default_:8080>
       ServerName files.jediholo.net
       DocumentRoot /srv/www/sd/files/htdocs/
-    </VirtualHost>
-  services.conf: |
-    <VirtualHost _default_:8080>
-      ServerName services.jediholo.net
-      DocumentRoot /srv/www/sd/services/htdocs/
-      Redirect permanent /kibana https://kibana.fabinfra.net/s/jedi
     </VirtualHost>

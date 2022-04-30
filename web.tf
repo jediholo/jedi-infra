@@ -113,6 +113,15 @@ resource "helm_release" "web_backups" {
   }
 }
 
+// Default backend
+resource "helm_release" "web_default_backend" {
+  name      = "default-backend"
+  chart     = "${path.module}/web/charts/default-backend"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/default-backend.yaml")]
+}
+
 // ActiveMQ broker
 resource "helm_release" "web_activemq" {
   name      = "activemq"
@@ -214,15 +223,6 @@ resource "helm_release" "web_mysql_slave" {
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
   values = [file("${path.module}/web/values/mysql-slave.yaml")]
-}
-
-// Nginx error pages
-resource "helm_release" "web_nginx_errors" {
-  name      = "nginx-errors"
-  chart     = "${path.module}/web/charts/nginx-errors"
-  namespace = kubernetes_namespace.web_ns.metadata[0].name
-
-  values = [file("${path.module}/web/values/nginx-errors.yaml")]
 }
 
 // phpBB

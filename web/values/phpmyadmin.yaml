@@ -7,7 +7,7 @@ nodeSelector:
 ingress:
   enabled: true
   annotations:
-    nginx.ingress.kubernetes.io/default-backend: nginx-errors
+    nginx.ingress.kubernetes.io/default-backend: default-backend
     nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
     - host: "services.jediholo.net"
@@ -15,7 +15,7 @@ ingress:
         - path: "/phpMyAdmin(/|$)(.*)"
           pathType: ImplementationSpecific
   tls:
-    - secretName: apache-tls
+    - secretName: default-backend-tls
       hosts:
         - "services.jediholo.net"
 
