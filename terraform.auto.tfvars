@@ -131,7 +131,6 @@ uptime_check_urls = [
   "https://comport.jediholo.net/",
   "https://files.jediholo.net/",
   "https://rpmod.jediholo.net/",
-  "https://services.jediholo.net/",
   "https://static.jediholo.net/",
   "https://www.jediholo.net/",
 ]
