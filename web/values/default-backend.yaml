@@ -15,6 +15,18 @@ ingress:
       if ($host = 'services.jediholo.net') {
         rewrite ^/kibana(/.*)?$ https://kibana.fabinfra.net/s/jedi$1 redirect;
       }
+      if ($host = 'temple.jediholo.net') {
+        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-temple redirect;
+      }
+      if ($host = 'grounds.jediholo.net') {
+        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-grounds redirect;
+      }
+      if ($host = 'demo.jediholo.net') {
+        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-demo redirect;
+      }
+      if ($host = 'galaxy.jediholo.net') {
+        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-galaxy redirect;
+      }
   hosts:
     - host: "discord.jediholo.net"
       paths:
@@ -24,8 +36,28 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+    - host: "temple.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: "grounds.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: "demo.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+    - host: "galaxy.jediholo.net"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
   tls:
     - secretName: default-backend-tls
       hosts:
         - "discord.jediholo.net"
         - "services.jediholo.net"
+        - "temple.jediholo.net"
+        - "grounds.jediholo.net"
+        - "demo.jediholo.net"
+        - "galaxy.jediholo.net"
