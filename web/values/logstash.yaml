@@ -1,0 +1,13 @@
+fullnameOverride: logstash
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+env:
+  ELASTICSEARCH_CACERT: /usr/share/logstash/secret/elasticsearch-ca.crt
+  ELASTICSEARCH_HOSTS: https://elasticsearch-es-http.infra.svc:9200
+  ELASTICSEARCH_USERNAME: elastic
+  LOGSTASH_PLUGINS: logstash-output-stomp
+  LS_JAVA_OPTS: -Xms512m -Xmx512m
+  XPACK_MONITORING_ENABLED: "false"

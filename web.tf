@@ -49,17 +49,39 @@ resource "kubernetes_network_policy" "web_network_policy_ingress_nginx" {
   }
 }
 
-// Network policy for ActiveMQ from JKA Logstash
-resource "kubernetes_network_policy" "web_network_policy_activemq_jka_logstash" {
+// Network policy for elastic operator
+resource "kubernetes_network_policy" "web_network_policy_elastic_system" {
   metadata {
-    name      = "allow-activemq-from-jka-logstash"
+    name      = "allow-elastic-system"
+    namespace = kubernetes_namespace.web_ns.metadata[0].name
+  }
+  spec {
+    policy_types = ["Ingress"]
+    pod_selector {
+    }
+    ingress {
+      from {
+        namespace_selector {
+          match_labels = {
+            "name" = "elastic-system"
+          }
+        }
+      }
+    }
+  }
+}
+
+// Network policy for Logstash from JKA Filebeat
+resource "kubernetes_network_policy" "web_network_policy_logstash_jka_filebeat" {
+  metadata {
+    name      = "allow-logstash-from-jka-filebeat"
     namespace = kubernetes_namespace.web_ns.metadata[0].name
   }
   spec {
     policy_types = ["Ingress"]
     pod_selector {
       match_labels = {
-        "app.kubernetes.io/name" = "activemq"
+        "app.kubernetes.io/name" = "logstash"
       }
     }
     ingress {
@@ -71,7 +93,7 @@ resource "kubernetes_network_policy" "web_network_policy_activemq_jka_logstash" 
         }
         pod_selector {
           match_labels = {
-            "app.kubernetes.io/name" = "logstash"
+            "beat.k8s.elastic.co/name" = "filebeat"
           }
         }
       }
@@ -156,6 +178,24 @@ resource "helm_release" "web_ldap" {
   set_sensitive {
     name  = "secrets.root.password"
     value = var.web_ldap_root_password
+  }
+}
+
+// Logstash
+resource "helm_release" "web_logstash" {
+  name       = "logstash"
+  chart     = "${path.module}/web/charts/logstash"
+  namespace  = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/logstash.yaml")]
+
+  set_sensitive {
+    name  = "env.ELASTICSEARCH_PASSWORD"
+    value = var.web_logstash_elasticsearch_password
+  }
+  set_sensitive {
+    name  = "secret.elasticsearch-ca\\.crt"
+    value = var.web_logstash_elasticsearch_ca
   }
 }
 
