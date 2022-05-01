@@ -1,0 +1,78 @@
+apiVersion: beat.k8s.elastic.co/v1beta1
+kind: Beat
+metadata:
+  name: {{ include "filebeat.fullname" . }}
+  labels:
+    {{- include "filebeat.labels" . | nindent 4 }}
+spec:
+  type: filebeat
+  version: "{{ .Values.image.tag | default .Chart.AppVersion }}"
+  image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+  config:
+    filebeat.inputs:
+      - type: filestream
+        paths: ["/home/jka/*/*/games.log"]
+        tags: ["jka-games"]
+      - type: filestream
+        paths: ["/home/jka/*/*/playerstats.log"]
+        tags: ["jka-playerstats"]
+      - type: filestream
+        paths: ["/home/jka/*/*/serverstats.log"]
+        tags: ["jka-serverstats"]
+    {{- with .Values.config.output.console }}
+    output.console:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.config.output.logstash }}
+    output.logstash:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  deployment:
+    replicas: {{ .Values.replicaCount }}
+    strategy:
+      type: {{ .Values.strategy }}
+    podTemplate:
+      metadata:
+        {{- with .Values.podAnnotations }}
+        annotations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        labels:
+          {{- include "filebeat.selectorLabels" . | nindent 8 }}
+      spec:
+        {{- with .Values.podSecurityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        containers:
+          - name: filebeat
+            {{- with .Values.securityContext }}
+            securityContext:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            {{- with .Values.resources }}
+            resources:
+              {{- toYaml . | nindent 14 }}
+            {{- end }}
+            volumeMounts:
+              {{- with .Values.volumes.jka }}
+              - name: jka
+                mountPath: /home/jka
+              {{- end }}
+        {{- with .Values.nodeSelector }}
+        nodeSelector:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        volumes:
+          {{- with .Values.volumes.jka }}
+          - name: jka
+            {{- toYaml . | nindent 12 }}
+          {{- end }}

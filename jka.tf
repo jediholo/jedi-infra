@@ -87,6 +87,15 @@ resource "helm_release" "jka_backups" {
   }
 }
 
+// Filebeat
+resource "helm_release" "jka_filebeat" {
+  name      = "filebeat"
+  chart     = "${path.module}/jka/charts/filebeat"
+  namespace = kubernetes_namespace.jka_ns.metadata[0].name
+
+  values = [file("${path.module}/jka/values/filebeat.yaml")]
+}
+
 // FTP server
 resource "helm_release" "jka_ftp" {
   name      = "ftp"
@@ -106,24 +115,6 @@ resource "helm_release" "jka_ftp" {
   set_sensitive {
     name  = "ftp.users"
     value = join(" ", [ for server in keys(var.jka_server_hostport) : "${server}:${lookup(var.jka_ftp_password, server, lookup(var.jka_ftp_password, "default", ""))}" ])
-  }
-}
-
-// Logstash
-resource "helm_release" "jka_logstash" {
-  name       = "logstash"
-  chart     = "${path.module}/jka/charts/logstash"
-  namespace  = kubernetes_namespace.jka_ns.metadata[0].name
-
-  values = [file("${path.module}/jka/values/logstash.yaml")]
-
-  set_sensitive {
-    name  = "env.ELASTICSEARCH_PASSWORD"
-    value = var.jka_logstash_elasticsearch_password
-  }
-  set_sensitive {
-    name  = "secret.elasticsearch-ca\\.crt"
-    value = var.jka_logstash_elasticsearch_ca
   }
 }
 

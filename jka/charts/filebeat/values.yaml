@@ -1,9 +1,12 @@
-# Default values for logstash.
+# Default values for filebeat.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+replicaCount: 1
+strategy: Recreate
+
 image:
-  repository: docker.elastic.co/logstash/logstash
+  repository: docker.elastic.co/beats/filebeat
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -12,18 +15,10 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  runAsUser: 0
   # fsGroup: 2000
 
 securityContext: {}
@@ -56,18 +51,15 @@ tolerations:
 
 affinity: {}
 
-# Environment variables
-env: {}
-  # ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-  # LS_JAVA_OPTS: -Xms512m -Xmx512m
-  # XPACK_MONITORING_ENABLED: "false"
+config:
+  output:
+    console: {}
+      # pretty: true
+    logstash: {}
+      # hosts: ["logstash:5044"]
 
-# Additional pipeline configuration files
-pipeline: {}
-
-# Additional secret data
-secret: {}
-
-# Volumes
-volumes: []
-volumeMounts: []
+volumes:
+  jka: {}
+    # hostPath:
+    #   path: /home/jka
+    #   type: DirectoryOrCreate

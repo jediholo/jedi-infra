@@ -1,0 +1,12 @@
+fullnameOverride: filebeat
+
+config:
+  output:
+    logstash:
+      hosts: ["logstash.domain-jediholo-net.svc:5044"]
+
+volumes:
+  jka:
+    hostPath:
+      path: /home/jka
+      type: DirectoryOrCreate

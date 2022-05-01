@@ -87,8 +87,6 @@ jka_server_hostport = {
 #jka_ftp_password = {
 #  "default" = "toComplete"
 #}
-#jka_logstash_elasticsearch_ca = "toComplete"
-#jka_logstash_elasticsearch_password = "toComplete"
 #jka_backups_openrc = "toComplete"
 #jka_backups_sa = "toComplete"
 

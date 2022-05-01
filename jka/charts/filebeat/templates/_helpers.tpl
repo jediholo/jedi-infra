@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "logstash.name" -}}
+{{- define "filebeat.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "logstash.fullname" -}}
+{{- define "filebeat.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "logstash.chart" -}}
+{{- define "filebeat.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "logstash.labels" -}}
-helm.sh/chart: {{ include "logstash.chart" . }}
-{{ include "logstash.selectorLabels" . }}
+{{- define "filebeat.labels" -}}
+helm.sh/chart: {{ include "filebeat.chart" . }}
+{{ include "filebeat.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,18 +45,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "logstash.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "logstash.name" . }}
+{{- define "filebeat.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "filebeat.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "logstash.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "logstash.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
 {{- end }}

@@ -130,14 +130,6 @@ variable "jka_ftp_password" {
   description = "JKA FTP password"
   sensitive   = true
 }
-variable "jka_logstash_elasticsearch_ca" {
-  description = "Logstash Elasticsearch certificate authority (PEM-encoded)"
-  sensitive   = true
-}
-variable "jka_logstash_elasticsearch_password" {
-  description = "Logstash Elasticsearch password"
-  sensitive   = true
-}
 variable "jka_backups_openrc" {
   description = "OpenStack openrc file for backups"
   sensitive   = true
