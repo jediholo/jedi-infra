@@ -30,7 +30,7 @@ async function processCommand(interaction) {
       // Publish announcement message using webhook
       await webhook.send(interaction.data.options[0].value);
       return {
-        type: InteractionResponseType.CHANNEL_MESSAGE,
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
           content: `:white_check_mark: <@${interaction.member.user.id}> Announcement published successfully.`,
         },
@@ -65,7 +65,10 @@ module.exports.interaction = async (req, res) => {
       res.send(resData);
     } else {
       res.send({
-        type: InteractionResponseType.ACKNOWLEDGE,
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `:white_check_mark: <@${interaction.member.user.id}> Command executed successfully.`,
+        }
       });
     }
   } else {
