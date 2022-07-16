@@ -19,7 +19,7 @@ async function processCommand(interaction) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
-        content: `:no_entry: <@${interaction.member.user.id}> You are not allowed to use this command.`,
+        content: `:no_entry: You are not allowed to use this command.`,
       },
     };
   }
@@ -32,7 +32,7 @@ async function processCommand(interaction) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `:white_check_mark: <@${interaction.member.user.id}> Announcement published successfully.`,
+          content: `:white_check_mark: Announcement published successfully.`,
         },
       };
 
@@ -41,7 +41,7 @@ async function processCommand(interaction) {
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `:x: <@${interaction.member.user.id}> Unknown command '/${interaction.data.name}'`,
+          content: `:x: Unknown command '/${interaction.data.name}'`,
         },
       };
   }
@@ -67,7 +67,7 @@ module.exports.interaction = async (req, res) => {
       res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
-          content: `:white_check_mark: <@${interaction.member.user.id}> Command executed successfully.`,
+          content: `:white_check_mark: Command executed successfully.`,
         }
       });
     }
