@@ -59,7 +59,7 @@ module.exports.interaction = async (req, res) => {
 
   // Handle the payload
   const interaction = req.body;
-  if (interaction && interaction.type === InteractionType.COMMAND) {
+  if (interaction && interaction.type === InteractionType.APPLICATION_COMMAND) {
     resData = await processCommand(interaction);
     if (resData != null) {
       res.send(resData);
