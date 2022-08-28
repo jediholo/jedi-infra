@@ -14,6 +14,7 @@ spec:
   template:
     metadata:
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
@@ -54,6 +55,9 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - mountPath: /opt/bitnami/apache/conf/vhosts/mod_remoteip.conf
+              name: config
+              subPath: mod_remoteip.conf
           {{- if .Values.volumes.data }}
             - mountPath: /bitnami/phpbb
               name: data
@@ -71,6 +75,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: config
+          configMap:
+            name: {{ include "phpbb.fullname" . }}-config
       {{- with .Values.volumes.data }}
         - name: data
           {{- toYaml . | nindent 10 }}
