@@ -97,6 +97,7 @@ stringData:
         user => "${ELASTICSEARCH_USERNAME:}"
         password => "${ELASTICSEARCH_PASSWORD:}"
         cacert => "${ELASTICSEARCH_CACERT:}"
+        ecs_compatibility => "disabled"
       }
     }
   activemq.conf: |
