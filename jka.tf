@@ -117,31 +117,3 @@ resource "helm_release" "jka_ftp" {
     value = join(" ", [ for server in keys(var.jka_server_hostport) : "${server}:${lookup(var.jka_ftp_password, server, lookup(var.jka_ftp_password, "default", ""))}" ])
   }
 }
-
-// Uptime checks
-resource "google_monitoring_uptime_check_config" "jka_uptime_check" {
-  for_each     = toset(values(var.jka_server_hostport))
-  display_name = replace(each.value, "/:.*$/", "")
-  timeout      = "10s"
-  period       = "60s"
-
-  http_check {
-    path         = "/ws/ServerService/rest?method=GetInfo&host=${replace(each.value, "/:.*$/", "")}&port=${replace(each.value, "/^.*:/", "")}"
-    port         = "443"
-    use_ssl      = true
-    validate_ssl = true
-  }
-
-  monitored_resource {
-    type = "uptime_url"
-    labels = {
-      project_id = var.gcp_project_id
-      host       = "rpmod.jediholo.net"
-    }
-  }
-
-  content_matchers {
-    matcher = "CONTAINS_STRING"
-    content = "<status>success</status>"
-  }
-}

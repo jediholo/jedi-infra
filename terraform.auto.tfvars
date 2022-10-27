@@ -127,11 +127,11 @@ web_namespace = "domain-jediholo-net"
 #web_wordpress_nonce_salt = "toComplete"
 
 # Uptime checks
-uptime_check_urls = [
-  "https://comport.jediholo.net/",
-  "https://files.jediholo.net/",
-  "https://rpmod.jediholo.net/",
-  "https://static.jediholo.net/",
-  "https://www.jediholo.net/",
-]
+#uptime_check_urls = [
+#  "https://comport.jediholo.net/",
+#  "https://files.jediholo.net/",
+#  "https://rpmod.jediholo.net/",
+#  "https://static.jediholo.net/",
+#  "https://www.jediholo.net/",
+#]
 uptime_check_notification_email = "webmaster@jediholo.net"

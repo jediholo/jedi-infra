@@ -23,7 +23,7 @@ resource "google_monitoring_uptime_check_config" "uptime_check" {
 
 // Alert policies
 resource "google_monitoring_alert_policy" "uptime_alert_policy" {
-  for_each              = merge(google_monitoring_uptime_check_config.uptime_check, google_monitoring_uptime_check_config.jka_uptime_check)
+  for_each              = google_monitoring_uptime_check_config.uptime_check
   display_name          = "Uptime check on ${each.value.display_name}"
   combiner              = "OR"
   notification_channels = [google_monitoring_notification_channel.uptime_notification_channel_email.name]
