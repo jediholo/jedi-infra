@@ -16,6 +16,12 @@ os_region = "GRA"
 gcp_project_id = "jediholo-net"
 gcp_region = "europe-west1"
 
+# Grafana provider
+grafana_url = "https://fabinfra.grafana.net/"
+#grafana_auth = "toComplete"
+grafana_sm_url = "https://synthetic-monitoring-api.grafana.net"
+#grafana_sm_access_token = "toComplete"
+
 # Kubernetes provider
 k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
 #k8s_client_cert = "toComplete"
@@ -127,11 +133,10 @@ web_namespace = "domain-jediholo-net"
 #web_wordpress_nonce_salt = "toComplete"
 
 # Uptime checks
-#uptime_check_urls = [
-#  "https://comport.jediholo.net/",
-#  "https://files.jediholo.net/",
-#  "https://rpmod.jediholo.net/",
-#  "https://static.jediholo.net/",
-#  "https://www.jediholo.net/",
-#]
-uptime_check_notification_email = "webmaster@jediholo.net"
+uptime_check_urls = [
+ "https://comport.jediholo.net/",
+ "https://files.jediholo.net/",
+ "https://rpmod.jediholo.net/",
+ "https://static.jediholo.net/",
+ "https://www.jediholo.net/",
+]
