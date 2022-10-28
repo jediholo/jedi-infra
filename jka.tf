@@ -117,3 +117,25 @@ resource "helm_release" "jka_ftp" {
     value = join(" ", [ for server in keys(var.jka_server_hostport) : "${server}:${lookup(var.jka_ftp_password, server, lookup(var.jka_ftp_password, "default", ""))}" ])
   }
 }
+
+// Uptime checks
+resource "grafana_synthetic_monitoring_check" "jka_uptime_check" {
+  for_each          = toset(values(var.jka_server_hostport))
+  job               = replace(each.value, "/:.*$/", "")
+  target            = "https://rpmod.jediholo.net/ws/ServerService/rest?method=GetInfo&host=${replace(each.value, "/:.*$/", "")}&port=${replace(each.value, "/^.*:/", "")}"
+  frequency         = 60000
+  timeout           = 10000
+  alert_sensitivity = "medium"
+  probes = [
+    data.grafana_synthetic_monitoring_probes.sm_probes.probes.Paris,
+    data.grafana_synthetic_monitoring_probes.sm_probes.probes.NewYork
+  ]
+  labels = {
+    domain = replace(each.value, "/(^[^.]+\\.|:.*$)/", "")
+  }
+  settings {
+    http {
+      fail_if_body_not_matches_regexp = [".*<status>success</status>.*"]
+    }
+  }
+}
