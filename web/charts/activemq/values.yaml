@@ -9,7 +9,7 @@ image:
   repository: ghcr.io/fab-infra/activemq
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 5.15-opensuse15
+  tag: 5.17-opensuse15
 
 imagePullSecrets: []
 nameOverride: ""
