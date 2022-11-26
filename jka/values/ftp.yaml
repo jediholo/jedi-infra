@@ -1,5 +1,8 @@
 fullnameOverride: ftp
 
+image:
+  tag: 3.0-opensuse15-20221126-1419-7da0aca
+
 volumes:
   - name: jka
     hostPath:

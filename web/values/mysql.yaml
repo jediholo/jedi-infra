@@ -1,5 +1,8 @@
 fullnameOverride: mysql
 
+image:
+  tag: 10.6-opensuse15-20221126-1419-0e873c2
+
 podSecurityContext:
   runAsUser: 1004
   runAsGroup: 1005

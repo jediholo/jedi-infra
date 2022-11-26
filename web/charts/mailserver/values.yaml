@@ -7,9 +7,9 @@ strategy: Recreate
 
 image:
   repository: ghcr.io/fab-infra/postfix
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 3.5-opensuse15
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -77,8 +77,8 @@ dkim:
   enabled: false
   image:
     repository: ghcr.io/fab-infra/opendkim
-    pullPolicy: Always
-    tag: 2.10-opensuse15
+    pullPolicy: IfNotPresent
+    tag: 2.11-opensuse15
   resources: {}
   config:
     domain: example.org

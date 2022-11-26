@@ -7,9 +7,9 @@ strategy: Recreate
 
 image:
   repository: ghcr.io/fab-infra/openldap
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2.4-opensuse15
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""

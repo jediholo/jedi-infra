@@ -7,9 +7,9 @@ strategy: Recreate
 
 image:
   repository: ghcr.io/fab-infra/vsftpd
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 3.0-opensuse15
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""

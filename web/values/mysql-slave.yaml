@@ -2,6 +2,7 @@ fullnameOverride: mysql-slave
 
 image:
   repository: ghcr.io/fab-infra/mariadb-slave
+  tag: 10.6-opensuse15-20221126-1418-d4ddd7b
 
 podSecurityContext:
   runAsUser: 1004

@@ -6,9 +6,9 @@ backoffLimit: 0
 
 image:
   repository: ghcr.io/fab-infra/backuptools
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: opensuse15
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
