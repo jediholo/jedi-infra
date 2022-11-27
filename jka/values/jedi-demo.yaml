@@ -1,5 +1,8 @@
 fullnameOverride: jedi-demo
 
+image:
+  tag: master-20221127-2348-060d6c1
+
 service:
   port: 29072
   nodePort: 30072
