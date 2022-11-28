@@ -31,7 +31,8 @@ spec:
       {{- if .Values.dkim.enabled }}
       initContainers:
         - name: copy-opendkim-secrets
-          image: busybox
+          image: busybox:1.34
+          imagePullPolicy: IfNotPresent
           args: ['/bin/sh', '-c', 'cp /var/secrets/opendkim/* /var/lib/opendkim && chmod -R 700 /var/lib/opendkim']
           volumeMounts:
             - mountPath: /var/lib/opendkim

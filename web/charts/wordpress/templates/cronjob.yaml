@@ -23,7 +23,8 @@ spec:
             - name: {{ .Chart.Name }}
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
-              image: busybox
+              image: busybox:1.34
+              imagePullPolicy: IfNotPresent
               args: ['wget', '-q', 'http://{{ include "wordpress.fullname" . }}/wp-cron.php']
           {{- with .Values.nodeSelector }}
           nodeSelector:
