@@ -87,6 +87,7 @@ stringData:
         geoip {
           source => "clientip"
           target => "geoip"
+          ecs_compatibility => "disabled"
         }
       }
     }
