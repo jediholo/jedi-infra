@@ -118,14 +118,6 @@ resource "helm_release" "web_backups" {
     value = base64encode(var.web_backups_sa)
   }
   set_sensitive {
-    name  = "secrets.ftp.username"
-    value = var.web_backups_ftp_username
-  }
-  set_sensitive {
-    name  = "secrets.ftp.password"
-    value = var.web_backups_ftp_password
-  }
-  set_sensitive {
     name  = "secrets.mysql.username"
     value = var.web_backups_mysql_username
   }

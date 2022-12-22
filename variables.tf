@@ -167,13 +167,6 @@ variable "web_backups_sa" {
   description = "Google Service Account JSON key for backups"
   sensitive   = true
 }
-variable "web_backups_ftp_username" {
-  description = "FTP username for backups"
-}
-variable "web_backups_ftp_password" {
-  description = "FTP password for backups"
-  sensitive   = true
-}
 variable "web_backups_mysql_username" {
   description = "MySQL username for backups"
 }
