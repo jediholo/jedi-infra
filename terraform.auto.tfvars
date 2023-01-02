@@ -31,8 +31,8 @@ k8s_host = "https://k8s-master.vpn.fabinfra.net:6443"
 # DNS config
 dns_zone = "jediholo.net"
 dns_records = [
-  { name = "",                      ttl = 0,     type = "A",      target = "51.255.79.178" },
-  { name = "",                      ttl = 0,     type = "AAAA",   target = "2001:41d0:203:2b2::1" },
+  { name = "",                      ttl = 0,     type = "A",      target = "5.39.85.118" },
+  { name = "",                      ttl = 0,     type = "AAAA",   target = "2001:41d0:8:9776::1" },
   { name = "",                      ttl = 0,     type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 0,     type = "MX",     target = "1 mx4.mail.ovh.net." },
   { name = "",                      ttl = 0,     type = "MX",     target = "10 mx3.mail.ovh.net." },
@@ -52,7 +52,7 @@ dns_records = [
   { name = "rpmod",                 ttl = 1800,  type = "CNAME",  target = "srv01" },
   { name = "rpmod.dev",             ttl = 300,   type = "A",      target = "127.0.0.13" },
   { name = "services",              ttl = 1800,  type = "CNAME",  target = "srv01" },
-  { name = "srv01",                 ttl = 1800,  type = "CNAME",  target = "k8s.fabinfra.net." },
+  { name = "srv01",                 ttl = 1800,  type = "CNAME",  target = "k8s-ingress.fabinfra.net." },
   { name = "static",                ttl = 1800,  type = "CNAME",  target = "jediholo.github.io." },
   { name = "static.dev",            ttl = 300,   type = "A",      target = "127.0.0.10" },
   { name = "temple",                ttl = 300,   type = "CNAME",  target = "jka06" },
