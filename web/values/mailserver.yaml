@@ -9,7 +9,7 @@ nodeSelector:
 
 env:
   FROM_HEADER: jediholo.net
-  POSTFIX_MYHOSTNAME: sy03.srv.fabinfra.net
+  POSTFIX_MYHOSTNAME: ks13.srv.fabinfra.net
   POSTFIX_MYNETWORKS: 127.0.0.0/8,10.244.0.0/16
   POSTFIX_BASIC_SPAM_PREVENTION: off
 
