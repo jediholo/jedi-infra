@@ -85,3 +85,12 @@ jka:
     # rp_accounts_AM_enabled: ""
     # rp_accounts_AM_serviceUsername: ""
     # rp_accounts_AM_servicePassword: ""
+
+# Logrotate config
+logrotate:
+  enabled: false
+  schedule: 0 0 * * *
+  image:
+    repository: ghcr.io/fab-infra/logrotate
+    pullPolicy: IfNotPresent
+    tag: 3.8-opensuse15

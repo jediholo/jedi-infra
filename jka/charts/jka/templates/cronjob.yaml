@@ -1,0 +1,76 @@
+{{- if .Values.logrotate.enabled }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "jka.fullname" . }}-logrotate
+  labels:
+    {{- include "jka.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.logrotate.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "jka.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          containers:
+            - name: logrotate
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.logrotate.image.repository }}:{{ .Values.logrotate.image.tag }}"
+              imagePullPolicy: {{ .Values.logrotate.image.pullPolicy }}
+              volumeMounts:
+                - mountPath: /etc/logrotate.d
+                  name: config
+                  readOnly: true
+                - mountPath: /opt/openjk/homepath
+                  name: homepath
+                - mountPath: /var/lib/misc
+                  name: homepath
+                  subPath: .logrotate
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          volumes:
+            - name: homepath
+              hostPath:
+                path: {{ .Values.jka.homepath }}
+            - name: config
+              configMap:
+                name: {{ include "jka.fullname" . }}-logrotate
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "jka.fullname" . }}-logrotate
+  labels:
+    {{- include "jka.labels" . | nindent 4 }}
+data:
+  jka: |
+    /opt/openjk/homepath/*/*.log {
+        missingok
+        notifempty
+        monthly
+        rotate 52
+        dateext
+        compress
+        copytruncate
+        olddir logs
+    }
+{{- end }}

@@ -27,3 +27,9 @@ jka:
     rp_adminRank_cmds3: "55644752117703"
     rp_adminRank_cmds4: "70368152780679"
     rp_adminRank_cmds5: "70368739983359"
+
+logrotate:
+  enabled: true
+  schedule: "0 6 * * *"
+  image:
+    tag: 3.18-opensuse15-20230104-1834-4ea8ebb
