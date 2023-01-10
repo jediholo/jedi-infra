@@ -47,6 +47,7 @@ dns_records = [
   { name = "ftp",                   ttl = 1800,  type = "CNAME",  target = "srv01" },
   { name = "galaxy",                ttl = 300,   type = "CNAME",  target = "jka06" },
   { name = "grounds",               ttl = 300,   type = "CNAME",  target = "jka06" },
+  { name = "jka01",                 ttl = 1800,  type = "CNAME",  target = "ipv4.ks14.srv.fabinfra.net." },
   { name = "jka06",                 ttl = 1800,  type = "CNAME",  target = "ipv4.ks11.srv.fabinfra.net." },
   { name = "march2016._domainkey",  ttl = 0,     type = "DKIM",   target = "k=rsa;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwvjrMuYA4hkI0TMzk6h4Hec06Unn/qZUxf4YnR5OWkCYrlIJZXuOUIsYZMXTiXCEhPdO6JktOcdVcUyB8UdhGLv7PoMShG+Kb9zsfqOtLJ3dfzJuaBsoV0BEi4yLqXPTNqbzE4YtxynC11MfPrtxwIYmJ5p4S2RMztBTZC5g/1PoQ2UWk/NphEzO6iA4Bbtas1OD+44Moa1OYMbi3YZrmEn1WTfrWodunAYE92Usoj+kpSiBqhYPS/r8iQMOsRZOznDZhxG7VIYGU5xq+Ah0hpWoU/Nvs79LBP0pgC7vyCRXec18Q7Ix3t7WaYOZv5/GfhbcWREM0wVAsEQYjVp9cwIDAQAB;t=s;" },
   { name = "rpmod",                 ttl = 1800,  type = "CNAME",  target = "srv01" },
