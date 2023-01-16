@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       {{- include "jka.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: jka-server
   strategy:
     type: {{ .Values.strategy }}
   template:
@@ -20,6 +21,7 @@ spec:
         {{- end }}
       labels:
         {{- include "jka.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: jka-server
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

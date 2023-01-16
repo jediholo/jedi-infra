@@ -94,3 +94,19 @@ logrotate:
     repository: ghcr.io/fab-infra/logrotate
     pullPolicy: IfNotPresent
     tag: 3.8-opensuse15
+
+# Mock server config
+mock:
+  enabled: false
+  image:
+    repository: ghcr.io/fcrespel/q3mockserver
+    pullPolicy: IfNotPresent
+    tag: master
+  args: []
+  hostPort: 29070
+  nodeSelector: {}
+  tolerations:
+    - key: dedicated-server
+      operator: Exists
+      effect: NoSchedule
+  affinity: {}

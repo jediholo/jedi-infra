@@ -33,3 +33,20 @@ logrotate:
   schedule: "0 6 * * *"
   image:
     tag: 3.18-opensuse15-20230104-1834-4ea8ebb
+
+mock:
+  enabled: true
+  image:
+    tag: master-20230115-2237-5944272
+  args: [
+    "-i", "game=rpmod",
+    "-i", "mapname=rannon_praxeum",
+    "-i", "hostname=^7The ^5::^7JEDI^5:: ^7Temple - www.jediholo.net",
+    "-s", "gamename=RPMod 0.5.1c",
+    "-s", "mapname=rannon_praxeum",
+    "-s", "sv_hostname=^7The ^5::^7JEDI^5:: ^7Temple - www.jediholo.net",
+    "-m", "The JEDI Temple server has moved to 5.196.89.22:29070",
+  ]
+  hostPort: 29070
+  nodeSelector:
+    kubernetes.io/hostname: ks11

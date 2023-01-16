@@ -1,0 +1,54 @@
+{{- if .Values.mock.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jka.fullname" . }}-mock
+  labels:
+    {{- include "jka.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "jka.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: q3mockserver
+  strategy:
+    type: {{ .Values.strategy }}
+  template:
+    metadata:
+      labels:
+        {{- include "jka.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: q3mockserver
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "jka.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: q3mockserver
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.mock.image.repository }}:{{ .Values.mock.image.tag }}"
+          imagePullPolicy: {{ .Values.mock.image.pullPolicy }}
+          args:
+            {{- toYaml .Values.mock.args | nindent 12 }}
+          ports:
+            - name: jka
+              containerPort: 29070
+              hostPort: {{ .Values.mock.hostPort }}
+              protocol: UDP
+      {{- with .Values.mock.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mock.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mock.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

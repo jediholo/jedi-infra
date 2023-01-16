@@ -40,3 +40,20 @@ logrotate:
   schedule: "0 6 * * *"
   image:
     tag: 3.18-opensuse15-20230104-1834-4ea8ebb
+
+mock:
+  enabled: true
+  image:
+    tag: master-20230115-2237-5944272
+  args: [
+    "-i", "game=rpmod",
+    "-i", "mapname=rannon_settlement",
+    "-i", "hostname=^7The ^5::^7JEDI^5:: ^7Grounds - www.jediholo.net",
+    "-s", "gamename=RPMod 0.5.1c",
+    "-s", "mapname=rannon_settlement",
+    "-s", "sv_hostname=^7The ^5::^7JEDI^5:: ^7Grounds - www.jediholo.net",
+    "-m", "The JEDI Grounds server has moved to 5.196.89.22:29071",
+  ]
+  hostPort: 29071
+  nodeSelector:
+    kubernetes.io/hostname: ks11

@@ -41,12 +41,12 @@ dns_records = [
   { name = "_dmarc",                ttl = 0,     type = "DMARC",  target = "v=DMARC1;p=none;rua=mailto:postmaster@jediholo.net;" },
   { name = "comport",               ttl = 1800,  type = "CNAME",  target = "srv01" },
   { name = "comport.dev",           ttl = 300,   type = "A",      target = "127.0.0.12" },
-  { name = "demo",                  ttl = 300,   type = "CNAME",  target = "jka06" },
+  { name = "demo",                  ttl = 300,   type = "CNAME",  target = "jka01" },
   { name = "discord",               ttl = 1800,  type = "CNAME",  target = "srv01" },
   { name = "files",                 ttl = 1800,  type = "CNAME",  target = "srv01" },
   { name = "ftp",                   ttl = 1800,  type = "CNAME",  target = "srv01" },
-  { name = "galaxy",                ttl = 300,   type = "CNAME",  target = "jka06" },
-  { name = "grounds",               ttl = 300,   type = "CNAME",  target = "jka06" },
+  { name = "galaxy",                ttl = 300,   type = "CNAME",  target = "jka01" },
+  { name = "grounds",               ttl = 300,   type = "CNAME",  target = "jka01" },
   { name = "jka01",                 ttl = 1800,  type = "CNAME",  target = "ipv4.ks14.srv.fabinfra.net." },
   { name = "jka06",                 ttl = 1800,  type = "CNAME",  target = "ipv4.ks11.srv.fabinfra.net." },
   { name = "march2016._domainkey",  ttl = 0,     type = "DKIM",   target = "k=rsa;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwvjrMuYA4hkI0TMzk6h4Hec06Unn/qZUxf4YnR5OWkCYrlIJZXuOUIsYZMXTiXCEhPdO6JktOcdVcUyB8UdhGLv7PoMShG+Kb9zsfqOtLJ3dfzJuaBsoV0BEi4yLqXPTNqbzE4YtxynC11MfPrtxwIYmJ5p4S2RMztBTZC5g/1PoQ2UWk/NphEzO6iA4Bbtas1OD+44Moa1OYMbi3YZrmEn1WTfrWodunAYE92Usoj+kpSiBqhYPS/r8iQMOsRZOznDZhxG7VIYGU5xq+Ah0hpWoU/Nvs79LBP0pgC7vyCRXec18Q7Ix3t7WaYOZv5/GfhbcWREM0wVAsEQYjVp9cwIDAQAB;t=s;" },
@@ -56,7 +56,7 @@ dns_records = [
   { name = "srv01",                 ttl = 1800,  type = "CNAME",  target = "k8s-ingress.fabinfra.net." },
   { name = "static",                ttl = 1800,  type = "CNAME",  target = "jediholo.github.io." },
   { name = "static.dev",            ttl = 300,   type = "A",      target = "127.0.0.10" },
-  { name = "temple",                ttl = 300,   type = "CNAME",  target = "jka06" },
+  { name = "temple",                ttl = 300,   type = "CNAME",  target = "jka01" },
   { name = "www",                   ttl = 1800,  type = "CNAME",  target = "srv01" },
   { name = "www.dev",               ttl = 300,   type = "A",      target = "127.0.0.11" },
 ]
@@ -69,7 +69,7 @@ dns_records = [
 
 # Jedi Academy
 jka_namespace = "jka"
-jka_external_ip = "37.187.118.231"
+jka_external_ip = "5.196.89.22"
 jka_deployments_scale_sa = [
   { name = "rpmod", "namespace" = "domain-jediholo-net" },
 ]

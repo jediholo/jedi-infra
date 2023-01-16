@@ -8,6 +8,7 @@ spec:
   type: {{ .Values.service.type }}
   selector:
     {{- include "jka.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: jka-server
   ports:
     - port: {{ .Values.service.port }}
       nodePort: {{ .Values.service.nodePort }}
