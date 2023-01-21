@@ -1,7 +1,7 @@
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
-    organization = "jediholo"
+    organization = "fabinfra"
 
     workspaces {
       name = "jedi-infra"
