@@ -11,12 +11,15 @@ spec:
   config:
     filebeat.inputs:
       - type: filestream
+        id: jka-games
         paths: ["/home/jka/*/*/games.log"]
         tags: ["jka-games"]
       - type: filestream
+        id: jka-playerstats
         paths: ["/home/jka/*/*/playerstats.log"]
         tags: ["jka-playerstats"]
       - type: filestream
+        id: jka-serverstats
         paths: ["/home/jka/*/*/serverstats.log"]
         tags: ["jka-serverstats"]
     {{- with .Values.config.output.console }}
@@ -55,6 +58,10 @@ spec:
               {{- toYaml . | nindent 14 }}
             {{- end }}
             volumeMounts:
+              {{- with .Values.volumes.data }}
+              - name: data
+                mountPath: /usr/share/filebeat/data
+              {{- end }}
               {{- with .Values.volumes.jka }}
               - name: jka
                 mountPath: /home/jka
@@ -72,6 +79,10 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         volumes:
+          {{- with .Values.volumes.data }}
+          - name: data
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.volumes.jka }}
           - name: jka
             {{- toYaml . | nindent 12 }}

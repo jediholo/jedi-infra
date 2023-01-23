@@ -6,6 +6,10 @@ config:
       hosts: ["logstash.domain-jediholo-net.svc:5044"]
 
 volumes:
+  data:
+    hostPath:
+      path: /home/jka/.filebeat
+      type: DirectoryOrCreate
   jka:
     hostPath:
       path: /home/jka

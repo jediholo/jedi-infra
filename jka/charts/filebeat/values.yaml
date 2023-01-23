@@ -59,6 +59,10 @@ config:
       # hosts: ["logstash:5044"]
 
 volumes:
+  data: {}
+    # hostPath:
+    #   path: /home/jka/.filebeat
+    #   type: DirectoryOrCreate
   jka: {}
     # hostPath:
     #   path: /home/jka
