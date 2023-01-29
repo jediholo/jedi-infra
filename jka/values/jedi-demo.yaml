@@ -50,8 +50,8 @@ mock:
     "-i", "hostname=^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net",
     "-s", "gamename=RPMod 0.5.1c",
     "-s", "sv_hostname=^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net",
-    "-m", "The JEDI Demo server has moved to 5.196.89.22:29072",
+    "-m", "The JEDI Demo server has moved to 5.39.85.118:29072",
   ]
   hostPort: 29072
   nodeSelector:
-    kubernetes.io/hostname: ks11
+    kubernetes.io/hostname: ks14

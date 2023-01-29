@@ -60,8 +60,8 @@ mock:
     "-s", "gamename=RPMod 0.5.1c",
     "-s", "mapname=rannon_settlement",
     "-s", "sv_hostname=^7The ^5::^7JEDI^5:: ^7Grounds - www.jediholo.net",
-    "-m", "The JEDI Grounds server has moved to 5.196.89.22:29071",
+    "-m", "The JEDI Grounds server has moved to 5.39.85.118:29071",
   ]
   hostPort: 29071
   nodeSelector:
-    kubernetes.io/hostname: ks11
+    kubernetes.io/hostname: ks14
