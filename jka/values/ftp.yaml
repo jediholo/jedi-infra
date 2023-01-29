@@ -7,9 +7,18 @@ volumes:
   - name: jka
     hostPath:
       path: /home/jka
+  - name: dumps
+    hostPath:
+      path: /home/jka/_shared_/rpmod/dumps
 volumeMounts:
   - mountPath: /home/jka
     name: jka
+  - mountPath: /home/jka/jedi-demo/rpmod/dumps
+    name: dumps
+  - mountPath: /home/jka/jedi-galaxy/rpmod/dumps
+    name: dumps
+  - mountPath: /home/jka/jedi-grounds/rpmod/dumps
+    name: dumps
 
 ftp:
   home: /home/jka
