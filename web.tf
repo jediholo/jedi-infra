@@ -110,12 +110,20 @@ resource "helm_release" "web_backups" {
   values = [file("${path.module}/web/values/backups.yaml")]
 
   set_sensitive {
-    name  = "secrets.swift.openrc"
-    value = var.web_backups_openrc
-  }
-  set_sensitive {
     name  = "secrets.gcs.sa"
     value = base64encode(var.web_backups_sa)
+  }
+  set_sensitive {
+    name  = "secrets.s3.accessKeyId"
+    value = var.web_backups_s3_access_key_id
+  }
+  set_sensitive {
+    name  = "secrets.s3.secretAccessKey"
+    value = var.web_backups_s3_secret_access_key
+  }
+  set_sensitive {
+    name  = "secrets.swift.openrc"
+    value = var.web_backups_openrc
   }
   set_sensitive {
     name  = "secrets.mysql.username"

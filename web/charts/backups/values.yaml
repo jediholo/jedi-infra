@@ -44,9 +44,12 @@ affinity: {}
 env: {}
   # BACKUP_BACKEND: multi
   # BACKUP_BACKENDS: swift,gcs,ftp
-  # BACKUP_BUCKET: example-org-backups
   # BACKUP_FTP_HOST: ftpbackup.example.org
   # BACKUP_FTP_DIR: example.org
+  # BACKUP_GCS_BUCKET: example-org-backups
+  # BACKUP_S3_BUCKET: example-org-backups
+  # BACKUP_S3_PROVIDER: OVH
+  # BACKUP_S3_REGION: rbx
   # BACKUP_SYNC_BACKENDS: swift,gcs
   # BACKUP_SYNC_ARGS: pcs:container gcs:bucket
   # MYSQL_HOST: mysql-slave
@@ -59,13 +62,16 @@ schedules: {}
   # sync: "0 5 * * *"
 
 secrets:
-  swift:
-    openrc: ""
-  gcs:
-    sa: ""
   ftp:
     username: ""
     password: ""
+  gcs:
+    sa: ""
+  s3:
+    accessKeyId: ""
+    secretAccessKey: ""
+  swift:
+    openrc: ""
   mysql:
     username: ""
     password: ""

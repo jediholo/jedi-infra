@@ -46,17 +46,22 @@ spec:
                       key: password
                       name: {{ include "backups.fullname" . }}-ftp-user
                 {{- end }}
+              {{- if .Values.secrets.s3.accessKeyId }}
+              envFrom:
+                - secretRef:
+                    name: {{ include "backups.fullname" . }}-s3-creds
+              {{- end }}
               volumeMounts:
-                {{- if .Values.secrets.swift.openrc }}
-                - mountPath: /home/backups/backup-openrc.sh
-                  name: backup-openrc
-                  subPath: backup-openrc.sh
-                  readOnly: true
-                {{- end }}
                 {{- if .Values.secrets.gcs.sa }}
                 - mountPath: /home/backups/backup-sa.json
                   name: backup-sa
                   subPath: backup-sa.json
+                  readOnly: true
+                {{- end }}
+                {{- if .Values.secrets.swift.openrc }}
+                - mountPath: /home/backups/backup-openrc.sh
+                  name: backup-openrc
+                  subPath: backup-openrc.sh
                   readOnly: true
                 {{- end }}
                 {{- if .Values.volumes.ldap }}
@@ -77,15 +82,15 @@ spec:
           {{- end }}
           restartPolicy: Never
           volumes:
-            {{- if .Values.secrets.swift.openrc }}
-            - name: backup-openrc
-              secret:
-                secretName: {{ include "backups.fullname" . }}-openrc
-            {{- end }}
             {{- if .Values.secrets.gcs.sa }}
             - name: backup-sa
               secret:
                 secretName: {{ include "backups.fullname" . }}-sa
+            {{- end }}
+            {{- if .Values.secrets.swift.openrc }}
+            - name: backup-openrc
+              secret:
+                secretName: {{ include "backups.fullname" . }}-openrc
             {{- end }}
             {{- with .Values.volumes.ldap }}
             - name: ldap

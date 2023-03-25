@@ -1,7 +1,7 @@
 fullnameOverride: backups
 
 image:
-  tag: opensuse15-20221126-1420-a55c8a8
+  tag: opensuse15-20230319-0306-4fde429
 
 podSecurityContext:
   runAsUser: 1004
@@ -22,13 +22,16 @@ env:
   BACKUP_BACKEND: multi
   BACKUP_BACKENDS: swift,gcs
   BACKUP_GCS_BUCKET: jediholo-net-backups
-  BACKUP_SYNC_BACKENDS: swift,gcs
+  BACKUP_S3_BUCKET: jediholo-net-backups
+  BACKUP_S3_PROVIDER: OVH
+  BACKUP_S3_REGION: rbx
+  BACKUP_SYNC_BACKENDS: s3,gcs
   BACKUP_SYNC_ARGS: |
-    pcs:gamerepo-default gcs:jediholo-net-gamerepo-default
-    pcs:gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads
-    pcs:gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private
-    pcs:gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins
-    pcs:gamerepo-jedi-skins/assets/ /srv/www/sd/files/htdocs/repos/jedi-skins/assets/
+    s3:jediholo-net-gamerepo-default gcs:jediholo-net-gamerepo-default
+    s3:jediholo-net-gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads
+    s3:jediholo-net-gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private
+    s3:jediholo-net-gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins
+    s3:jediholo-net-gamerepo-jedi-skins/assets/ /srv/www/sd/files/htdocs/repos/jedi-skins/assets/
   MYSQL_HOST: mysql-slave
 
 volumes:

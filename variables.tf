@@ -167,6 +167,14 @@ variable "web_backups_sa" {
   description = "Google Service Account JSON key for backups"
   sensitive   = true
 }
+variable "web_backups_s3_access_key_id" {
+  description = "Amazon S3 Access Key ID"
+  sensitive   = true
+}
+variable "web_backups_s3_secret_access_key" {
+  description = "Amazon S3 Secret Access Key"
+  sensitive   = true
+}
 variable "web_backups_mysql_username" {
   description = "MySQL username for backups"
 }
