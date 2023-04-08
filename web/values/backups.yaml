@@ -27,10 +27,10 @@ env:
   BACKUP_S3_REGION: rbx
   BACKUP_SYNC_BACKENDS: s3,gcs
   BACKUP_SYNC_ARGS: |
-    s3:jediholo-net-gamerepo-default gcs:jediholo-net-gamerepo-default
-    s3:jediholo-net-gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads
-    s3:jediholo-net-gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private
-    s3:jediholo-net-gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins
+    s3:jediholo-net-gamerepo-default gcs:jediholo-net-gamerepo-default --checksum
+    s3:jediholo-net-gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads --checksum
+    s3:jediholo-net-gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private --checksum
+    s3:jediholo-net-gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins --checksum
     s3:jediholo-net-gamerepo-jedi-skins/assets/ /srv/www/sd/files/htdocs/repos/jedi-skins/assets/
   MYSQL_HOST: mysql-slave
 
