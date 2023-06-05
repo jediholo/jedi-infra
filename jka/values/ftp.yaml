@@ -1,7 +1,7 @@
 fullnameOverride: ftp
 
 image:
-  tag: 3.0-opensuse15-20221126-1419-7da0aca
+  tag: 3.0-opensuse15-20230605-2036-6dd594a
 
 volumes:
   - name: jka

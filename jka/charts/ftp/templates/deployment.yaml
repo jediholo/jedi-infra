@@ -50,14 +50,14 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 10
             timeoutSeconds: 10
-            tcpSocket:
-              port: ftp
+            exec:
+              command: ['/healthcheck.sh']
           readinessProbe:
             initialDelaySeconds: 3
             periodSeconds: 10
             timeoutSeconds: 10
-            tcpSocket:
-              port: ftp
+            exec:
+              command: ['/healthcheck.sh']
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
