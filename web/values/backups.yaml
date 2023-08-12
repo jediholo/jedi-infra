@@ -1,7 +1,7 @@
 fullnameOverride: backups
 
 image:
-  tag: opensuse15-20230319-0306-4fde429
+  tag: opensuse15-20230806-0240-4fde429
 
 podSecurityContext:
   runAsUser: 1004
