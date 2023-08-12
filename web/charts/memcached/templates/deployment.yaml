@@ -47,8 +47,8 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 10
             timeoutSeconds: 10
-            exec:
-              command: ['/bin/sh', '-c', 'memcached-tool 127.0.0.1 stats | grep version']
+            tcpSocket:
+              port: tcp
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

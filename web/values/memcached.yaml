@@ -1,8 +1,5 @@
 fullnameOverride: memcached
 
-image:
-  tag: 1.5-opensuse15-20221126-1419-20e78ef
-
 podSecurityContext:
   runAsUser: 1004
   runAsGroup: 1005

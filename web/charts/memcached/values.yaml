@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: Recreate
 
 image:
-  repository: ghcr.io/fab-infra/memcached
+  repository: memcached
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
