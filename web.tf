@@ -292,6 +292,15 @@ resource "helm_release" "web_phpmyadmin" {
   values = [file("${path.module}/web/values/phpmyadmin.yaml")]
 }
 
+// Redis cache server
+resource "helm_release" "web_redis" {
+  name      = "redis"
+  chart     = "${path.module}/web/charts/redis"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/redis.yaml")]
+}
+
 // RPMod Web
 resource "helm_release" "web_rpmod" {
   name      = "rpmod"

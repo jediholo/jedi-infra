@@ -1,0 +1,15 @@
+fullnameOverride: redis
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+volumes:
+  data:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/redis
+      type: DirectoryOrCreate
