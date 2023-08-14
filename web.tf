@@ -235,15 +235,6 @@ resource "helm_release" "web_matomo" {
   }
 }
 
-// Memcached cache server
-resource "helm_release" "web_memcached" {
-  name      = "memcached"
-  chart     = "${path.module}/web/charts/memcached"
-  namespace = kubernetes_namespace.web_ns.metadata[0].name
-
-  values = [file("${path.module}/web/values/memcached.yaml")]
-}
-
 // MySQL database
 resource "helm_release" "web_mysql" {
   name      = "mysql"
