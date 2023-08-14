@@ -1,9 +1,0 @@
-fullnameOverride: memcached
-
-podSecurityContext:
-  runAsUser: 1004
-  runAsGroup: 1005
-
-nodeSelector:
-  server-role-web: "true"
-  domain-jediholo-net: "true"
