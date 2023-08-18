@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: RollingUpdate
 
 image:
-  repository: k8s.gcr.io/ingress-nginx/nginx-errors
+  repository: registry.k8s.io/ingress-nginx/nginx-errors
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
