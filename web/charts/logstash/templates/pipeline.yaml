@@ -82,7 +82,7 @@ stringData:
             "playercount", "integer",
             "playermax", "integer"
           ]
-          remove_field => [ "agent", "ecs", "host", "input", "log", "[event][original]" ]
+          remove_field => [ "agent", "ecs", "event", "host", "input", "log" ]
         }
         geoip {
           source => "clientip"
