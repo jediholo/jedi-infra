@@ -56,3 +56,48 @@ output "discord_interaction_https_url" {
   value       = google_cloudfunctions_function.discord_interaction_function.https_trigger_url
   description = "Discord interaction URL"
 }
+
+
+// JKA logs processor ZIP archive
+data "archive_file" "jka_logs_processor_archive" {
+  type        = "zip"
+  source_dir  = "${path.module}/functions/jka-logs-processor"
+  output_path = "${path.module}/functions/jka-logs-processor.zip"
+}
+
+// JKA logs processor ZIP archive bucket object
+resource "google_storage_bucket_object" "jka_logs_processor_object" {
+  name   = "jka-logs-processor-${data.archive_file.jka_logs_processor_archive.output_sha}.zip"
+  bucket = var.gcp_project_id
+  source = data.archive_file.jka_logs_processor_archive.output_path
+}
+
+// JKA logs processor Cloud Function
+resource "google_cloudfunctions_function" "jka_logs_processor_function" {
+  name        = "jka-logs-processor"
+  project     = var.gcp_project_id
+  description = "JKA logs processor"
+  runtime     = "nodejs18"
+
+  available_memory_mb   = 128
+  source_archive_bucket = google_storage_bucket_object.jka_logs_processor_object.bucket
+  source_archive_object = google_storage_bucket_object.jka_logs_processor_object.name
+  service_account_email = google_service_account.jka_logs_processor_sa.email
+  entry_point           = "process"
+  max_instances         = 10
+
+  event_trigger {
+    event_type = "google.pubsub.topic.publish"
+    resource   = google_pubsub_topic.web_logstash_pubsub_topic.name
+    failure_policy {
+      retry = true
+    }
+  }
+}
+
+// JKA logs processor service account
+resource "google_service_account" "jka_logs_processor_sa" {
+  project      = var.gcp_project_id
+  account_id   = "jka-logs-processor"
+  display_name = "Service account for JKA logs processor"
+}
