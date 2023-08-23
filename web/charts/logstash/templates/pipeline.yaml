@@ -82,7 +82,7 @@ stringData:
             "playercount", "integer",
             "playermax", "integer"
           ]
-          remove_field => [ "agent", "ecs", "host", "input", "log" ]
+          remove_field => [ "agent", "ecs", "host", "input", "log", "[event][original]" ]
         }
         geoip {
           source => "clientip"
@@ -93,23 +93,40 @@ stringData:
     }
   elasticsearch.conf: |
     output {
-      elasticsearch {
-        hosts => "${ELASTICSEARCH_HOSTS:http://elasticsearch:9200}"
-        user => "${ELASTICSEARCH_USERNAME:}"
-        password => "${ELASTICSEARCH_PASSWORD:}"
-        cacert => "${ELASTICSEARCH_CACERT:}"
-        ecs_compatibility => "disabled"
+      if "${ELASTICSEARCH_HOSTS:}" != "" {
+        elasticsearch {
+          hosts => "${ELASTICSEARCH_HOSTS:}"
+          user => "${ELASTICSEARCH_USERNAME:}"
+          password => "${ELASTICSEARCH_PASSWORD:}"
+          ssl_certificate_authorities => "${ELASTICSEARCH_CACERT:}"
+          ecs_compatibility => "disabled"
+        }
       }
     }
   activemq.conf: |
     output {
-      # JKA Server Log
-      if "jka-games" in [tags] {
-        stomp {
-          host => "${ACTIVEMQ_HOST:activemq}"
-          port => 61613
-          destination => "/topic/jka.%{modname}.%{servername}.games.log"
-          headers => [ "amq-msg-type", "text", "type", "%{type}" ]
+      if "${ACTIVEMQ_HOST:}" != "" {
+        # JKA Server Log
+        if "jka-games" in [tags] {
+          stomp {
+            host => "${ACTIVEMQ_HOST:}"
+            port => 61613
+            destination => "/topic/jka.%{modname}.%{servername}.games.log"
+            headers => [ "amq-msg-type", "text" ]
+          }
+        }
+      }
+    }
+  google_pubsub.conf: |
+    output {
+      if "${GOOGLE_PUBSUB_PROJECT_ID:}" != "" and "${GOOGLE_PUBSUB_TOPIC:}" != "" {
+        # JKA Server Log
+        if "jka-games" in [tags] {
+          google_pubsub {
+            project_id => "${GOOGLE_PUBSUB_PROJECT_ID:}"
+            topic => "${GOOGLE_PUBSUB_TOPIC:}"
+            json_key_file => "${GOOGLE_PUBSUB_JSON_KEY_FILE:}"
+          }
         }
       }
     }

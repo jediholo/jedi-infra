@@ -5,9 +5,11 @@ nodeSelector:
   domain-jediholo-net: "true"
 
 env:
+  ACTIVEMQ_HOST: activemq
   ELASTICSEARCH_CACERT: /usr/share/logstash/secret/elasticsearch-ca.crt
   ELASTICSEARCH_HOSTS: https://elasticsearch-es-http.infra.svc:9200
   ELASTICSEARCH_USERNAME: elastic
-  LOGSTASH_PLUGINS: logstash-output-stomp
+  GOOGLE_PUBSUB_JSON_KEY_FILE: /usr/share/logstash/secret/google_pubsub.json
+  LOGSTASH_PLUGINS: logstash-output-stomp logstash-output-google_pubsub
   LS_JAVA_OPTS: -Xms512m -Xmx512m
   XPACK_MONITORING_ENABLED: "false"

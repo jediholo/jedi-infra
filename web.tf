@@ -183,9 +183,9 @@ resource "helm_release" "web_ldap" {
 
 // Logstash
 resource "helm_release" "web_logstash" {
-  name       = "logstash"
+  name      = "logstash"
   chart     = "${path.module}/web/charts/logstash"
-  namespace  = kubernetes_namespace.web_ns.metadata[0].name
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
 
   values = [file("${path.module}/web/values/logstash.yaml")]
 
@@ -193,10 +193,40 @@ resource "helm_release" "web_logstash" {
     name  = "env.ELASTICSEARCH_PASSWORD"
     value = var.web_logstash_elasticsearch_password
   }
+  set {
+    name  = "env.GOOGLE_PUBSUB_PROJECT_ID"
+    value = google_pubsub_topic.web_logstash_pubsub_topic.project
+  }
+  set {
+    name  = "env.GOOGLE_PUBSUB_TOPIC"
+    value = google_pubsub_topic.web_logstash_pubsub_topic.name
+  }
   set_sensitive {
     name  = "secret.elasticsearch-ca\\.crt"
-    value = var.web_logstash_elasticsearch_ca
+    value = base64encode(var.web_logstash_elasticsearch_ca)
   }
+  set_sensitive {
+    name  = "secret.google_pubsub\\.json"
+    value = google_service_account_key.web_logstash_sa_key.private_key
+  }
+}
+resource "google_service_account" "web_logstash_sa" {
+  project      = var.gcp_project_id
+  account_id   = "logstash"
+  display_name = "Logstash service account"
+}
+resource "google_service_account_key" "web_logstash_sa_key" {
+  service_account_id = google_service_account.web_logstash_sa.name
+}
+resource "google_pubsub_topic" "web_logstash_pubsub_topic" {
+  project = var.gcp_project_id
+  name    = "jka-logs"
+}
+resource "google_pubsub_topic_iam_member" "web_logstash_pubsub_topic_publisher" {
+  project = var.gcp_project_id
+  topic   = google_pubsub_topic.web_logstash_pubsub_topic.name
+  role    = "roles/pubsub.publisher"
+  member  = "serviceAccount:${google_service_account.web_logstash_sa.email}"
 }
 
 // Mail server (outbound only)
