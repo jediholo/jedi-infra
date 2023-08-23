@@ -10,8 +10,8 @@ The main infrastructure components are:
 - DNS records (`dns.tf`)
 - JKA servers (`jka.tf`)
 - Web hosting (`web.tf`)
+- Cloud functions (`functions.tf`)
 - Cloud storage buckets for assets and backups (`storage.tf`)
-- Discord [interaction](https://discord.com/developers/docs/interactions/slash-commands) used on the official JEDI Discord channel (`discord-interaction.tf`)
 - Uptime checks (`uptime.tf`)
 
 The main underlying provider is currently [OVH](https://www.ovh.com). Some resources are hosted or backed up on [Google Cloud Platform (GCP)](https://cloud.google.com).
