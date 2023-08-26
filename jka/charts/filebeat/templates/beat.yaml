@@ -14,6 +14,8 @@ spec:
         id: jka-games
         paths: ["/home/jka/*/*/games.log"]
         tags: ["jka-games"]
+        backoff.init: 1s
+        backoff.max: 1s
       - type: filestream
         id: jka-playerstats
         paths: ["/home/jka/*/*/playerstats.log"]
