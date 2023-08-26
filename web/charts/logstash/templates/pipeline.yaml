@@ -126,6 +126,7 @@ stringData:
             project_id => "${GOOGLE_PUBSUB_PROJECT_ID:}"
             topic => "${GOOGLE_PUBSUB_TOPIC:}"
             json_key_file => "${GOOGLE_PUBSUB_JSON_KEY_FILE:}"
+            delay_threshold_secs => 1
           }
         }
       }
