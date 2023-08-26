@@ -28,10 +28,9 @@ resource "google_cloudfunctions_function" "discord_interaction_function" {
   max_instances         = 10
 
   environment_variables = {
-    CLIENT_PUBLIC_KEY = var.discord_client_public_key
-    WEBHOOK_ID        = var.discord_webhook_id
-    WEBHOOK_TOKEN     = var.discord_webhook_token
-    ADMIN_ROLE_ID     = var.discord_admin_role_id
+    ADMIN_ROLE_ID        = var.discord_admin_role_id
+    ANNOUNCE_WEBHOOK_URL = var.discord_announce_webhook_url
+    CLIENT_PUBLIC_KEY    = var.discord_client_public_key
   }
 }
 

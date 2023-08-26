@@ -61,10 +61,9 @@ dns_records = [
 ]
 
 # Discord interaction
-#discord_client_public_key = "toComplete"
-#discord_webhook_id = "toComplete"
-#discord_webhook_token = "toComplete"
 #discord_admin_role_id = "toComplete"
+#discord_client_public_key = "toComplete"
+#discord_announce_webhook_url = "toComplete"
 
 # Jedi Academy
 jka_namespace = "jka"

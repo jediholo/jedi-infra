@@ -4,13 +4,12 @@ const Discord = require('discord.js');
 
 // Config
 const CLIENT_PUBLIC_KEY = process.env.CLIENT_PUBLIC_KEY;
-const WEBHOOK_ID = process.env.WEBHOOK_ID;
-const WEBHOOK_TOKEN = process.env.WEBHOOK_TOKEN;
+const ANNOUNCE_WEBHOOK_URL = process.env.ANNOUNCE_WEBHOOK_URL;
 const ADMIN_ROLE_ID = process.env.ADMIN_ROLE_ID.split(',');
 const ADMIN_COMMANDS = ['announce'];
 
 // Webhook
-const webhook = new Discord.WebhookClient(WEBHOOK_ID, WEBHOOK_TOKEN);
+const announceWebhook = new Discord.WebhookClient({url: ANNOUNCE_WEBHOOK_URL});
 
 // Function to process command
 async function processCommand(interaction) {
@@ -28,7 +27,7 @@ async function processCommand(interaction) {
   switch (interaction.data.name) {
     case 'announce':
       // Publish announcement message using webhook
-      await webhook.send(interaction.data.options[0].value);
+      await announceWebhook.send(interaction.data.options[0].value);
       return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
