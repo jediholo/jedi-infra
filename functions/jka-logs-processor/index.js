@@ -1,6 +1,38 @@
+// Imports
+const Discord = require('discord.js');
+const Rcon = require('./rcon.js');
+
+// Config
+const COMMLINK_WEBHOOK_URL = process.env.COMMLINK_WEBHOOK_URL;
+
+// Webhook
+const commlinkWebhook = new Discord.WebhookClient({url: COMMLINK_WEBHOOK_URL});
+
 // Process function
 async function processLog(log) {
   console.log(JSON.stringify(log));
+  switch (log.commandname) {
+    case 'say':
+      // Don't invoke Him.
+      if (log.commandargs.match(/Soh Raun/i)) {
+        await Rcon.exec(log.servername, 'rpeffect camerashake 1 1');
+      }
+      break;
+    case 'comm':
+      // Relay commlink to Discord channel
+      if (log.targetname == 'Broadcast') {
+        await commlinkWebhook.send({
+          content: `Broadcast @here: ${log.commandargs}`,
+          username: log.playername
+        });
+      } else {
+        await commlinkWebhook.send({
+          content: `To ${log.targetname}: ${log.commandargs}`,
+          username: log.playername
+        });
+      }
+      break;
+  }
 }
 
 // Process entrypoint

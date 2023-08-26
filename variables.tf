@@ -103,6 +103,10 @@ variable "discord_announce_webhook_url" {
   description = "Discord webhook URL for announcements"
   sensitive   = true
 }
+variable "discord_commlink_webhook_url" {
+  description = "Discord webhook URL for commlink"
+  sensitive   = true
+}
 
 // JKA
 variable "jka_namespace" {

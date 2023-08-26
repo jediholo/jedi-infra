@@ -85,6 +85,12 @@ resource "google_cloudfunctions_function" "jka_logs_processor_function" {
   entry_point           = "process"
   max_instances         = 10
 
+  environment_variables = {
+    COMMLINK_WEBHOOK_URL = var.discord_commlink_webhook_url
+    RCON_PASSWORD        = lookup(var.jka_rcon_password, "default", "")
+    RCON_SERVERS         = jsonencode(var.jka_server_hostport)
+  }
+
   event_trigger {
     event_type = "google.pubsub.topic.publish"
     resource   = google_pubsub_topic.web_logstash_pubsub_topic.name

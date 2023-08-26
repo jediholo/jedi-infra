@@ -1,4 +1,7 @@
 {
   "name": "jka-logs-processor",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "dependencies": {
+    "discord.js": "^14.13.0"
+  }
 }
