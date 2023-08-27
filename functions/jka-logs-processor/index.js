@@ -21,14 +21,15 @@ async function processLog(log) {
     case 'comm':
       // Relay commlink to Discord channel
       const playerName = log.playername.replaceAll(/:+JEDI:+/g, '').replaceAll('=', ' ').trim();
+      const message = log.commandargs.replaceAll(/\^[0-9a-zA-Z]/g, '').trim();
       if (log.targetname == 'Broadcast') {
         await commlinkWebhook.send({
-          content: `Broadcast @here: ${log.commandargs}`,
+          content: `Broadcast @here: ${message}`,
           username: playerName
         });
       } else {
         await commlinkWebhook.send({
-          content: `To ${log.targetname}: ${log.commandargs}`,
+          content: `To ${log.targetname}: ${message}`,
           username: playerName
         });
       }
