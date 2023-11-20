@@ -87,6 +87,7 @@ resource "google_cloudfunctions_function" "jka_logs_processor_function" {
 
   environment_variables = {
     COMMLINK_WEBHOOK_URL = var.discord_commlink_webhook_url
+    COUNCIL_WEBHOOK_URL  = var.discord_council_webhook_url
     RCON_PASSWORD        = lookup(var.jka_rcon_password, "default", "")
     RCON_SERVERS         = jsonencode(var.jka_server_hostport)
   }
