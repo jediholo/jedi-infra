@@ -36,7 +36,7 @@ stringData:
           match => [
             "logmsg", "(?<eventname>Client(?:Begin|Disconnect)): %{NUMBER:clientnum} \(%{DATA:playername}\)",
             "logmsg", "(?<eventname>ClientConnect): %{NUMBER:clientnum} \(IP: %{IP:clientip}, name: %{DATA:playername}\)",
-            "logmsg", "(?<eventname>ClientUserinfoChanged): %{DATA:playername}\^7 renamed to %{GREEDYDATA:playername}"
+            "logmsg", "(?<eventname>ClientUserinfoChanged): %{DATA:playername}\^7 renamed to %{GREEDYDATA:targetname}"
           ]
           add_field => [ "eventtype", "client" ]
         }
