@@ -13,9 +13,9 @@ const councilWebhook = new Discord.WebhookClient({url: COUNCIL_WEBHOOK_URL});
 // Process function
 async function processLog(log) {
   console.log(JSON.stringify(log));
-  const commandargs = log.commandargs?.replaceAll(/\^[0-9a-zA-Z]/g, '').trim();
-  const playername = log.playername?.replaceAll(/:+JEDI:+/g, '').replaceAll('=', ' ').trim();
-  const targetname = log.targetname?.replaceAll(/:+JEDI:+/g, '').replaceAll('=', ' ').trim();
+  const commandargs = log.commandargs ? log.commandargs.replaceAll(/\^[0-9a-zA-Z]/g, '').trim() : undefined;
+  const playername = log.playername ? log.playername.replaceAll(/:+JEDI:+/g, '').replaceAll('=', ' ').trim() : undefined;
+  const targetname = log.targetname ? log.targetname.replaceAll(/:+JEDI:+/g, '').replaceAll('=', ' ').trim() : undefined;
   switch (log.commandname) {
     case 'say':
       // Don't invoke Him.
