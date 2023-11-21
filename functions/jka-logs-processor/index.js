@@ -24,21 +24,23 @@ async function processLog(log) {
       }
       break;
     case 'comm':
-      // Relay commlink to Discord channel
-      if (targetname == 'Broadcast') {
-        await commlinkWebhook.send({
-          content: `Broadcast @here: ${commandargs}`,
-          username: playername
-        });
-      } else {
-        await commlinkWebhook.send({
-          content: `To ${targetname}: ${commandargs}`,
-          username: playername
-        });
+      // Relay Temple comm to #commlink Discord channel
+      if (log.servername == 'jedi-temple') {
+        if (targetname == 'Broadcast') {
+          await commlinkWebhook.send({
+            content: `Broadcast @here: ${commandargs}`,
+            username: playername
+          });
+        } else {
+          await commlinkWebhook.send({
+            content: `To ${targetname}: ${commandargs}`,
+            username: playername
+          });
+        }
       }
       break;
     case 'rpnotify':
-      // Relay notification to Discord channel
+      // Relay notification to #council-chamber Discord channel
       const questMatch = /message: (.* has completed the .* quest!)/i.exec(commandargs);
       if (questMatch !== null) {
         await councilWebhook.send(questMatch[1]);
