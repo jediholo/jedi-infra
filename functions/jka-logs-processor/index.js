@@ -5,6 +5,17 @@ const Rcon = require('./rcon.js');
 // Config
 const COMMLINK_WEBHOOK_URL = process.env.COMMLINK_WEBHOOK_URL;
 const COUNCIL_WEBHOOK_URL = process.env.COUNCIL_WEBHOOK_URL;
+const COMMLINK_TARGETS = {
+  'broadcast':  '<@&700727212457984081>', // @Resident
+  'class':      '<@&501782073565118484> <@&501781730269593601>', // @Jedi Initiate @Jedi Padawan
+  'students':   '<@&501782073565118484> <@&501781730269593601>', // @Jedi Initiate @Jedi Padawan
+  'initiates':  '<@&501782073565118484>', // @Jedi Initiate
+  'padawans':   '<@&501781730269593601>', // @Jedi Padawan
+  'knights':    '<@&501781105272160285>', // @Jedi Knight
+  'masters':    '<@&501780638295392256>', // @Jedi Master
+  'council':    '<@&501780010089185281> <@&501779685961760779>', // @Councilor @High Councilor
+  'councilors': '<@&501780010089185281> <@&501779685961760779>', // @Councilor @High Councilor
+};
 
 // Webhook
 const commlinkWebhook = new Discord.WebhookClient({url: COMMLINK_WEBHOOK_URL});
@@ -26,17 +37,11 @@ async function processLog(log) {
     case 'comm':
       // Relay Temple comm to #commlink Discord channel
       if (log.servername == 'jedi-temple') {
-        if (targetname == 'Broadcast') {
-          await commlinkWebhook.send({
-            content: `Broadcast @here: ${commandargs}`,
-            username: playername
-          });
-        } else {
-          await commlinkWebhook.send({
-            content: `To ${targetname}: ${commandargs}`,
-            username: playername
-          });
-        }
+        const commlinkTarget = COMMLINK_TARGETS[targetname.toLowerCase()] || `@${targetname}`;
+        await commlinkWebhook.send({
+          content: `${commlinkTarget} ${commandargs}`,
+          username: playername
+        });
       }
       break;
     case 'rpnotify':
