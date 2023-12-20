@@ -36,7 +36,7 @@ dns_records = [
   { name = "",                      ttl = 3600,  type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 3600,  type = "MX",     target = "1 mx4.mail.ovh.net." },
   { name = "",                      ttl = 3600,  type = "MX",     target = "10 mx3.mail.ovh.net." },
-  { name = "",                      ttl = 600,   type = "SPF",    target = "\"v=spf1 include:fabinfra.net ?all\"" },
+  { name = "",                      ttl = 600,   type = "SPF",    target = "\"v=spf1 include:fabinfra.net -all\"" },
   { name = "",                      ttl = 300,   type = "TXT",    target = "\"google-site-verification=_20vklpumKjTDIdPh0jiFaUlXiVl4ho56OS6ZwJQNqs\"" },
   { name = "_dmarc",                ttl = 600,   type = "DMARC",  target = "v=DMARC1;p=none;rua=mailto:postmaster@jediholo.net;" },
   { name = "comport",               ttl = 1800,  type = "CNAME",  target = "srv01" },
