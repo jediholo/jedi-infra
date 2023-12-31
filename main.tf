@@ -33,17 +33,15 @@ provider "grafana" {
 // Kubernetes provider
 provider "kubernetes" {
   host                   = var.k8s_host
-  client_certificate     = base64decode(var.k8s_client_cert)
-  client_key             = base64decode(var.k8s_client_key)
   cluster_ca_certificate = base64decode(var.k8s_ca_cert)
+  token                  = var.k8s_token
 }
 
 // Helm provider
 provider "helm" {
   kubernetes {
     host                   = var.k8s_host
-    client_certificate     = base64decode(var.k8s_client_cert)
-    client_key             = base64decode(var.k8s_client_key)
     cluster_ca_certificate = base64decode(var.k8s_ca_cert)
+    token                  = var.k8s_token
   }
 }

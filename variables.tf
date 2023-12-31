@@ -65,15 +65,12 @@ variable "grafana_sm_access_token" {
 variable "k8s_host" {
   description = "Kubernetes master host name"
 }
-variable "k8s_client_cert" {
-  description = "Kubernetes client certificate (base64-encoded PEM)"
-}
-variable "k8s_client_key" {
-  description = "Kubernetes client private key (base64-encoded PEM)"
-  sensitive   = true
-}
 variable "k8s_ca_cert" {
   description = "Kubernetes cluster CA certificate (base64-encoded PEM)"
+}
+variable "k8s_token" {
+  description = "Kubernetes service account token"
+  sensitive   = true
 }
 
 // DNS config

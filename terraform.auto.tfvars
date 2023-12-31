@@ -24,9 +24,8 @@ grafana_sm_url = "https://synthetic-monitoring-api.grafana.net"
 
 # Kubernetes provider
 k8s_host = "https://k8s-master.fabinfra.net:6443"
-#k8s_client_cert = "toComplete"
-#k8s_client_key = "toComplete"
 #k8s_ca_cert = "toComplete"
+#k8s_token = "toComplete"
 
 # DNS config
 dns_zone = "jediholo.net"
