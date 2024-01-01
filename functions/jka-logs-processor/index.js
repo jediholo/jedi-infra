@@ -28,16 +28,10 @@ async function processLog(log) {
   const playername = (typeof log.playername === 'string') ? log.playername.replaceAll(/:+JEDI:+/g, '').replaceAll('=', ' ').trim() : undefined;
   const targetname = (typeof log.targetname === 'string') ? log.targetname.replaceAll(/:+JEDI:+/g, '').replaceAll('=', ' ').trim() : undefined;
   switch (log.commandname) {
-    case 'say':
-      // Don't invoke Him.
-      if (commandargs.match(/Soh Raun/i)) {
-        await Rcon.exec(log.servername, 'rpeffect camerashake 1 1');
-      }
-      break;
     case 'comm':
       // Relay Temple comm to #commlink Discord channel
       if (log.servername == 'jedi-temple') {
-        const commlinkTarget = COMMLINK_TARGETS[targetname.toLowerCase()] || `@${targetname}`;
+        const commlinkTarget = COMMLINK_TARGETS[targetname.toLowerCase()] || `@${targetname}:`;
         await commlinkWebhook.send({
           content: `${commlinkTarget} ${commandargs}`,
           username: playername
