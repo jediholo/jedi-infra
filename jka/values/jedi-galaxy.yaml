@@ -42,6 +42,7 @@ jka:
     rp_adminRank_cmds3: "70368169557959"
     rp_adminRank_cmds4: "70368152780679"
     rp_adminRank_cmds5: "70368739983359"
+    g_privateDuel: "0"
 
 logrotate:
   enabled: true
