@@ -29,6 +29,10 @@ spec:
                 - mountPath: /config
                   name: config
                   readOnly: true
+              {{- if .Values.volumes.misc }}
+                - mountPath: /var/www/html/misc
+                  name: misc
+              {{- end }}
               {{- if .Values.volumes.tmp }}
                 - mountPath: /var/www/html/tmp
                   name: tmp
@@ -42,6 +46,10 @@ spec:
               volumeMounts:
                 - mountPath: /var/www/html
                   name: www
+              {{- if .Values.volumes.misc }}
+                - mountPath: /var/www/html/misc
+                  name: misc
+              {{- end }}
               {{- if .Values.volumes.tmp }}
                 - mountPath: /var/www/html/tmp
                   name: tmp
@@ -65,6 +73,10 @@ spec:
             - name: config
               secret:
                 secretName: {{ include "matomo.fullname" . }}-config
+          {{- with .Values.volumes.misc }}
+            - name: misc
+              {{- toYaml . | nindent 14 }}
+          {{- end }}
           {{- with .Values.volumes.tmp }}
             - name: tmp
               {{- toYaml . | nindent 14 }}

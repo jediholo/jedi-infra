@@ -46,6 +46,10 @@ config:
     host: mailserver
 
 volumes:
+  misc:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/matomo/misc
+      type: DirectoryOrCreate
   tmp:
     hostPath:
       path: /home/domains/jediholo.net/apps/matomo/tmp
