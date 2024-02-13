@@ -41,6 +41,8 @@ env:
     define( 'WP_AUTO_UPDATE_CORE', false );
     define( 'WP_CACHE', true );
     define( 'WPCACHEHOME', '/var/www/html/wp-content/plugins/wp-super-cache/' );
+    define( 'WP_REDIS_HOST', 'redis' );
+    define( 'WP_REDIS_DATABASE', 1 );
 
 config:
   php:
