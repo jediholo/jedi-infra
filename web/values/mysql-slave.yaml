@@ -1,9 +1,5 @@
 fullnameOverride: mysql-slave
 
-image:
-  repository: ghcr.io/fab-infra/mariadb-slave
-  tag: 10.6-opensuse15-20230806-0242-3aa556d
-
 podSecurityContext:
   runAsUser: 1004
   runAsGroup: 1005
@@ -11,6 +7,18 @@ podSecurityContext:
 nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"
+
+config:
+  slave.cnf: |
+    [mysqld]
+    binlog_format = mixed
+    expire_logs_days = 7
+    log-bin = mysql-bin
+    max_allowed_packet = 67108864
+    relay-log = relay-bin
+    relay-log-index = relay-bin.index
+    server-id = 2
+    read-only
 
 volumes:
   data:

@@ -1,8 +1,5 @@
 fullnameOverride: mysql
 
-image:
-  tag: 10.6-opensuse15-20230806-0241-b7dec9b
-
 podSecurityContext:
   runAsUser: 1004
   runAsGroup: 1005
@@ -11,8 +8,14 @@ nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"
 
-service:
-  aliases: ["db01"]
+config:
+  master.cnf: |
+    [mysqld]
+    binlog_format = mixed
+    expire_logs_days = 7
+    log-bin = mysql-bin
+    max_allowed_packet = 67108864
+    server-id = 1
 
 volumes:
   data:

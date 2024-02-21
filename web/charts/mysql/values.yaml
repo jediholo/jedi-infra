@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: Recreate
 
 image:
-  repository: ghcr.io/fab-infra/mariadb
+  repository: mariadb
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -63,6 +63,11 @@ affinity: {}
 
 env: {}
   # MYSQL_ROOT_PASSWORD: toComplete
+
+config: {}
+  # custom.cnf: |
+  #   [mysqld]
+  #   max_allowed_packet = 67108864
 
 volumes:
   data: {}
