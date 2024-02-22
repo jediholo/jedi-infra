@@ -7,6 +7,8 @@ const COMMLINK_WEBHOOK_URL = process.env.COMMLINK_WEBHOOK_URL;
 const COUNCIL_WEBHOOK_URL = process.env.COUNCIL_WEBHOOK_URL;
 const COMMLINK_TARGETS = {
   'broadcast':  '<@&700727212457984081>', // @Resident
+  'resident':   '<@&700727212457984081>', // @Resident
+  'residents':  '<@&700727212457984081>', // @Resident
   'class':      '<@&501782073565118484> <@&501781730269593601>', // @Jedi Initiate @Jedi Padawan
   'students':   '<@&501782073565118484> <@&501781730269593601>', // @Jedi Initiate @Jedi Padawan
   'initiates':  '<@&501782073565118484>', // @Jedi Initiate
