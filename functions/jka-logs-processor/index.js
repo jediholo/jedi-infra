@@ -41,10 +41,15 @@ async function processLog(log) {
       }
       break;
     case 'rpnotify':
-      // Relay notification to #council-chamber Discord channel
+      // Relay quest completion notification to #council-chamber Discord channel
       const questMatch = /message: (.* has completed the .* quest!)/i.exec(commandargs);
       if (questMatch !== null) {
         await councilWebhook.send(questMatch[1]);
+      }
+      // Relay height change notification to #council-chamber Discord channel
+      const heightchangeMatch = /message: (.* has adjusted their height to .*)/i.exec(commandargs);
+      if (heightchangeMatch !== null) {
+        await councilWebhook.send(heightchangeMatch[1]);
       }
       break;
   }
