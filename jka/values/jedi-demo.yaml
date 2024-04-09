@@ -39,10 +39,10 @@ logrotate:
   enabled: true
   schedule: "0 6 * * *"
   image:
-    tag: 3.18-opensuse15-20230104-1834-4ea8ebb
+    tag: 3.18-opensuse15-20240331-0242-3a415e7
 
 mock:
-  enabled: false
+  enabled: true
   image:
     tag: master-20230115-2237-5944272
   args: [
@@ -50,8 +50,8 @@ mock:
     "-i", "hostname=^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net",
     "-s", "gamename=RPMod 0.5.1c",
     "-s", "sv_hostname=^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net",
-    "-m", "The JEDI Demo server has moved to 5.39.85.118:29072",
+    "-m", "The JEDI Demo server has moved to 94.23.252.71:29072",
   ]
   hostPort: 29072
   nodeSelector:
-    kubernetes.io/hostname: ks14
+    kubernetes.io/hostname: ks13
