@@ -30,8 +30,8 @@ k8s_host = "https://k8s-master.fabinfra.net:6443"
 # DNS config
 dns_zone = "jediholo.net"
 dns_records = [
-  { name = "",                      ttl = 1800,  type = "A",      target = "5.39.85.118" },
-  { name = "",                      ttl = 1800,  type = "AAAA",   target = "2001:41d0:8:9776::1" },
+  { name = "",                      ttl = 1800,  type = "A",      target = "94.23.252.71" },
+  { name = "",                      ttl = 1800,  type = "AAAA",   target = "2001:41d0:2:7f47::1" },
   { name = "",                      ttl = 3600,  type = "CAA",    target = "128 issue \"letsencrypt.org\"" },
   { name = "",                      ttl = 3600,  type = "MX",     target = "1 mx4.mail.ovh.net." },
   { name = "",                      ttl = 3600,  type = "MX",     target = "10 mx3.mail.ovh.net." },
@@ -68,7 +68,7 @@ dns_records = [
 
 # Jedi Academy
 jka_namespace = "jka"
-jka_external_ip = "5.39.85.118"
+jka_external_ip = "94.23.252.71"
 jka_deployments_scale_sa = [
   { name = "rpmod", "namespace" = "domain-jediholo-net" },
 ]
