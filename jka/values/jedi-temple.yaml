@@ -44,7 +44,7 @@ logrotate:
     tag: 3.18-opensuse15-20240331-0242-3a415e7
 
 mock:
-  enabled: true
+  enabled: false
   image:
     tag: master-20230115-2237-5944272
   args: [
