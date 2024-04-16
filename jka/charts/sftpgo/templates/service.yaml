@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sftpgo.fullname" . }}
+  labels:
+    {{- include "sftpgo.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "sftpgo.selectorLabels" . | nindent 4 }}
+  ports:
+    {{- with first .Values.config.httpd.bindings }}
+    - port: {{ $.Values.service.http.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    {{- end }}
+    {{- with first .Values.config.ftpd.bindings }}
+    - port: {{ $.Values.service.ftp.port }}
+      targetPort: ftp
+      protocol: TCP
+      name: ftp
+    {{- end }}
+    {{- range untilStep (int .Values.config.ftpd.passive_port_range.start) (int .Values.config.ftpd.passive_port_range.end) 1 }}
+    - port: {{ . }}
+      targetPort: ftp-pasv-{{ . }}
+      protocol: TCP
+      name: ftp-pasv-{{ . }}
+    {{- end }}
+    {{- with first .Values.config.sftpd.bindings }}
+    - port: {{ $.Values.service.sftp.port }}
+      targetPort: sftp
+      protocol: TCP
+      name: sftp
+    {{- end }}
+  {{- with .Values.service.externalIPs }}
+  externalTrafficPolicy: Local
+  externalIPs:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}

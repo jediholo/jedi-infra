@@ -120,6 +120,74 @@ resource "helm_release" "jka_ftp" {
 }
 */
 
+// SFTPGo
+resource "helm_release" "jka_sftpgo" {
+  name      = "sftpgo"
+  chart     = "${path.module}/jka/charts/sftpgo"
+  namespace = kubernetes_namespace.jka_ns.metadata[0].name
+
+  values = [file("${path.module}/jka/values/sftpgo.yaml")]
+
+  set_sensitive {
+    name = "env.SFTPGO_DEFAULT_ADMIN_PASSWORD"
+    value = var.jka_sftpgo_admin_password
+  }
+  set {
+    name  = "service.externalIPs[0]"
+    value = var.jka_external_ip
+  }
+  set {
+    name  = "config.ftpd.bindings[0].port"
+    value = "2121"
+  }
+  set {
+    name  = "config.ftpd.bindings[0].force_passive_ip"
+    value = var.jka_external_ip
+  }
+  dynamic "set" {
+    for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
+    content {
+      name = "initdata.users[${set.key}].status"
+      value = "1"
+    }
+  }
+  dynamic "set" {
+    for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
+    content {
+      name = "initdata.users[${set.key}].username"
+      value = set.value
+    }
+  }
+  dynamic "set" {
+    for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
+    content {
+      name = "initdata.users[${set.key}].password"
+      value = bcrypt(lookup(var.jka_ftp_password, set.value, lookup(var.jka_ftp_password, "default", "")))
+    }
+  }
+  dynamic "set" {
+    for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
+    content {
+      name = "initdata.users[${set.key}].permissions./[0]"
+      value = "*"
+    }
+  }
+  dynamic "set" {
+    for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
+    content {
+      name = "initdata.users[${set.key}].groups[0].name"
+      value = "jka"
+    }
+  }
+  dynamic "set" {
+    for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
+    content {
+      name = "initdata.users[${set.key}].groups[0].type"
+      value = "1"
+    }
+  }
+}
+
 // Uptime checks
 resource "grafana_synthetic_monitoring_check" "jka_uptime_check" {
   for_each          = toset(values(var.jka_server_hostport))

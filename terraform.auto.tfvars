@@ -92,6 +92,7 @@ jka_server_hostport = {
 #jka_ftp_password = {
 #  "default" = "toComplete"
 #}
+#jka_sftpgo_admin_password = "toComplete"
 #jka_backups_openrc = "toComplete"
 #jka_backups_sa = "toComplete"
 

@@ -1,0 +1,80 @@
+fullnameOverride: sftpgo
+
+podSecurityContext:
+  runAsUser: 1100
+  runAsGroup: 1100
+
+service:
+  type: NodePort
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/default-backend: default-backend
+    nginx.ingress.kubernetes.io/proxy-body-size: 300m
+  hosts:
+    - host: "ftp.jediholo.net"
+      paths:
+        - path: "/"
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: sftpgo-tls
+      hosts:
+        - "ftp.jediholo.net"
+
+volumes:
+  - name: sftpgo
+    hostPath:
+      path: /home/jka/.sftpgo
+  - name: jka
+    hostPath:
+      path: /home/jka
+  - name: dumps
+    hostPath:
+      path: /home/jka/_shared_/rpmod/dumps
+volumeMounts:
+  - mountPath: /var/lib/sftpgo
+    name: sftpgo
+  - mountPath: /home/jka
+    name: jka
+  - mountPath: /home/jka/jedi-demo/rpmod/dumps
+    name: dumps
+  - mountPath: /home/jka/jedi-galaxy/rpmod/dumps
+    name: dumps
+  - mountPath: /home/jka/jedi-grounds/rpmod/dumps
+    name: dumps
+
+config:
+  data_provider:
+    create_default_admin: true
+    users_base_dir: /home/jka
+
+initdata:
+  version: 16
+  groups:
+    - name: jka
+      user_settings:
+        max_sessions: 5
+        filters:
+          web_client:
+            - password-change-disabled
+            - password-reset-disabled
+            - publickey-change-disabled
+            - mfa-disabled
+            - api-key-auth-change-disabled
+            - info-change-disabled
+            - shares-disabled
+            - shares-without-password-disabled
+
+cert:
+  enabled: true
+  dnsNames:
+    - ftp.jediholo.net
+    - temple.jediholo.net
+    - demo.jediholo.net
+    - grounds.jediholo.net
+    - galaxy.jediholo.net
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

@@ -1,0 +1,14 @@
+{{- if .Values.cert.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "sftpgo.fullname" . }}-cert
+  labels:
+    {{- include "sftpgo.labels" . | nindent 4 }}
+spec:
+  secretName: {{ include "sftpgo.fullname" . }}-cert
+  dnsNames:
+    {{- toYaml .Values.cert.dnsNames | nindent 4 }}
+  issuerRef:
+    {{- toYaml .Values.cert.issuerRef | nindent 4 }}
+{{- end }}

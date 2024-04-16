@@ -148,6 +148,10 @@ variable "jka_ftp_password" {
   description = "JKA FTP password"
   sensitive   = true
 }
+variable "jka_sftpgo_admin_password" {
+  description = "SFTPGo admin password"
+  sensitive   = true
+}
 variable "jka_backups_openrc" {
   description = "OpenStack openrc file for backups"
   sensitive   = true

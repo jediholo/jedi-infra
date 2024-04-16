@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sftpgo.fullname" . }}
+  labels:
+    {{- include "sftpgo.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sftpgo.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: {{ .Values.strategy }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "sftpgo.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "sftpgo.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- with first .Values.config.httpd.bindings }}
+            - name: http
+              containerPort: {{.port}}
+              protocol: TCP
+            {{- end }}
+            {{- with .Values.config.telemetry }}
+            - name: telemetry
+              containerPort: {{.bind_port}}
+              protocol: TCP
+            {{- end }}
+            {{- with first .Values.config.ftpd.bindings }}
+            - name: ftp
+              containerPort: {{.port}}
+              protocol: TCP
+            {{- end }}
+            {{- range untilStep (int .Values.config.ftpd.passive_port_range.start) (int .Values.config.ftpd.passive_port_range.end) 1 }}
+            - name: ftp-pasv-{{ . }}
+              containerPort: {{ . }}
+              protocol: TCP
+            {{- end }}
+            {{- with first .Values.config.sftpd.bindings }}
+            - name: sftp
+              containerPort: {{.port}}
+              protocol: TCP
+            {{- end }}
+          {{- with first .Values.config.ftpd.bindings }}
+          {{- if $.Values.cert.enabled }}
+          env:
+            - name: SFTPGO_FTPD__BINDINGS__0__CERTIFICATE_FILE
+              value: /etc/sftpgo/cert/tls.crt
+            - name: SFTPGO_FTPD__BINDINGS__0__CERTIFICATE_KEY_FILE
+              value: /etc/sftpgo/cert/tls.key
+          {{- end }}
+          {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ include "sftpgo.fullname" . }}-env
+          livenessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 10
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/sftpgo/sftpgo.json
+              name: config
+              subPath: sftpgo.json
+              readOnly: true
+            - mountPath: /etc/sftpgo/initdata.json
+              name: config
+              subPath: initdata.json
+              readOnly: true
+            {{- if .Values.cert.enabled }}
+            - mountPath: /etc/sftpgo/cert
+              name: cert
+              readOnly: true
+            {{- end }}
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: config
+          secret:
+            secretName: {{ include "sftpgo.fullname" . }}-config
+        {{- if .Values.cert.enabled }}
+        - name: cert
+          secret:
+            secretName: {{ include "sftpgo.fullname" . }}-cert
+        {{- end }}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
