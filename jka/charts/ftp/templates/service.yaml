@@ -10,19 +10,17 @@ spec:
     {{- include "ftp.selectorLabels" . | nindent 4 }}
   ports:
     - port: {{ .Values.service.port }}
-      nodePort: {{ .Values.service.nodePort }}
       targetPort: ftp
       protocol: TCP
       name: ftp
-  {{- range untilStep (.Values.service.passivePortMin | int) (.Values.service.passivePortMax | int) 1 }}
+  {{- range untilStep (.Values.ftp.passivePortMin | int) (.Values.ftp.passivePortMax | int) 1 }}
     - port: {{ . }}
-      nodePort: {{ add . (sub $.Values.service.passiveNodePortMin $.Values.service.passivePortMin) }}
-      targetPort: {{ add . (sub $.Values.ftp.passivePortMin $.Values.service.passivePortMin) }}
+      targetPort: pasv{{ . }}
       protocol: TCP
       name: pasv{{ . }}
   {{- end }}
-  externalTrafficPolicy: Local
   {{- with .Values.service.externalIPs }}
+  externalTrafficPolicy: Local
   externalIPs:
     {{- toYaml . | nindent 4 }}
   {{- end }}

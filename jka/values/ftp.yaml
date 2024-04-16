@@ -3,6 +3,9 @@ fullnameOverride: ftp
 image:
   tag: 3.0-opensuse15-20240211-0243-6dd594a
 
+service:
+  type: NodePort
+
 volumes:
   - name: jka
     hostPath:

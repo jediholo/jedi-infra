@@ -39,13 +39,8 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 21
-  nodePort: 30021
-  passivePortMin: 20000
-  passivePortMax: 20020
-  passiveNodePortMin: 32000
-  passiveNodePortMax: 32020
   externalIPs: []
 
 resources: {}
