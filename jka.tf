@@ -97,6 +97,7 @@ resource "helm_release" "jka_filebeat" {
 }
 
 // FTP server
+/*
 resource "helm_release" "jka_ftp" {
   name      = "ftp"
   chart     = "${path.module}/jka/charts/ftp"
@@ -117,6 +118,7 @@ resource "helm_release" "jka_ftp" {
     value = join(" ", [ for server in keys(var.jka_server_hostport) : "${server}:${lookup(var.jka_ftp_password, server, lookup(var.jka_ftp_password, "default", ""))}" ])
   }
 }
+*/
 
 // Uptime checks
 resource "grafana_synthetic_monitoring_check" "jka_uptime_check" {
