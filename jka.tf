@@ -162,7 +162,7 @@ resource "helm_release" "jka_sftpgo" {
     for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
     content {
       name = "initdata.users[${set.key}].password"
-      value = bcrypt(lookup(var.jka_ftp_password, set.value, lookup(var.jka_ftp_password, "default", "")))
+      value = "\\{SHA512\\}${sha512(lookup(var.jka_ftp_password, set.value, lookup(var.jka_ftp_password, "default", "")))}"
     }
   }
   dynamic "set" {
