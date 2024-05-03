@@ -312,3 +312,9 @@ variable "uptime_check_urls" {
   type        = list(string)
   description = "Uptime check HTTPS URLs"
 }
+variable "uptime_frequency" {
+  description = "Uptime check frequency (ms)"
+}
+variable "uptime_timeout" {
+  description = "Uptime check timeout (ms)"
+}

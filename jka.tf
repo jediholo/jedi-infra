@@ -169,12 +169,11 @@ resource "grafana_synthetic_monitoring_check" "jka_uptime_check" {
   for_each          = toset(values(var.jka_server_hostport))
   job               = replace(each.value, "/:.*$/", "")
   target            = "https://rpmod.jediholo.net/ws/ServerService/rest?method=GetInfo&host=${replace(each.value, "/:.*$/", "")}&port=${replace(each.value, "/^.*:/", "")}"
-  frequency         = 60000
-  timeout           = 10000
+  frequency         = var.uptime_frequency
+  timeout           = var.uptime_timeout
   alert_sensitivity = "medium"
   probes = [
-    data.grafana_synthetic_monitoring_probes.sm_probes.probes.Paris,
-    data.grafana_synthetic_monitoring_probes.sm_probes.probes.NewYork
+    data.grafana_synthetic_monitoring_probes.sm_probes.probes.Paris
   ]
   labels = {
     domain = replace(each.value, "/(^[^.]+\\.|:.*$)/", "")

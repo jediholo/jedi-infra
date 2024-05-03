@@ -135,8 +135,9 @@ web_namespace = "domain-jediholo-net"
 # Uptime checks
 uptime_check_urls = [
  "https://comport.jediholo.net/",
- "https://files.jediholo.net/",
  "https://rpmod.jediholo.net/",
  "https://static.jediholo.net/",
  "https://www.jediholo.net/",
 ]
+uptime_frequency = 120000
+uptime_timeout = 10000
