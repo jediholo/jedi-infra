@@ -96,30 +96,6 @@ resource "helm_release" "jka_filebeat" {
   values = [file("${path.module}/jka/values/filebeat.yaml")]
 }
 
-// FTP server
-/*
-resource "helm_release" "jka_ftp" {
-  name      = "ftp"
-  chart     = "${path.module}/jka/charts/ftp"
-  namespace = kubernetes_namespace.jka_ns.metadata[0].name
-
-  values = [file("${path.module}/jka/values/ftp.yaml")]
-
-  set {
-    name  = "service.externalIPs[0]"
-    value = var.jka_external_ip
-  }
-  set {
-    name  = "ftp.passiveAddress"
-    value = var.jka_external_ip
-  }
-  set_sensitive {
-    name  = "ftp.users"
-    value = join(" ", [ for server in keys(var.jka_server_hostport) : "${server}:${lookup(var.jka_ftp_password, server, lookup(var.jka_ftp_password, "default", ""))}" ])
-  }
-}
-*/
-
 // SFTPGo
 resource "helm_release" "jka_sftpgo" {
   name      = "sftpgo"
