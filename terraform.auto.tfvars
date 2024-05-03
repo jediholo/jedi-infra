@@ -93,6 +93,9 @@ jka_server_hostport = {
 #  "default" = "toComplete"
 #}
 #jka_sftpgo_admin_password = "toComplete"
+jka_uptime_check_enabled = {
+  "jedi-demo" = false
+}
 #jka_backups_openrc = "toComplete"
 #jka_backups_sa = "toComplete"
 

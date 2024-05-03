@@ -105,7 +105,7 @@ resource "helm_release" "jka_sftpgo" {
   values = [file("${path.module}/jka/values/sftpgo.yaml")]
 
   set_sensitive {
-    name = "env.SFTPGO_DEFAULT_ADMIN_PASSWORD"
+    name  = "env.SFTPGO_DEFAULT_ADMIN_PASSWORD"
     value = var.jka_sftpgo_admin_password
   }
   set {
@@ -123,42 +123,42 @@ resource "helm_release" "jka_sftpgo" {
   dynamic "set" {
     for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
     content {
-      name = "initdata.users[${set.key}].status"
+      name  = "initdata.users[${set.key}].status"
       value = "1"
     }
   }
   dynamic "set" {
     for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
     content {
-      name = "initdata.users[${set.key}].username"
+      name  = "initdata.users[${set.key}].username"
       value = set.value
     }
   }
   dynamic "set" {
     for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
     content {
-      name = "initdata.users[${set.key}].password"
+      name  = "initdata.users[${set.key}].password"
       value = "\\{SHA512\\}${sha512(lookup(var.jka_ftp_password, set.value, lookup(var.jka_ftp_password, "default", "")))}"
     }
   }
   dynamic "set" {
     for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
     content {
-      name = "initdata.users[${set.key}].permissions./[0]"
+      name  = "initdata.users[${set.key}].permissions./[0]"
       value = "*"
     }
   }
   dynamic "set" {
     for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
     content {
-      name = "initdata.users[${set.key}].groups[0].name"
+      name  = "initdata.users[${set.key}].groups[0].name"
       value = "jka"
     }
   }
   dynamic "set" {
     for_each = { for i, v in keys(var.jka_server_hostport) : i => v }
     content {
-      name = "initdata.users[${set.key}].groups[0].type"
+      name  = "initdata.users[${set.key}].groups[0].type"
       value = "1"
     }
   }
@@ -166,9 +166,10 @@ resource "helm_release" "jka_sftpgo" {
 
 // Uptime checks
 resource "grafana_synthetic_monitoring_check" "jka_uptime_check" {
-  for_each          = toset(values(var.jka_server_hostport))
+  for_each          = var.jka_server_hostport
   job               = replace(each.value, "/:.*$/", "")
   target            = "https://rpmod.jediholo.net/ws/ServerService/rest?method=GetInfo&host=${replace(each.value, "/:.*$/", "")}&port=${replace(each.value, "/^.*:/", "")}"
+  enabled           = lookup(var.jka_uptime_check_enabled, each.key, true)
   frequency         = var.uptime_frequency
   timeout           = var.uptime_timeout
   alert_sensitivity = "medium"

@@ -152,6 +152,10 @@ variable "jka_sftpgo_admin_password" {
   description = "SFTPGo admin password"
   sensitive   = true
 }
+variable "jka_uptime_check_enabled" {
+  type        = map(bool)
+  description = "JKA uptime check toggle"
+}
 variable "jka_backups_openrc" {
   description = "OpenStack openrc file for backups"
   sensitive   = true
