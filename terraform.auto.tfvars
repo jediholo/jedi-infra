@@ -142,5 +142,5 @@ uptime_check_urls = [
  "https://static.jediholo.net/",
  "https://www.jediholo.net/",
 ]
-uptime_frequency = 120000
+uptime_frequency = 300000
 uptime_timeout = 10000
