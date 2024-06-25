@@ -61,6 +61,7 @@ initdata:
             - password-change-disabled
             - password-reset-disabled
             - publickey-change-disabled
+            - tls-cert-change-disabled
             - mfa-disabled
             - api-key-auth-change-disabled
             - info-change-disabled
