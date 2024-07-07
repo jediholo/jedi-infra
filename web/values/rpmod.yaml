@@ -1,7 +1,7 @@
 fullnameOverride: rpmod
 
 image:
-  tag: master-20240705-2247-c0e19a8
+  tag: master-20240707-1942-21c502a
 
 podSecurityContext:
   runAsUser: 1004
