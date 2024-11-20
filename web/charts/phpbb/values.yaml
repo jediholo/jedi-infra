@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: RollingUpdate
 
 image:
-  repository: bitnami/phpbb
+  repository: ghcr.io/fab-infra/phpbb
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -90,7 +90,15 @@ env: {}
   # PHPBB_HOST: "example.com"
 
 volumes:
-  data: {}
+  files: {}
     # hostPath:
-    #   path: /home/domains/example.org/apps/phpbb
+    #   path: /home/domains/example.org/apps/phpbb/files
+    #   type: DirectoryOrCreate
+  images: {}
+    # hostPath:
+    #   path: /home/domains/example.org/apps/phpbb/images
+    #   type: DirectoryOrCreate
+  store: {}
+    # hostPath:
+    #   path: /home/domains/example.org/apps/phpbb/store
     #   type: DirectoryOrCreate

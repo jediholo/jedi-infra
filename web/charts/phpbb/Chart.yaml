@@ -2,5 +2,5 @@ apiVersion: v2
 name: phpbb
 description: phpBB forum
 type: application
-version: 0.1.5
-appVersion: "3.3.12"
+version: 0.2.0
+appVersion: "3.3-opensuse15"

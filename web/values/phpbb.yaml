@@ -1,5 +1,13 @@
 fullnameOverride: phpbb
 
+image:
+  repository: ghcr.io/jediholo/jedi-comport
+  tag: master-20241119-2326-85cff13
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
 nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"
@@ -42,7 +50,15 @@ env:
   PHP_UPLOAD_MAX_FILESIZE: 100M
 
 volumes:
-  data:
+  files:
     hostPath:
-      path: /home/domains/jediholo.net/apps/phpbb
+      path: /home/domains/jediholo.net/apps/phpbb/files
+      type: DirectoryOrCreate
+  images:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/phpbb/images
+      type: DirectoryOrCreate
+  store:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/phpbb/store
       type: DirectoryOrCreate
