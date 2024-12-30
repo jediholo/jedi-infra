@@ -109,7 +109,11 @@ resource "helm_release" "jka_sftpgo" {
     value = var.jka_sftpgo_admin_password
   }
   set {
-    name  = "service.externalIPs[0]"
+    name  = "service.ftp.externalIPs[0]"
+    value = var.jka_external_ip
+  }
+  set {
+    name  = "service.sftp.externalIPs[0]"
     value = var.jka_external_ip
   }
   set {

@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "sftpgo.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service.http.type }}
   selector:
     {{- include "sftpgo.selectorLabels" . | nindent 4 }}
   ports:
@@ -15,6 +15,23 @@ spec:
       protocol: TCP
       name: http
     {{- end }}
+  {{- with .Values.service.http.externalIPs }}
+  externalTrafficPolicy: Local
+  externalIPs:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sftpgo.fullname" . }}-ftp
+  labels:
+    {{- include "sftpgo.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.ftp.type }}
+  selector:
+    {{- include "sftpgo.selectorLabels" . | nindent 4 }}
+  ports:
     {{- with first .Values.config.ftpd.bindings }}
     - port: {{ $.Values.service.ftp.port }}
       targetPort: ftp
@@ -27,13 +44,30 @@ spec:
       protocol: TCP
       name: ftp-pasv-{{ . }}
     {{- end }}
+  {{- with .Values.service.ftp.externalIPs }}
+  externalTrafficPolicy: Local
+  externalIPs:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sftpgo.fullname" . }}-sftp
+  labels:
+    {{- include "sftpgo.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.sftp.type }}
+  selector:
+    {{- include "sftpgo.selectorLabels" . | nindent 4 }}
+  ports:
     {{- with first .Values.config.sftpd.bindings }}
     - port: {{ $.Values.service.sftp.port }}
       targetPort: sftp
       protocol: TCP
       name: sftp
     {{- end }}
-  {{- with .Values.service.externalIPs }}
+  {{- with .Values.service.sftp.externalIPs }}
   externalTrafficPolicy: Local
   externalIPs:
     {{- toYaml . | nindent 4 }}

@@ -38,14 +38,18 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
   http:
+    type: ClusterIP
     port: 8080
+    externalIPs: []
   ftp:
+    type: ClusterIP
     port: 21
+    externalIPs: []
   sftp:
+    type: ClusterIP
     port: 2022
-  externalIPs: []
+    externalIPs: []
 
 ingress:
   enabled: false

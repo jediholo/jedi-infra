@@ -5,7 +5,10 @@ podSecurityContext:
   runAsGroup: 1100
 
 service:
-  type: NodePort
+  ftp:
+    type: NodePort
+  sftp:
+    type: NodePort
 
 ingress:
   enabled: true
