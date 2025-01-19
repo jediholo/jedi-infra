@@ -8,6 +8,10 @@ terraform {
       source = "terraform-provider-openstack/openstack"
       version = "~> 1.54"
     }
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 5.84"
+    }
     google = {
       source  = "hashicorp/google"
       version = "~> 5.16"

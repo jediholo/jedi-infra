@@ -6,6 +6,21 @@ provider "ovh" {
   consumer_key       = var.ovh_consumer_key
 }
 
+// OVH S3 AWS provider
+provider "aws" {
+  region     = var.ovh_s3_region
+  access_key = var.ovh_s3_access_key
+  secret_key = var.ovh_s3_secret_key
+
+  skip_credentials_validation = true
+  skip_requesting_account_id  = true
+  skip_region_validation      = true
+
+  endpoints {
+    s3 = var.ovh_s3_endpoint
+  }
+}
+
 // OpenStack provider
 provider "openstack" {
   auth_url    = var.os_auth_url

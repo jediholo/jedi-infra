@@ -1,3 +1,14 @@
+// OVH S3 buckets
+resource "aws_s3_bucket" "s3_bucket" {
+  for_each = toset(var.storage_bucket_names)
+  bucket   = "${var.storage_bucket_prefix}-${each.value}"
+}
+import {
+  for_each = toset(var.storage_bucket_names)
+  to       = aws_s3_bucket.s3_bucket[each.value]
+  id       = "${var.storage_bucket_prefix}-${each.value}"
+}
+
 // GCS bucket for project files
 resource "google_storage_bucket" "gcs_bucket_project" {
   name                        = var.gcp_project_id
@@ -8,40 +19,33 @@ resource "google_storage_bucket" "gcs_bucket_project" {
 }
 
 // GCS buckets for backups
-resource "google_storage_bucket" "gcs_bucket_backups" {
-  name                        = "${var.gcp_project_id}-backups"
+resource "google_storage_bucket" "gcs_bucket" {
+  for_each                    = toset(var.storage_bucket_names)
+  name                        = "${var.storage_bucket_prefix}-${each.value}"
   project                     = var.gcp_project_id
   location                    = var.gcp_region
   storage_class               = "COLDLINE"
   uniform_bucket_level_access = true
 }
-resource "google_storage_bucket" "gcs_bucket_gamerepo_default" {
-  name                        = "${var.gcp_project_id}-gamerepo-default"
-  project                     = var.gcp_project_id
-  location                    = var.gcp_region
-  storage_class               = "COLDLINE"
-  uniform_bucket_level_access = true
+moved {
+  from = google_storage_bucket.gcs_bucket_backups
+  to   = google_storage_bucket.gcs_bucket["backups"]
 }
-resource "google_storage_bucket" "gcs_bucket_gamerepo_jedi_downloads" {
-  name                        = "${var.gcp_project_id}-gamerepo-jedi-downloads"
-  project                     = var.gcp_project_id
-  location                    = var.gcp_region
-  storage_class               = "COLDLINE"
-  uniform_bucket_level_access = true
+moved {
+  from = google_storage_bucket.gcs_bucket_gamerepo_default
+  to   = google_storage_bucket.gcs_bucket["gamerepo-default"]
 }
-resource "google_storage_bucket" "gcs_bucket_gamerepo_jedi_private" {
-  name                        = "${var.gcp_project_id}-gamerepo-jedi-private"
-  project                     = var.gcp_project_id
-  location                    = var.gcp_region
-  storage_class               = "COLDLINE"
-  uniform_bucket_level_access = true
+moved {
+  from = google_storage_bucket.gcs_bucket_gamerepo_jedi_downloads
+  to   = google_storage_bucket.gcs_bucket["gamerepo-jedi-downloads"]
 }
-resource "google_storage_bucket" "gcs_bucket_gamerepo_jedi_skins" {
-  name                        = "${var.gcp_project_id}-gamerepo-jedi-skins"
-  project                     = var.gcp_project_id
-  location                    = var.gcp_region
-  storage_class               = "COLDLINE"
-  uniform_bucket_level_access = true
+moved {
+  from = google_storage_bucket.gcs_bucket_gamerepo_jedi_private
+  to   = google_storage_bucket.gcs_bucket["gamerepo-jedi-private"]
+}
+moved {
+  from = google_storage_bucket.gcs_bucket_gamerepo_jedi_skins
+  to   = google_storage_bucket.gcs_bucket["gamerepo-jedi-skins"]
 }
 
 // Service Account with Storage Object Admin role

@@ -4,6 +4,12 @@ ovh_endpoint = "ovh-eu"
 #ovh_application_secret = "toComplete"
 #ovh_consumer_key = "toComplete"
 
+# OVH S3 AWS provider
+ovh_s3_endpoint = "https://s3.rbx.io.cloud.ovh.net"
+ovh_s3_region = "rbx"
+#ovh_s3_access_key = "toComplete"
+#ovh_s3_secret_key = "toComplete"
+
 # OpenStack provider
 os_auth_url = "https://auth.cloud.ovh.net/v3/"
 os_region = "GRA"
@@ -98,6 +104,10 @@ jka_uptime_check_enabled = {
 }
 #jka_backups_openrc = "toComplete"
 #jka_backups_sa = "toComplete"
+
+# Storage
+storage_bucket_prefix = "jediholo-net"
+storage_bucket_names = [ "backups", "gamerepo-default", "gamerepo-jedi-downloads", "gamerepo-jedi-private", "gamerepo-jedi-skins" ]
 
 # Web
 web_namespace = "domain-jediholo-net"
