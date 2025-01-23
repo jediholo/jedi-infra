@@ -221,6 +221,10 @@ resource "google_service_account_key" "web_logstash_sa_key" {
 resource "google_pubsub_topic" "web_logstash_pubsub_topic" {
   project = var.gcp_project_id
   name    = "jka-logs"
+
+  message_storage_policy {
+    allowed_persistence_regions = [var.gcp_region]
+  }
 }
 resource "google_pubsub_topic_iam_member" "web_logstash_pubsub_topic_publisher" {
   project = var.gcp_project_id

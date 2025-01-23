@@ -1,4 +1,5 @@
 // Imports
+const functions = require('@google-cloud/functions-framework');
 const Discord = require('discord.js');
 const Rcon = require('./rcon.js');
 
@@ -56,8 +57,8 @@ async function processLog(log) {
 }
 
 // Process entrypoint
-module.exports.process = async (message, context) => {
-  const data = Buffer.from(message.data, 'base64').toString();
+functions.cloudEvent('process', async (cloudEvent) => {
+  const data = Buffer.from(cloudEvent.data.message.data, 'base64').toString();
   const log = JSON.parse(data);
   await processLog(log);
-};
+});

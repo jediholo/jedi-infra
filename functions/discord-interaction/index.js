@@ -1,4 +1,5 @@
 // Imports
+const functions = require('@google-cloud/functions-framework');
 const { InteractionResponseType, InteractionType, verifyKey } = require('discord-interactions');
 const Discord = require('discord.js');
 
@@ -47,7 +48,7 @@ async function processCommand(interaction) {
 }
 
 // Interaction entrypoint
-module.exports.interaction = async (req, res) => {
+functions.http('interaction', async (req, res) => {
   // Verify the request
   const signature = req.get('X-Signature-Ed25519');
   const timestamp = req.get('X-Signature-Timestamp');
@@ -75,4 +76,4 @@ module.exports.interaction = async (req, res) => {
       type: InteractionResponseType.PONG,
     });
   }
-};
+});

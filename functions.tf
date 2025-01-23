@@ -13,24 +13,33 @@ resource "google_storage_bucket_object" "discord_interaction_object" {
 }
 
 // Discord interaction Cloud Function
-resource "google_cloudfunctions_function" "discord_interaction_function" {
+resource "google_cloudfunctions2_function" "discord_interaction_function" {
   name        = "discord-interaction"
   project     = var.gcp_project_id
+  location    = var.gcp_region
   description = "Discord interaction"
-  runtime     = "nodejs18"
 
-  available_memory_mb   = 128
-  source_archive_bucket = google_storage_bucket_object.discord_interaction_object.bucket
-  source_archive_object = google_storage_bucket_object.discord_interaction_object.name
-  service_account_email = google_service_account.discord_interaction_sa.email
-  trigger_http          = true
-  entry_point           = "interaction"
-  max_instances         = 10
+  build_config {
+    runtime     = "nodejs18"
+    entry_point = "interaction"
+    source {
+      storage_source {
+        bucket = google_storage_bucket_object.discord_interaction_object.bucket
+        object = google_storage_bucket_object.discord_interaction_object.name
+      }
+    }
+  }
 
-  environment_variables = {
-    ADMIN_ROLE_ID        = var.discord_admin_role_id
-    ANNOUNCE_WEBHOOK_URL = var.discord_announce_webhook_url
-    CLIENT_PUBLIC_KEY    = var.discord_client_public_key
+  service_config {
+    max_instance_count = 10
+    available_memory   = "128Mi"
+    environment_variables = {
+      ADMIN_ROLE_ID        = var.discord_admin_role_id
+      ANNOUNCE_WEBHOOK_URL = var.discord_announce_webhook_url
+      CLIENT_PUBLIC_KEY    = var.discord_client_public_key
+    }
+    ingress_settings      = "ALLOW_ALL"
+    service_account_email = google_service_account.discord_interaction_sa.email
   }
 }
 
@@ -42,17 +51,17 @@ resource "google_service_account" "discord_interaction_sa" {
 }
 
 // Discord interaction IAM entry for public access
-resource "google_cloudfunctions_function_iam_member" "discord_interaction_function_iam" {
-  project        = google_cloudfunctions_function.discord_interaction_function.project
-  region         = google_cloudfunctions_function.discord_interaction_function.region
-  cloud_function = google_cloudfunctions_function.discord_interaction_function.name
-  role           = "roles/cloudfunctions.invoker"
-  member         = "allUsers"
+resource "google_cloud_run_service_iam_member" "discord_interaction_function_iam" {
+  project  = google_cloudfunctions2_function.discord_interaction_function.project
+  location = google_cloudfunctions2_function.discord_interaction_function.location
+  service  = google_cloudfunctions2_function.discord_interaction_function.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
 }
 
 // Discord interaction URL (output)
 output "discord_interaction_https_url" {
-  value       = google_cloudfunctions_function.discord_interaction_function.https_trigger_url
+  value       = google_cloudfunctions2_function.discord_interaction_function.service_config[0].uri
   description = "Discord interaction URL"
 }
 
@@ -72,32 +81,41 @@ resource "google_storage_bucket_object" "jka_logs_processor_object" {
 }
 
 // JKA logs processor Cloud Function
-resource "google_cloudfunctions_function" "jka_logs_processor_function" {
+resource "google_cloudfunctions2_function" "jka_logs_processor_function" {
   name        = "jka-logs-processor"
   project     = var.gcp_project_id
+  location    = var.gcp_region
   description = "JKA logs processor"
-  runtime     = "nodejs18"
 
-  available_memory_mb   = 128
-  source_archive_bucket = google_storage_bucket_object.jka_logs_processor_object.bucket
-  source_archive_object = google_storage_bucket_object.jka_logs_processor_object.name
-  service_account_email = google_service_account.jka_logs_processor_sa.email
-  entry_point           = "process"
-  max_instances         = 10
+  build_config {
+    runtime     = "nodejs18"
+    entry_point = "process"
+    source {
+      storage_source {
+        bucket = google_storage_bucket_object.jka_logs_processor_object.bucket
+        object = google_storage_bucket_object.jka_logs_processor_object.name
+      }
+    }
+  }
 
-  environment_variables = {
-    COMMLINK_WEBHOOK_URL = var.discord_commlink_webhook_url
-    COUNCIL_WEBHOOK_URL  = var.discord_council_webhook_url
-    RCON_PASSWORD        = lookup(var.jka_rcon_password, "default", "")
-    RCON_SERVERS         = jsonencode(var.jka_server_hostport)
+  service_config {
+    max_instance_count = 10
+    available_memory   = "128Mi"
+    environment_variables = {
+      COMMLINK_WEBHOOK_URL = var.discord_commlink_webhook_url
+      COUNCIL_WEBHOOK_URL  = var.discord_council_webhook_url
+      RCON_PASSWORD        = lookup(var.jka_rcon_password, "default", "")
+      RCON_SERVERS         = jsonencode(var.jka_server_hostport)
+    }
+    ingress_settings      = "ALLOW_INTERNAL_ONLY"
+    service_account_email = google_service_account.jka_logs_processor_sa.email
   }
 
   event_trigger {
-    event_type = "google.pubsub.topic.publish"
-    resource   = google_pubsub_topic.web_logstash_pubsub_topic.name
-    failure_policy {
-      retry = true
-    }
+    event_type            = "google.cloud.pubsub.topic.v1.messagePublished"
+    pubsub_topic          = google_pubsub_topic.web_logstash_pubsub_topic.id
+    retry_policy          = "RETRY_POLICY_RETRY"
+    service_account_email = google_service_account.jka_logs_processor_sa.email
   }
 }
 
@@ -106,4 +124,13 @@ resource "google_service_account" "jka_logs_processor_sa" {
   project      = var.gcp_project_id
   account_id   = "jka-logs-processor"
   display_name = "Service account for JKA logs processor"
+}
+
+// JKA logs processor IAM entry for internal access
+resource "google_cloud_run_service_iam_member" "jka_logs_processor_function_iam" {
+  project  = google_cloudfunctions2_function.jka_logs_processor_function.project
+  location = google_cloudfunctions2_function.jka_logs_processor_function.location
+  service  = google_cloudfunctions2_function.jka_logs_processor_function.name
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${google_service_account.jka_logs_processor_sa.email}"
 }
