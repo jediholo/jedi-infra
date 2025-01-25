@@ -317,6 +317,15 @@ resource "helm_release" "web_phpmyadmin" {
   values = [file("${path.module}/web/values/phpmyadmin.yaml")]
 }
 
+// n8n
+resource "helm_release" "web_n8n" {
+  name      = "n8n"
+  chart     = "${path.module}/web/charts/n8n"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/n8n.yaml")]
+}
+
 // Redis cache server
 resource "helm_release" "web_redis" {
   name      = "redis"

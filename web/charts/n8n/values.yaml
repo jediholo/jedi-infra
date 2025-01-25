@@ -1,0 +1,99 @@
+# Default values for n8n.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+strategy: RollingUpdate
+
+image:
+  repository: docker.n8n.io/n8nio/n8n
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 5678
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: example.org
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - example.org
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector:
+  server-role-web: "true"
+
+tolerations: []
+
+affinity: {}
+
+env:
+  # N8N_DIAGNOSTICS_ENABLED: "false"
+  # N8N_HIDE_USAGE_PAGE: "true"
+  # N8N_HOST: example.org
+  # N8N_PATH: /n8n/
+  # N8N_PORT: 5678
+  # N8N_PROTOCOL: https
+  # N8N_PROXY_HOPS: 1
+  # N8N_SMTP_HOST: mailserver
+  # N8N_SMTP_PORT: 587
+  # N8N_SMTP_SENDER: n8n@example.org
+  # WEBHOOK_URL: https://example.org/n8n/
+
+volumes:
+  data: {}
+    # hostPath:
+    #   path: /home/domains/example.org/apps/n8n/data
+    #   type: DirectoryOrCreate
