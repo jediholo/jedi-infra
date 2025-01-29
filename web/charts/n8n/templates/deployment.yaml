@@ -51,14 +51,14 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 10
             httpGet:
-              path: /
+              path: /healthz
               port: http
           readinessProbe:
             initialDelaySeconds: 3
             periodSeconds: 10
             timeoutSeconds: 10
             httpGet:
-              path: /
+              path: /healthz/readiness
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
