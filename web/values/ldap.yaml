@@ -1,7 +1,7 @@
 fullnameOverride: ldap
 
 image:
-  tag: 2.4-opensuse15-20240721-0250-299a004
+  tag: 2.4-opensuse15-20250223-0303-299a004
 
 podSecurityContext:
   runAsUser: 1004
