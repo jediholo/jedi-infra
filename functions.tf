@@ -20,7 +20,7 @@ resource "google_cloudfunctions2_function" "discord_interaction_function" {
   description = "Discord interaction"
 
   build_config {
-    runtime     = "nodejs18"
+    runtime     = "nodejs20"
     entry_point = "interaction"
     source {
       storage_source {
