@@ -21,15 +21,6 @@ provider "aws" {
   }
 }
 
-// OpenStack provider
-provider "openstack" {
-  auth_url    = var.os_auth_url
-  region      = var.os_region
-  tenant_name = var.os_tenant
-  user_name   = var.os_username
-  password    = var.os_password
-}
-
 // Google Cloud provider
 provider "google" {
   credentials = var.gcp_credentials
