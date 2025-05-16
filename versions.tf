@@ -2,11 +2,7 @@ terraform {
   required_providers {
     ovh = {
       source = "ovh/ovh"
-      version = "~> 0.36"
-    }
-    aws = {
-      source = "hashicorp/aws"
-      version = "~> 5.84"
+      version = "~> 2.2"
     }
     google = {
       source  = "hashicorp/google"

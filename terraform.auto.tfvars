@@ -3,19 +3,8 @@ ovh_endpoint = "ovh-eu"
 #ovh_application_key = "toComplete"
 #ovh_application_secret = "toComplete"
 #ovh_consumer_key = "toComplete"
-
-# OVH S3 AWS provider
-ovh_s3_endpoint = "https://s3.rbx.io.cloud.ovh.net"
-ovh_s3_region = "rbx"
-#ovh_s3_access_key = "toComplete"
-#ovh_s3_secret_key = "toComplete"
-
-# OpenStack provider
-os_auth_url = "https://auth.cloud.ovh.net/v3/"
-os_region = "GRA"
-#os_tenant = "toComplete"
-#os_username = "toComplete"
-#os_password = "toComplete"
+#ovh_project_id = "toComplete"
+ovh_region = "RBX"
 
 # GCP provider
 #gcp_credentials = "toComplete"

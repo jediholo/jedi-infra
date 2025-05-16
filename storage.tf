@@ -1,7 +1,9 @@
-// OVH S3 buckets
-resource "aws_s3_bucket" "s3_bucket" {
-  for_each = toset(var.storage_bucket_names)
-  bucket   = "${var.storage_bucket_prefix}-${each.value}"
+// OVH storage buckets
+resource "ovh_cloud_project_storage" "ovh_bucket" {
+  for_each     = toset(var.storage_bucket_names)
+  service_name = var.ovh_project_id
+  region_name  = var.ovh_region
+  name         = "${var.storage_bucket_prefix}-${each.value}"
 }
 
 // GCS bucket for project files

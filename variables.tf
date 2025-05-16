@@ -14,21 +14,11 @@ variable "ovh_consumer_key" {
   description = "OVH consumer key"
   sensitive   = true
 }
-
-// OVH S3 AWS provider
-variable "ovh_s3_endpoint" {
-  description = "OVH S3 API endpoint"
+variable "ovh_project_id" {
+  description = "OVH public cloud project ID"
 }
-variable "ovh_s3_region" {
-  description = "OVH S3 region"
-}
-variable "ovh_s3_access_key" {
-  description = "OVH S3 access key"
-  sensitive   = true
-}
-variable "ovh_s3_secret_key" {
-  description = "OVH S3 secret key"
-  sensitive   = true
+variable "ovh_region" {
+  description = "OVH public cloud region"
 }
 
 // Google Cloud provider
