@@ -48,7 +48,7 @@ service:
     externalIPs: []
   sftp:
     type: ClusterIP
-    port: 2022
+    port: 2222
     externalIPs: []
 
 ingress:
@@ -121,7 +121,7 @@ config:
       end: 20020
   sftpd:
     bindings:
-      - port: 2022
+      - port: 2222
   telemetry:
     bind_address: ""
     bind_port: 8081
