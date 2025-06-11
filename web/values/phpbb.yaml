@@ -2,7 +2,7 @@ fullnameOverride: phpbb
 
 image:
   repository: ghcr.io/jediholo/jedi-comport
-  tag: master-20241230-2223-85cff13
+  tag: master-20250610-2149-85cff13
 
 podSecurityContext:
   runAsUser: 1004
@@ -18,6 +18,17 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/default-backend: default-backend
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/server-snippet: |
+      set $block_request "";
+      if ($arg_sid != "") {
+        set $block_request "Y";
+      }
+      if ($http_referer = "") {
+        set $block_request "${block_request}Y";
+      }
+      if ($block_request = "YY") {
+        return 403;
+      }
   hosts:
     - host: "comport.jediholo.net"
       paths:
