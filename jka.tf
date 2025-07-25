@@ -109,19 +109,7 @@ resource "helm_release" "jka_sftpgo" {
     value = var.jka_sftpgo_admin_password
   }
   set {
-    name  = "service.ftp.externalIPs[0]"
-    value = var.jka_external_ip
-  }
-  set {
     name  = "service.sftp.externalIPs[0]"
-    value = var.jka_external_ip
-  }
-  set {
-    name  = "config.ftpd.bindings[0].port"
-    value = "2121"
-  }
-  set {
-    name  = "config.ftpd.bindings[0].force_passive_ip"
     value = var.jka_external_ip
   }
   dynamic "set" {

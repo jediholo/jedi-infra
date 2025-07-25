@@ -5,8 +5,6 @@ podSecurityContext:
   runAsGroup: 1100
 
 service:
-  ftp:
-    type: NodePort
   sftp:
     type: NodePort
 
@@ -70,15 +68,3 @@ initdata:
             - info-change-disabled
             - shares-disabled
             - shares-without-password-disabled
-
-cert:
-  enabled: true
-  dnsNames:
-    - ftp.jediholo.net
-    - temple.jediholo.net
-    - demo.jediholo.net
-    - grounds.jediholo.net
-    - galaxy.jediholo.net
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
