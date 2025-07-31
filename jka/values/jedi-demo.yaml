@@ -1,7 +1,7 @@
 fullnameOverride: jedi-demo
 
 image:
-  tag: master-20221127-2348-060d6c1
+  tag: master-20250731-2323-1a8e192
 
 service:
   port: 29072
@@ -25,6 +25,7 @@ jka:
   homepath: /home/jka/jedi-demo
   cvars:
     sv_hostname: "^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net"
+    sv_maxclients: "64"
     g_motd: "Welcome to the ::JEDI:: Demo Server"
     rp_motd: "^5::^7JEDI^5:: ^7Demo\\nwww.jediholo.net\\n\\n^1Demo Server Only\\n^7Please be ^3respectful^7,\\ndownload the ^3RPMod Client^7\\nand have fun!\\n\\nThe ^5::^7JEDI^5::^7 Temple can be found at\\n^5 temple.jediholo.net:29070"
     rp_accounts_AM_enabled: "1"
