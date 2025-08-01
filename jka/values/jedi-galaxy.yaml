@@ -1,7 +1,7 @@
 fullnameOverride: jedi-galaxy
 
 image:
-  tag: master-20221127-2348-060d6c1
+  tag: master-20250731-2323-1a8e192
 
 service:
   port: 29073
