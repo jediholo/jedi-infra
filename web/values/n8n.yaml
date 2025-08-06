@@ -34,6 +34,7 @@ env:
   N8N_SMTP_SENDER: noreply@jediholo.net
   N8N_SMTP_SSL: "false"
   N8N_SMTP_STARTTLS: "false"
+  NODE_FUNCTION_ALLOW_BUILTIN: "crypto"
   NODES_EXCLUDE: "[\"n8n-nodes-base.executeCommand\", \"n8n-nodes-base.localFileTrigger\", \"n8n-nodes-base.readWriteFile\"]"
   WEBHOOK_URL: https://services.jediholo.net/n8n/
 
