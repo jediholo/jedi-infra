@@ -56,12 +56,6 @@ dns_records = [
   { name = "www.dev",               ttl = 300,   type = "A",      target = "127.0.0.11" },
 ]
 
-# Discord interaction
-#discord_admin_role_id = "toComplete"
-#discord_client_public_key = "toComplete"
-#discord_announce_webhook_url = "toComplete"
-#discord_commlink_webhook_url = "toComplete"
-
 # Jedi Academy
 jka_namespace = "jka"
 jka_external_ip = "94.23.252.71"

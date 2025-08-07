@@ -76,27 +76,6 @@ variable "dns_records" {
   description = "DNS records"
 }
 
-// Discord interaction
-variable "discord_admin_role_id" {
-  description = "Discord admin role ID (comma-separated list)"
-}
-variable "discord_client_public_key" {
-  description = "Discord bot public key"
-  sensitive   = true
-}
-variable "discord_announce_webhook_url" {
-  description = "Discord webhook URL for announcements"
-  sensitive   = true
-}
-variable "discord_commlink_webhook_url" {
-  description = "Discord webhook URL for commlink"
-  sensitive   = true
-}
-variable "discord_council_webhook_url" {
-  description = "Discord webhook URL for council"
-  sensitive   = true
-}
-
 // JKA
 variable "jka_namespace" {
   description = "JKA Kubernetes namespace"
