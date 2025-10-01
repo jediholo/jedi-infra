@@ -61,6 +61,9 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - mountPath: /etc/apache2/conf-enabled/custom.conf
+              name: config
+              subPath: apache.conf
             - mountPath: /usr/local/etc/php/conf.d/custom.ini
               name: config
               subPath: php.ini
@@ -70,6 +73,10 @@ spec:
             - mountPath: /var/www/html/.htaccess
               name: config
               subPath: multisite.htaccess
+          {{- else }}
+            - mountPath: /var/www/html/.htaccess
+              name: config
+              subPath: default.htaccess
           {{- end }}
           {{- if .Values.volumes.content }}
             - mountPath: /var/www/html/wp-content

@@ -5,11 +5,15 @@ metadata:
   labels:
     {{- include "wordpress.labels" . | nindent 4 }}
 data:
+  apache.conf: |
+    {{- .Values.config.apache | nindent 4 }}
   php.ini: |
     {{- range $key, $value := .Values.config.php }}
     {{ $key }} = {{ $value }}
     {{- end }}
-  multisite.htaccess: |
+  default.htaccess: |
+    {{- .Values.config.htaccess.prepend | nindent 4 }}
+
     # BEGIN WordPress
 
     RewriteEngine On
@@ -17,8 +21,26 @@ data:
     RewriteBase /
     RewriteRule ^index\.php$ - [L]
 
-    # uploaded files
-    RewriteRule ^([_0-9a-zA-Z-]+/)?files/(.+) wp-includes/ms-files.php?file=$2 [L]
+    {{- .Values.config.htaccess.rules | nindent 4 }}
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+
+    # END WordPress
+
+    {{- .Values.config.htaccess.append | nindent 4 }}
+  multisite.htaccess: |
+    {{- .Values.config.htaccess.prepend | nindent 4 }}
+
+    # BEGIN WordPress
+
+    RewriteEngine On
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+
+    {{- .Values.config.htaccess.rules | nindent 4 }}
 
     # add a trailing slash to /wp-admin
     RewriteRule ^([_0-9a-zA-Z-]+/)?wp-admin$ $1wp-admin/ [R=301,L]
@@ -31,3 +53,5 @@ data:
     RewriteRule . index.php [L]
 
     # END WordPress
+
+    {{- .Values.config.htaccess.append | nindent 4 }}
