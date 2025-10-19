@@ -110,3 +110,13 @@ mock:
       operator: Exists
       effect: NoSchedule
   affinity: {}
+
+# Exporter config
+exporter:
+  enabled: false
+  image:
+    repository: ghcr.io/fcrespel/jka-exporter
+    pullPolicy: IfNotPresent
+    tag: master
+  args: []
+  env: {}

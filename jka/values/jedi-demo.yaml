@@ -56,3 +56,12 @@ mock:
   hostPort: 29072
   nodeSelector:
     kubernetes.io/hostname: ks13
+
+exporter:
+  enabled: true
+  image:
+    tag: master-20251019-214234-9726cff
+  args: ["-exporter", "otlphttp", "-log-format", "json", "-log-level", "debug"]
+  env:
+    OTEL_EXPORTER_OTLP_ENDPOINT: "http://94.23.252.71:4318"
+    OTEL_RESOURCE_ATTRIBUTES: "service.instance.id=jedi-demo"

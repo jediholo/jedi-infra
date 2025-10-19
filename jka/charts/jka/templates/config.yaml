@@ -14,3 +14,17 @@ stringData:
     {{- range $key, $value := .Values.jka.cvars }}
     set {{ tpl $key $ }} "{{ tpl (print $value) $ }}"
     {{- end }}
+---
+{{- if and .Values.exporter.enabled .Values.exporter.env }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "jka.fullname" . }}-exporter
+  labels:
+    {{- include "jka.labels" . | nindent 4 }}
+type: Opaque
+stringData:
+  {{- range $key, $value := .Values.exporter.env }}
+  {{ tpl $key $ }}: {{ tpl (print $value) $ | quote }}
+  {{- end }}
+{{- end }}
