@@ -1,7 +1,7 @@
 fullnameOverride: jedi-temple
 
 image:
-  tag: master-20250731-2323-1a8e192
+  tag: master-20251023-2231-1a8e192
 
 service:
   port: 29070
@@ -64,8 +64,8 @@ mock:
 exporter:
   enabled: true
   image:
-    tag: master-20251019-214234-9726cff
-  args: ["-exporter", "otlphttp", "-log-format", "json"]
+    tag: master-20251023-220805-bec7d46
+  args: ["-enable-rpmetrics", "-exporter", "otlphttp", "-log-format", "json", "-log-level", "debug"]
   env:
-    OTEL_EXPORTER_OTLP_ENDPOINT: "http://94.23.252.71:4318"
+    OTEL_EXPORTER_OTLP_ENDPOINT: "http://${HOST_IP}:4318"
     OTEL_RESOURCE_ATTRIBUTES: "service.instance.id=jedi-temple"

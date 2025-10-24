@@ -55,17 +55,21 @@ resource "helm_release" "jka_server" {
     name  = "service.externalIPs[0]"
     value = var.jka_external_ip
   }
-  set {
+  set_sensitive {
     name  = "jka.cvars.g_password"
     value = lookup(var.jka_server_password, each.value, lookup(var.jka_server_password, "default", ""))
   }
-  set {
+  set_sensitive {
     name  = "jka.cvars.rconpassword"
     value = lookup(var.jka_rcon_password, each.value, lookup(var.jka_rcon_password, "default", ""))
   }
-  set {
+  set_sensitive {
     name  = "jka.cvars.rp_accounts_AM_servicePassword"
     value = lookup(var.jka_am_password, each.value, lookup(var.jka_am_password, "default", ""))
+  }
+  set_sensitive {
+    name  = "exporter.env.RCON_PASSWORD"
+    value = lookup(var.jka_rcon_password, each.value, lookup(var.jka_rcon_password, "default", ""))
   }
 }
 
