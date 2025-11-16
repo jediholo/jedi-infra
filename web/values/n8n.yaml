@@ -19,11 +19,16 @@ ingress:
       hosts:
         - "n8n.jediholo.net"
 
+podAnnotations:
+  prometheus.io/port: "5678"
+  prometheus.io/scrape: "true"
+
 env:
   N8N_CONCURRENCY_PRODUCTION_LIMIT: "50"
   N8N_DIAGNOSTICS_ENABLED: "false"
   N8N_HIDE_USAGE_PAGE: "true"
   N8N_HOST: n8n.jediholo.net
+  N8N_METRICS: "true"
   N8N_PORT: 5678
   N8N_PROTOCOL: https
   N8N_PROXY_HOPS: 1
