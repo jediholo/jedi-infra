@@ -24,6 +24,9 @@ podAnnotations:
   prometheus.io/scrape: "true"
 
 env:
+  DB_SQLITE_POOL_SIZE: "5"
+  DB_SQLITE_VACUUM_ON_STARTUP: "true"
+  N8N_BLOCK_ENV_ACCESS_IN_NODE: "true"
   N8N_CONCURRENCY_PRODUCTION_LIMIT: "50"
   N8N_DIAGNOSTICS_ENABLED: "false"
   N8N_HIDE_USAGE_PAGE: "true"
@@ -33,6 +36,7 @@ env:
   N8N_PROTOCOL: https
   N8N_PROXY_HOPS: 1
   N8N_PUBLIC_API_SWAGGERUI_DISABLED: "true"
+  N8N_RUNNERS_ENABLED: "true"
   N8N_SMTP_HOST: mailserver
   N8N_SMTP_PORT: 587
   N8N_SMTP_SENDER: noreply@jediholo.net

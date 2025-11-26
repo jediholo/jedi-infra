@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-strategy: RollingUpdate
+strategy: Recreate
 
 image:
   repository: docker.n8n.io/n8nio/n8n
