@@ -15,7 +15,7 @@ ingress:
         - path: "/phpMyAdmin(/|$)(.*)"
           pathType: ImplementationSpecific
   tls:
-    - secretName: default-backend-tls
+    - secretName: apache-tls
       hosts:
         - "services.jediholo.net"
 

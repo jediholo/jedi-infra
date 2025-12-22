@@ -22,10 +22,40 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
+    - host: "services.jediholo.net"
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: "discord.jediholo.net"
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: "temple.jediholo.net"
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: "grounds.jediholo.net"
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: "demo.jediholo.net"
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: "galaxy.jediholo.net"
+      paths:
+        - path: /
+          pathType: Prefix
   tls:
     - secretName: apache-tls
       hosts:
         - "files.jediholo.net"
+        - "services.jediholo.net"
+        - "discord.jediholo.net"
+        - "temple.jediholo.net"
+        - "grounds.jediholo.net"
+        - "demo.jediholo.net"
+        - "galaxy.jediholo.net"
 
 env:
   SERVER_ENV: production
@@ -47,4 +77,35 @@ vhosts:
     <VirtualHost _default_:8080>
       ServerName files.jediholo.net
       DocumentRoot /srv/www/sd/files/htdocs/
+    </VirtualHost>
+  services.conf: |
+    <VirtualHost _default_:8080>
+      ServerName services.jediholo.net
+      DocumentRoot /srv/www/sd/services/htdocs/
+      Redirect permanent /kibana/ https://kibana.fabinfra.net/s/jedi/
+    </VirtualHost>
+  discord.conf: |
+    <VirtualHost _default_:8080>
+      ServerName discord.jediholo.net
+      Redirect permanent / https://discord.gg/XwX5q6KNEX
+    </VirtualHost>
+  temple.conf: |
+    <VirtualHost _default_:8080>
+      ServerName temple.jediholo.net
+      Redirect permanent / https://rpmod.jediholo.net/server/view/name/jedi-temple
+    </VirtualHost>
+  grounds.conf: |
+    <VirtualHost _default_:8080>
+      ServerName grounds.jediholo.net
+      Redirect permanent / https://rpmod.jediholo.net/server/view/name/jedi-grounds
+    </VirtualHost>
+  demo.conf: |
+    <VirtualHost _default_:8080>
+      ServerName demo.jediholo.net
+      Redirect permanent / https://rpmod.jediholo.net/server/view/name/jedi-demo
+    </VirtualHost>
+  galaxy.conf: |
+    <VirtualHost _default_:8080>
+      ServerName galaxy.jediholo.net
+      Redirect permanent / https://rpmod.jediholo.net/server/view/name/jedi-galaxy
     </VirtualHost>

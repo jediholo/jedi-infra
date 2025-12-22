@@ -17,7 +17,7 @@ ingress:
         - path: "/piwik(/|$)(.*)"
           pathType: ImplementationSpecific
   tls:
-    - secretName: default-backend-tls
+    - secretName: apache-tls
       hosts:
         - "services.jediholo.net"
 
