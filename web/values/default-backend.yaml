@@ -4,60 +4,120 @@ nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"
 
-ingress:
-  enabled: true
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/server-snippet: |
-      if ($host = 'discord.jediholo.net') {
-        rewrite ^/$ https://discord.gg/XwX5q6KNEX redirect;
-      }
-      if ($host = 'services.jediholo.net') {
-        rewrite ^/kibana(/.*)?$ https://kibana.fabinfra.net/s/jedi$1 redirect;
-      }
-      if ($host = 'temple.jediholo.net') {
-        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-temple redirect;
-      }
-      if ($host = 'grounds.jediholo.net') {
-        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-grounds redirect;
-      }
-      if ($host = 'demo.jediholo.net') {
-        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-demo redirect;
-      }
-      if ($host = 'galaxy.jediholo.net') {
-        rewrite ^/$ https://rpmod.jediholo.net/server/view/name/jedi-galaxy redirect;
-      }
-  hosts:
-    - host: "discord.jediholo.net"
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: "services.jediholo.net"
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: "temple.jediholo.net"
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: "grounds.jediholo.net"
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: "demo.jediholo.net"
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: "galaxy.jediholo.net"
-      paths:
-        - path: /
-          pathType: Prefix
-  tls:
-    - secretName: default-backend-tls
-      hosts:
-        - "discord.jediholo.net"
-        - "services.jediholo.net"
-        - "temple.jediholo.net"
-        - "grounds.jediholo.net"
-        - "demo.jediholo.net"
-        - "galaxy.jediholo.net"
+pages:
+  404.html: |
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta name="description" content="JEDI is a thriving Star Wars role-playing community offering a complete Jedi curriculum to its members, in an immersive universe set after 250 ABY." />
+      <title>JEDI HoloNet</title>
+      <link rel="stylesheet" href="https://static.jediholo.net/css/maintenance.css" type="text/css" />
+    </head>
+    <body>
+      <div id="mainContainer">
+        <div id="contentContainer">
+          <div id="contentFrameTop">
+            <div id="contentFrameTopLeft"></div>
+            <div id="contentFrameTopSpacer"></div>
+            <div id="contentFrameTopRight"></div>
+          </div>
+          <div id="contentFrameCornerTopLeft"></div>
+          <div id="contentFrameCornerTopRight"></div>
+          <div id="contentFrameLeft">
+            <div id="contentFrameLeftTop"></div>
+            <div id="contentFrameLeftSpacer"></div>
+            <div id="contentFrameLeftBottom"></div>
+          </div>
+          <div id="contentFrameRight">
+            <div id="contentFrameRightTop"></div>
+            <div id="contentFrameRightSpacer"></div>
+            <div id="contentFrameRightBottom"></div>
+          </div>
+          <div id="contentFrameCornerBottomLeft"></div>
+          <div id="contentFrameCornerBottomRight"></div>
+          <div id="contentFrameBottom">
+            <div id="contentFrameBottomLeft"></div>
+            <div id="contentFrameBottomSpacer"></div>
+            <div id="contentFrameBottomRight"></div>
+          </div>
+          <div id="content">
+            <p style="text-align: center;"><img id="logo" src="https://static.jediholo.net/img/logo_unavailable.png" alt="JEDI HoloNet Unavailable" title="JEDI HoloNet Unavailable" /></p>
+            <div class="box">
+              <p style="text-align: center;"><strong>The page you requested was not found or no longer exists.</strong></p>
+              <p style="text-align: center;">You may try accessing the <a href="https://www.jediholo.net" title="www.jediholo.net">home page</a> or the <a href="https://comport.jediholo.net" title="comport.jediholo.net">forums</a> instead.</p>
+              <p style="text-align: center;">We apologize for the inconvenience.</p>
+            </div>
+            <h3>About JEDI</h3>
+            <div class="box">
+              <p>The <strong>JEDI Temple</strong> is a place of <strong>learning</strong> and <strong>peace</strong> that aims to recreate an <strong>immersing Jedi role-playing experience</strong> in the Star Wars universe, from the Jedi Initiates discovering their Force-sensitivity and the constantly learning Padawan Learners, to the Jedi Knights and Jedi Masters studying the deeper mysteries of the Force.</p>
+              <p>JEDI mainly uses the <strong>Star Wars: Jedi Knight Jedi Academy</strong> (JKA) game along with its own <strong>RPMod</strong> modification to provide an unique role-playing experience to its members and guests. The main server is called the <strong>JEDI Temple</strong> and is where continuous, strict role-playing occurs. The following servers are available:</p>
+              <ul>
+                <li><strong>JEDI Temple:</strong> temple.jediholo.net:29070</li>
+                <li><strong>JEDI Grounds</strong> grounds.jediholo.net:29071</li>
+                <li><strong>JEDI Galaxy:</strong> galaxy.jediholo.net:29073</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>
+  503.html: |
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta name="description" content="JEDI is a thriving Star Wars role-playing community offering a complete Jedi curriculum to its members, in an immersive universe set after 250 ABY." />
+      <title>JEDI HoloNet</title>
+      <link rel="stylesheet" href="https://static.jediholo.net/css/maintenance.css" type="text/css" />
+    </head>
+    <body>
+      <div id="mainContainer">
+        <div id="contentContainer">
+          <div id="contentFrameTop">
+            <div id="contentFrameTopLeft"></div>
+            <div id="contentFrameTopSpacer"></div>
+            <div id="contentFrameTopRight"></div>
+          </div>
+          <div id="contentFrameCornerTopLeft"></div>
+          <div id="contentFrameCornerTopRight"></div>
+          <div id="contentFrameLeft">
+            <div id="contentFrameLeftTop"></div>
+            <div id="contentFrameLeftSpacer"></div>
+            <div id="contentFrameLeftBottom"></div>
+          </div>
+          <div id="contentFrameRight">
+            <div id="contentFrameRightTop"></div>
+            <div id="contentFrameRightSpacer"></div>
+            <div id="contentFrameRightBottom"></div>
+          </div>
+          <div id="contentFrameCornerBottomLeft"></div>
+          <div id="contentFrameCornerBottomRight"></div>
+          <div id="contentFrameBottom">
+            <div id="contentFrameBottomLeft"></div>
+            <div id="contentFrameBottomSpacer"></div>
+            <div id="contentFrameBottomRight"></div>
+          </div>
+          <div id="content">
+            <p style="text-align: center;"><img id="logo" src="https://static.jediholo.net/img/logo_unavailable.png" alt="JEDI HoloNet Unavailable" title="JEDI HoloNet Unavailable" /></p>
+            <div class="box">
+              <p style="text-align: center;"><strong>The JEDI HoloNet is currently experiencing issues or is under maintenance.<br />The page you requested is not available.</strong></p>
+              <p style="text-align: center;">You may try accessing the <a href="https://www.jediholo.net" title="www.jediholo.net">home page</a> or the <a href="https://comport.jediholo.net" title="comport.jediholo.net">forums</a> instead.</p>
+              <p style="text-align: center;">We apologize for the inconvenience. Please try again later and thank you for your patience.</p>
+            </div>
+            <h3>About JEDI</h3>
+            <div class="box">
+              <p>The <strong>JEDI Temple</strong> is a place of <strong>learning</strong> and <strong>peace</strong> that aims to recreate an <strong>immersing Jedi role-playing experience</strong> in the Star Wars universe, from the Jedi Initiates discovering their Force-sensitivity and the constantly learning Padawan Learners, to the Jedi Knights and Jedi Masters studying the deeper mysteries of the Force.</p>
+              <p>JEDI mainly uses the <strong>Star Wars: Jedi Knight Jedi Academy</strong> (JKA) game along with its own <strong>RPMod</strong> modification to provide an unique role-playing experience to its members and guests. The main server is called the <strong>JEDI Temple</strong> and is where continuous, strict role-playing occurs. The following servers are available:</p>
+              <ul>
+                <li><strong>JEDI Temple:</strong> temple.jediholo.net:29070</li>
+                <li><strong>JEDI Grounds</strong> grounds.jediholo.net:29071</li>
+                <li><strong>JEDI Galaxy:</strong> galaxy.jediholo.net:29073</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>

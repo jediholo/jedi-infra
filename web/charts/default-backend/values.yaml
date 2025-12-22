@@ -75,3 +75,7 @@ nodeSelector:
 tolerations: []
 
 affinity: {}
+
+pages:
+  # 404.html: Not Found
+  # 503.html: Service Unavailable
