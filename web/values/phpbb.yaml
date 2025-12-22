@@ -33,7 +33,7 @@ ingress:
     - host: "comport.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls:
     - secretName: phpbb-tls
       hosts:

@@ -17,8 +17,8 @@ ingress:
   hosts:
     - host: "ftp.jediholo.net"
       paths:
-        - path: "/"
-          pathType: ImplementationSpecific
+        - path: /
+          pathType: Prefix
   tls:
     - secretName: sftpgo-tls
       hosts:

@@ -31,27 +31,27 @@ ingress:
     - host: "discord.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
     - host: "services.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
     - host: "temple.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
     - host: "grounds.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
     - host: "demo.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
     - host: "galaxy.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls:
     - secretName: default-backend-tls
       hosts:

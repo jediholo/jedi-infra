@@ -14,11 +14,11 @@ ingress:
     - host: "jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
     - host: "www.jediholo.net"
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls:
     - secretName: wordpress-tls
       hosts:
