@@ -29,8 +29,9 @@ config:
       host: mysql
       dbname: jedi-piwik
       tables_prefix: piwik_
-      schema: Myisam
+      schema: Mariadb
       charset: utf8mb4
+      collation: utf8mb4_unicode_ci
     General:
       assume_secure_protocol: 1
       force_ssl: 1
