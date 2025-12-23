@@ -14,6 +14,7 @@ spec:
   template:
     metadata:
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
@@ -54,6 +55,12 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - mountPath: /etc/apache2/conf.d/custom.conf
+              name: config
+              subPath: apache.conf
+            - mountPath: /etc/php8/conf.d/custom.ini
+              name: config
+              subPath: php.ini
           {{- if .Values.volumes.files }}
             - mountPath: /srv/www/apps/phpbb/files
               name: files
@@ -79,6 +86,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: config
+          configMap:
+            name: {{ include "phpbb.fullname" . }}-config
       {{- with .Values.volumes.files }}
         - name: files
           {{- toYaml . | nindent 10 }}

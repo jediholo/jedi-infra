@@ -89,6 +89,10 @@ env: {}
   # PHPBB_FORUM_SERVER_PROTOCOL: "https://"
   # PHPBB_HOST: "example.com"
 
+config:
+  apache: ""
+  php: {}
+
 volumes:
   files: {}
     # hostPath:
