@@ -8,12 +8,11 @@ ingress:
   enabled: true
   annotations:
     nginx.ingress.kubernetes.io/default-backend: default-backend
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
     - host: "services.jediholo.net"
       paths:
-        - path: "/phpMyAdmin(/|$)(.*)"
-          pathType: ImplementationSpecific
+        - path: /phpMyAdmin
+          pathType: Prefix
   tls:
     - secretName: apache-tls
       hosts:
@@ -23,3 +22,7 @@ env:
   PMA_HOST: mysql
   PMA_PORT: 3306
   PMA_ABSOLUTE_URI: https://services.jediholo.net/phpMyAdmin/
+
+config:
+  apache: |
+    Alias /phpMyAdmin /var/www/html

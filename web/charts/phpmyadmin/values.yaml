@@ -79,3 +79,7 @@ affinity: {}
 env:
   PMA_HOST: mysql
   PMA_PORT: 3306
+
+config:
+  apache: ""
+  php: {}

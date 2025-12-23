@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "phpmyadmin.fullname" . }}-config
+  labels:
+    {{- include "phpmyadmin.labels" . | nindent 4 }}
+data:
+  apache.conf: |
+    {{- .Values.config.apache | nindent 4 }}
+  php.ini: |
+    {{- range $key, $value := .Values.config.php }}
+    {{ $key }} = {{ $value }}
+    {{- end }}
