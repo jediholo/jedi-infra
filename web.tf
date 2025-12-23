@@ -256,15 +256,15 @@ resource "helm_release" "web_matomo" {
   values = [file("${path.module}/web/values/matomo.yaml")]
 
   set_sensitive {
-    name  = "config.database.username"
+    name  = "config.matomo.database.username"
     value = var.web_matomo_db_username
   }
   set_sensitive {
-    name  = "config.database.password"
+    name  = "config.matomo.database.password"
     value = var.web_matomo_db_password
   }
   set_sensitive {
-    name  = "config.General.salt"
+    name  = "config.matomo.General.salt"
     value = var.web_matomo_salt
   }
 }

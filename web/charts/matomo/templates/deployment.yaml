@@ -140,6 +140,12 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - mountPath: /etc/apache2/conf-enabled/custom.conf
+              name: config
+              subPath: apache.conf
+            - mountPath: /usr/local/etc/php/conf.d/custom.ini
+              name: config
+              subPath: php.ini
             - mountPath: /var/www/html
               name: www
           {{- if .Values.volumes.misc }}

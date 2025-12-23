@@ -76,9 +76,12 @@ tolerations: []
 
 affinity: {}
 
-config: {}
-  # General:
-  #   force_ssl: 1
+config:
+  apache: ""
+  php: {}
+  matomo: {}
+    # General:
+    #   force_ssl: 1
 
 cron:
   enabled: true
