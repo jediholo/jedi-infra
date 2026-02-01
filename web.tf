@@ -167,20 +167,6 @@ resource "helm_release" "web_apache" {
   values = [file("${path.module}/web/values/apache.yaml")]
 }
 
-// LDAP directory
-resource "helm_release" "web_ldap" {
-  name      = "ldap"
-  chart     = "${path.module}/web/charts/ldap"
-  namespace = kubernetes_namespace.web_ns.metadata[0].name
-
-  values = [file("${path.module}/web/values/ldap.yaml")]
-
-  set_sensitive {
-    name  = "secrets.root.password"
-    value = var.web_ldap_root_password
-  }
-}
-
 // Logstash
 resource "helm_release" "web_logstash" {
   name      = "logstash"

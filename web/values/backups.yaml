@@ -13,7 +13,6 @@ nodeSelector:
 
 schedules:
   files: "30 5 * * *"
-  ldap: "0 5 * * *"
   mysql: "0 5 * * *"
   skinpack: "15 5 * * *"
   sync: "0 5 * * *"
@@ -38,8 +37,4 @@ volumes:
   domain:
     hostPath:
       path: /home/domains/jediholo.net
-      type: DirectoryOrCreate
-  ldap:
-    hostPath:
-      path: /home/domains/jediholo.net/ldap
       type: DirectoryOrCreate

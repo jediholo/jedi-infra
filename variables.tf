@@ -173,10 +173,6 @@ variable "web_activemq_admin_password" {
   description = "ActiveMQ admin password"
   sensitive   = true
 }
-variable "web_ldap_root_password" {
-  description = "LDAP root password"
-  sensitive   = true
-}
 variable "web_logstash_elasticsearch_ca" {
   description = "Logstash Elasticsearch certificate authority (PEM-encoded)"
   sensitive   = true
