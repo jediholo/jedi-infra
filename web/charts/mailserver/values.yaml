@@ -78,7 +78,7 @@ dkim:
   image:
     repository: ghcr.io/fab-infra/opendkim
     pullPolicy: IfNotPresent
-    tag: 2.11-opensuse15
+    tag: 2.11-opensuse16
   resources: {}
   config:
     domain: example.org

@@ -1,7 +1,7 @@
 fullnameOverride: mailserver
 
 image:
-  tag: 3.8-opensuse15-20250223-0305-d2b7117
+  tag: 3.10-opensuse16-20260201-0439-4f0bbce
 
 nodeSelector:
   server-role-web: "true"
@@ -22,7 +22,7 @@ volumes:
 dkim:
   enabled: true
   image:
-    tag:  2.11-opensuse15-20250223-0304-44699bd
+    tag: 2.11-opensuse16-20260202-2305-e940027
   config:
     domain: jediholo.net
     selector: march2016
