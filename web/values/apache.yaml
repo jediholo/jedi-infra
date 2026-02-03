@@ -1,7 +1,7 @@
 fullnameOverride: apache
 
 image:
-  tag: 2.4-opensuse15-20250223-0304-ee6f4a5
+  tag: 2.4-opensuse16-20260201-0439-cfc22f9
 
 podSecurityContext:
   runAsUser: 1004
