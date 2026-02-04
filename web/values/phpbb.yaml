@@ -2,7 +2,7 @@ fullnameOverride: phpbb
 
 image:
   repository: ghcr.io/jediholo/jedi-comport
-  tag: master-20250610-2149-85cff13
+  tag: master-20260204-2007-a2a4dfc
 
 podSecurityContext:
   runAsUser: 1004
