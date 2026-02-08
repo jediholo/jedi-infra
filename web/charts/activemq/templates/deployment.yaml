@@ -54,12 +54,12 @@ spec:
               containerPort: 61616
               protocol: TCP
           env:
-            - name: ACTIVEMQ_ADMIN_USERNAME
+            - name: ACTIVEMQ_WEB_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ include "activemq.fullname" . }}-admin-secret
                   key: username
-            - name: ACTIVEMQ_ADMIN_PASSWORD
+            - name: ACTIVEMQ_WEB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "activemq.fullname" . }}-admin-secret
@@ -79,12 +79,12 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - mountPath: /opt/activemq/conf/activemq.xml
+            - mountPath: /opt/apache-activemq/conf/activemq.xml
               name: config
               subPath: activemq.xml
               readOnly: true
             {{- if .Values.volumes.data }}
-            - mountPath: /opt/activemq/data
+            - mountPath: /opt/apache-activemq/data
               name: data
             {{- end }}
       {{- with .Values.nodeSelector }}

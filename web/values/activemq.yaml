@@ -1,7 +1,7 @@
 fullnameOverride: activemq
 
 image:
-  tag: 5.17-opensuse15-20240211-0237-8405501
+  tag: 6.2-20260202-2323-24853a7
 
 podSecurityContext:
   runAsUser: 1004
