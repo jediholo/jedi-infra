@@ -55,7 +55,7 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 10
             exec:
-              command: ['/usr/bin/mysqladmin', 'ping']
+              command: ['/usr/bin/mariadb-admin', 'ping']
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
