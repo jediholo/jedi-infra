@@ -48,7 +48,7 @@ logrotate:
   enabled: true
   schedule: "0 6 * * *"
   image:
-    tag: 3.18-opensuse15-20240331-0242-3a415e7
+    tag: 3.22-opensuse16-20260301-0434-9b31a44
 
 mock:
   enabled: false

@@ -93,7 +93,7 @@ logrotate:
   image:
     repository: ghcr.io/fab-infra/logrotate
     pullPolicy: IfNotPresent
-    tag: 3.8-opensuse15
+    tag: 3.22-opensuse16
 
 # Mock server config
 mock:
