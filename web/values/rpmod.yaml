@@ -37,3 +37,10 @@ volumes:
     hostPath:
       path: /home/domains/jediholo.net/apps/RPMod-Web/public/downloads
       type: DirectoryOrCreate
+
+config:
+  application:
+    development: {}
+    production:
+      passwordPolicy.enforceOnLogin: false
+      passwordPolicy.minScore: 1
