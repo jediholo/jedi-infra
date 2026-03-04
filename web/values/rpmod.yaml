@@ -42,5 +42,5 @@ config:
   application:
     development: {}
     production:
-      passwordPolicy.enforceOnLogin: false
+      passwordPolicy.enforceOnLogin: true
       passwordPolicy.minScore: 1
