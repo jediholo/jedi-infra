@@ -2,5 +2,5 @@ apiVersion: v2
 name: wordpress
 description: Wordpress
 type: application
-version: 0.10.1
-appVersion: "6.9.2-php8.4"
+version: 0.10.2
+appVersion: "6.9.4-php8.4"
