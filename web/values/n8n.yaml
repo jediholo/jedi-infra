@@ -1,5 +1,8 @@
 fullnameOverride: n8n
 
+image:
+  repository: ghcr.io/n8n-io/n8n
+
 nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"
