@@ -31,11 +31,12 @@ jka:
     rp_accounts_AM_enabled: "1"
     rp_accounts_AM_serviceUsername: "temple.jediholo.net@29070"
     rp_locks_title: "^5:: Temple Security ::"
-    rp_adminRank_cmds1: "35186519574528"
-    rp_adminRank_cmds2: "55644752117703"
-    rp_adminRank_cmds3: "69938403278791"
-    rp_adminRank_cmds4: "70368152780679"
-    rp_adminRank_cmds5: "70368739983359"
+    # Admin commands bitvalues: https://rpmod.jediholo.net/tools/bitvalues
+    rp_adminRank_cmds1: "35186519574528" # Instructor
+    rp_adminRank_cmds2: "55644752117703" # Watchman
+    rp_adminRank_cmds3: "69938403278791" # Mission Director
+    rp_adminRank_cmds4: "70368152780679" # Honorary Admin
+    rp_adminRank_cmds5: "70368739983359" # Council
     g_privateDuel: "0"
 
 logrotate:
