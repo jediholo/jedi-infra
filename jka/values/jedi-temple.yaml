@@ -35,8 +35,9 @@ jka:
     rp_adminRank_cmds1: "35186519574528" # Instructor
     rp_adminRank_cmds2: "55644752117703" # Watchman
     rp_adminRank_cmds3: "64440845139911" # Mission Director
-    rp_adminRank_cmds4: "70368152780679" # Honorary Admin
-    rp_adminRank_cmds5: "70368739983359" # Council
+    rp_adminRank_cmds4: "69938403278791" # Department Head
+    rp_adminRank_cmds5: "70368152780679" # Honorary Admin
+    rp_adminRank_cmds6: "70368739983359" # Council
     g_privateDuel: "0"
 
 logrotate:
