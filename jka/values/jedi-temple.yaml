@@ -35,8 +35,19 @@ jka:
     rp_adminRank_cmds1: "35186519574528" # Instructor
     rp_adminRank_cmds2: "55644752117703" # Watchman
     rp_adminRank_cmds3: "64440845139911" # Mission Director
-    rp_adminRank_cmds4: "70368152780679" # Honorary Admin
-    rp_adminRank_cmds5: "70368739983359" # Council
+    rp_adminRank_cmds4: "69938403278791" # Department Head
+    rp_adminRank_cmds5: "70368152780679" # Honorary Admin
+    rp_adminRank_cmds6: "70368739983359" # Council
+
+    rp_adminRank_name1: "Instructor"
+    rp_adminRank_name2: "Watchman"
+    rp_adminRank_name3: "Mission Director"
+    rp_adminRank_name4: "Department Head"
+    rp_adminRank_name5: "Honorary Admin"
+    rp_adminRank_name6: "Council"
+    rp_adminRank_name7: "^1God"
+    rp_adminRank_god: "7"   
+    
     g_privateDuel: "0"
 
 logrotate:
