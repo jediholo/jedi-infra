@@ -31,8 +31,8 @@ jka:
     rp_accounts_AM_enabled: "1"
     rp_accounts_AM_serviceUsername: "demo.jediholo.net@29072"
     # Admin commands bitvalues: https://rpmod.jediholo.net/tools/bitvalues
-    rp_adminRank_cmds1: "35269667457153" # Instructor
-    rp_adminRank_cmds2: "60317946019783" # Watchman
+    rp_adminRank_cmds1: "35269399021697" # Instructor
+    rp_adminRank_cmds2: "60043068112839" # Watchman
     rp_adminRank_cmds3: "70368169557959" # Mission Director
     rp_adminRank_cmds4: "70368169557959" # Department Head
     rp_adminRank_cmds5: "70368152780679" # Honorary Admin
