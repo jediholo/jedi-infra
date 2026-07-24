@@ -1,6 +1,7 @@
 fullnameOverride: mailserver
 
 image:
+  repository: ghcr.io/fab-infra/postfix
   tag: 3.10-opensuse16-20260201-0439-4f0bbce
 
 nodeSelector:
@@ -22,6 +23,7 @@ volumes:
 dkim:
   enabled: true
   image:
+    repository: ghcr.io/fab-infra/opendkim
     tag: 2.11-opensuse16-20260202-2305-e940027
   config:
     domain: jediholo.net

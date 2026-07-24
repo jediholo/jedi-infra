@@ -1,5 +1,9 @@
 fullnameOverride: redis
 
+image:
+  repository: docker.io/redis
+  tag: "8.2.3"
+
 podSecurityContext:
   runAsUser: 1004
   runAsGroup: 1005

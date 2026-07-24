@@ -1,5 +1,9 @@
 fullnameOverride: matomo
 
+image:
+  repository: docker.io/matomo
+  tag: "5.12.0"
+
 nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"

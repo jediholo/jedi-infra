@@ -1,5 +1,9 @@
 fullnameOverride: logstash
 
+image:
+  repository: docker.elastic.co/logstash/logstash
+  tag: "8.9.1"
+
 nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"

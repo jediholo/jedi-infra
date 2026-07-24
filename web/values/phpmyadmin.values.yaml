@@ -1,5 +1,9 @@
 fullnameOverride: phpmyadmin
 
+image:
+  repository: docker.io/phpmyadmin
+  tag: "5.2.3"
+
 nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"

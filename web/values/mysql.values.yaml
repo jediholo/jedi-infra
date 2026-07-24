@@ -1,5 +1,9 @@
 fullnameOverride: mysql
 
+image:
+  repository: docker.io/mariadb
+  tag: "11.8.5"
+
 podSecurityContext:
   runAsUser: 1004
   runAsGroup: 1005

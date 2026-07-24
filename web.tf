@@ -107,7 +107,7 @@ resource "helm_release" "web_backups" {
   chart     = "${path.module}/web/charts/backups"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/backups.yaml")]
+  values = [file("${path.module}/web/values/backups.values.yaml")]
 
   set_sensitive {
     name  = "secrets.gcs.sa"
@@ -141,7 +141,7 @@ resource "helm_release" "web_default_backend" {
   chart     = "${path.module}/web/charts/default-backend"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/default-backend.yaml")]
+  values = [file("${path.module}/web/values/default-backend.values.yaml")]
 }
 
 // ActiveMQ broker
@@ -150,7 +150,7 @@ resource "helm_release" "web_activemq" {
   chart     = "${path.module}/web/charts/activemq"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/activemq.yaml")]
+  values = [file("${path.module}/web/values/activemq.values.yaml")]
 
   set_sensitive {
     name  = "secrets.admin.password"
@@ -164,7 +164,7 @@ resource "helm_release" "web_apache" {
   chart     = "${path.module}/web/charts/apache"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/apache.yaml")]
+  values = [file("${path.module}/web/values/apache.values.yaml")]
 }
 
 // Logstash
@@ -173,7 +173,7 @@ resource "helm_release" "web_logstash" {
   chart     = "${path.module}/web/charts/logstash"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/logstash.yaml")]
+  values = [file("${path.module}/web/values/logstash.values.yaml")]
 
   set_sensitive {
     name  = "env.ELASTICSEARCH_PASSWORD"
@@ -225,7 +225,7 @@ resource "helm_release" "web_mailserver" {
   chart     = "${path.module}/web/charts/mailserver"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/mailserver.yaml")]
+  values = [file("${path.module}/web/values/mailserver.values.yaml")]
 
   set_sensitive {
     name  = "dkim.config.privateKey"
@@ -239,7 +239,7 @@ resource "helm_release" "web_matomo" {
   chart     = "${path.module}/web/charts/matomo"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/matomo.yaml")]
+  values = [file("${path.module}/web/values/matomo.values.yaml")]
 
   set_sensitive {
     name  = "config.matomo.database.username"
@@ -261,7 +261,7 @@ resource "helm_release" "web_mysql" {
   chart     = "${path.module}/web/charts/mysql"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/mysql.yaml")]
+  values = [file("${path.module}/web/values/mysql.values.yaml")]
 
   set_sensitive {
     name  = "env.MYSQL_ROOT_PASSWORD"
@@ -273,7 +273,7 @@ resource "helm_release" "web_mysql_slave" {
   chart     = "${path.module}/web/charts/mysql"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/mysql-slave.yaml")]
+  values = [file("${path.module}/web/values/mysql-slave.values.yaml")]
 }
 
 // phpBB
@@ -282,7 +282,7 @@ resource "helm_release" "web_phpbb" {
   chart     = "${path.module}/web/charts/phpbb"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/phpbb.yaml")]
+  values = [file("${path.module}/web/values/phpbb.values.yaml")]
 
   set_sensitive {
     name  = "env.PHPBB_DATABASE_USER"
@@ -300,7 +300,7 @@ resource "helm_release" "web_phpmyadmin" {
   chart     = "${path.module}/web/charts/phpmyadmin"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/phpmyadmin.yaml")]
+  values = [file("${path.module}/web/values/phpmyadmin.values.yaml")]
 }
 
 // n8n
@@ -309,7 +309,7 @@ resource "helm_release" "web_n8n" {
   chart     = "${path.module}/web/charts/n8n"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/n8n.yaml")]
+  values = [file("${path.module}/web/values/n8n.values.yaml")]
 }
 
 // Redis cache server
@@ -318,7 +318,7 @@ resource "helm_release" "web_redis" {
   chart     = "${path.module}/web/charts/redis"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/redis.yaml")]
+  values = [file("${path.module}/web/values/redis.values.yaml")]
 }
 
 // RPMod Web
@@ -327,7 +327,7 @@ resource "helm_release" "web_rpmod" {
   chart     = "${path.module}/web/charts/rpmod"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/rpmod.yaml")]
+  values = [file("${path.module}/web/values/rpmod.values.yaml")]
 
   set_sensitive {
     name  = "config.application.production.resources\\.doctrine\\.connections\\.rpmod\\.dsn"
@@ -373,7 +373,7 @@ resource "helm_release" "web_wordpress" {
   chart     = "${path.module}/web/charts/wordpress"
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
-  values = [file("${path.module}/web/values/wordpress.yaml")]
+  values = [file("${path.module}/web/values/wordpress.values.yaml")]
 
   set_sensitive {
     name  = "env.WORDPRESS_DB_USER"

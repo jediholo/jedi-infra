@@ -1,0 +1,14 @@
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/web/values"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "web"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
