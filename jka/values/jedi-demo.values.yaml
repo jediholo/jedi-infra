@@ -75,7 +75,7 @@ exporter:
   enabled: true
   image:
     repository: ghcr.io/fcrespel/jka-exporter
-    tag: master-20251023-220805-bec7d46
+    tag: 1.1.0
   args: ["-enable-rpmetrics", "-exporter", "otlphttp", "-log-format", "json", "-log-level", "debug"]
   env:
     OTEL_EXPORTER_OTLP_ENDPOINT: "http://${HOST_IP}:4318"
