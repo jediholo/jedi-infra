@@ -4,6 +4,15 @@
 version: 2
 updates:
   - package-ecosystem: "docker"
+    directory: "/jka/values"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "jka"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "docker"
     directory: "/web/values"
     schedule:
       interval: "monthly"

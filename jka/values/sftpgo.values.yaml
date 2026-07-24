@@ -1,5 +1,9 @@
 fullnameOverride: sftpgo
 
+image:
+  repository: docker.io/drakkan/sftpgo
+  tag: "v2.7.5"
+
 podSecurityContext:
   runAsUser: 1100
   runAsGroup: 1100

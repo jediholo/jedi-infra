@@ -49,7 +49,7 @@ resource "helm_release" "jka_server" {
   chart     = "${path.module}/jka/charts/jka"
   namespace = kubernetes_namespace.jka_ns.metadata[0].name
 
-  values = [file("${path.module}/jka/values/${each.value}.yaml")]
+  values = [file("${path.module}/jka/values/${each.value}.values.yaml")]
 
   set {
     name  = "service.externalIPs[0]"
@@ -79,7 +79,7 @@ resource "helm_release" "jka_backups" {
   chart     = "${path.module}/jka/charts/backups"
   namespace = kubernetes_namespace.jka_ns.metadata[0].name
 
-  values = [file("${path.module}/jka/values/backups.yaml")]
+  values = [file("${path.module}/jka/values/backups.values.yaml")]
 
   set_sensitive {
     name  = "secrets.swift.openrc"
@@ -97,7 +97,7 @@ resource "helm_release" "jka_filebeat" {
   chart     = "${path.module}/jka/charts/filebeat"
   namespace = kubernetes_namespace.jka_ns.metadata[0].name
 
-  values = [file("${path.module}/jka/values/filebeat.yaml")]
+  values = [file("${path.module}/jka/values/filebeat.values.yaml")]
 }
 
 // SFTPGo
@@ -106,7 +106,7 @@ resource "helm_release" "jka_sftpgo" {
   chart     = "${path.module}/jka/charts/sftpgo"
   namespace = kubernetes_namespace.jka_ns.metadata[0].name
 
-  values = [file("${path.module}/jka/values/sftpgo.yaml")]
+  values = [file("${path.module}/jka/values/sftpgo.values.yaml")]
 
   set_sensitive {
     name  = "env.SFTPGO_DEFAULT_ADMIN_PASSWORD"
