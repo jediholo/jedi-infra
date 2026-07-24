@@ -61,7 +61,7 @@ logrotate:
   schedule: "0 6 * * *"
   image:
     repository: ghcr.io/fab-infra/logrotate
-    tag: 3.18-opensuse15-20260125-0405-4d1ad40
+    tag: 3.22-opensuse16-20260510-0550-d985a32
 
 mock:
   enabled: false
