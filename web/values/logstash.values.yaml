@@ -15,5 +15,5 @@ env:
   ELASTICSEARCH_USERNAME: elastic
   GOOGLE_PUBSUB_JSON_KEY_FILE: /usr/share/logstash/secret/google_pubsub.json
   LOGSTASH_PLUGINS: logstash-output-stomp logstash-output-google_pubsub
-  LS_JAVA_OPTS: -Xms512m -Xmx512m
+  LS_JAVA_OPTS: -Xms512m -Xmx1024m
   XPACK_MONITORING_ENABLED: "false"
