@@ -44,19 +44,40 @@ tolerations:
 
 affinity: {}
 
-env: {}
-  # BACKUP_BACKEND: multi
-  # BACKUP_BACKENDS: swift,gcs
-  # BACKUP_BUCKET: example-org-backups
+backends:
+  ftp:
+    host: ""      # ftpbackup.example.org
+    dir: ""       # example
+  gcs:
+    bucket: ""    # example-org-backups
+  s3:
+    provider: ""  # OVH
+    region: ""    # rbx
+    bucket: ""    # example-org-backups
+  swift:
+    container: "" # example-org-backups
+
+backups:
+  files:
+    backends: ""  # swift,gcs,ftp
+    subdir: ""    # files
 
 schedules: {}
   # files: "0 6 * * *"
 
 secrets:
-  swift:
-    openrc: ""
+  ftp:
+    username: ""
+    password: ""
   gcs:
     sa: ""
+  s3:
+    accessKeyId: ""
+    secretAccessKey: ""
+  swift:
+    openrc: ""
+
+env: {}
 
 volumes:
   data: {}
