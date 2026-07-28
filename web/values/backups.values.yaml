@@ -2,7 +2,7 @@ fullnameOverride: backups
 
 image:
   repository: ghcr.io/fab-infra/backuptools
-  tag: opensuse16-20260607-0648-ca5d315
+  tag: opensuse16-20260728-1847-563bf6e
 
 podSecurityContext:
   runAsUser: 1004
@@ -12,27 +12,43 @@ nodeSelector:
   server-role-web: "true"
   domain-jediholo-net: "true"
 
-schedules:
-  files: "30 5 * * *"
-  mysql: "0 5 * * *"
-  skinpack: "15 5 * * *"
-  sync: "0 5 * * *"
+backends:
+  gcs:
+    bucket: jediholo-net-backups
+  s3:
+    provider: OVH
+    region: rbx
+    bucket: jediholo-net-backups
+  swift:
+    container: backups
 
-env:
-  BACKUP_BACKEND: multi
-  BACKUP_BACKENDS: swift,gcs
-  BACKUP_GCS_BUCKET: jediholo-net-backups
-  BACKUP_S3_BUCKET: jediholo-net-backups
-  BACKUP_S3_PROVIDER: OVH
-  BACKUP_S3_REGION: rbx
-  BACKUP_SYNC_BACKENDS: s3,gcs
-  BACKUP_SYNC_ARGS: |
-    s3:jediholo-net-gamerepo-default gcs:jediholo-net-gamerepo-default --checksum
-    s3:jediholo-net-gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads --checksum
-    s3:jediholo-net-gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private --checksum
-    s3:jediholo-net-gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins --checksum
-    s3:jediholo-net-gamerepo-jedi-skins/assets/ /srv/www/sd/files/htdocs/repos/jedi-skins/assets/
-  MYSQL_HOST: mysql-slave
+backups:
+  files:
+    backends: swift,gcs
+  mysql:
+    backends: s3,gcs
+    host: mysql-slave
+  skinpack:
+    backends: fs
+    subdir: downloads
+    basename: JEDI_Skins
+    sourceDir: /srv/www/sd/files/htdocs/repos/jedi-skins/assets
+    targetDir: /srv/www/sd/files/htdocs
+    filePattern: "*.pk3"
+  sync:
+    backends: s3,gcs
+    args: |
+      s3:jediholo-net-gamerepo-default gcs:jediholo-net-gamerepo-default --checksum
+      s3:jediholo-net-gamerepo-jedi-downloads gcs:jediholo-net-gamerepo-jedi-downloads --checksum
+      s3:jediholo-net-gamerepo-jedi-private gcs:jediholo-net-gamerepo-jedi-private --checksum
+      s3:jediholo-net-gamerepo-jedi-skins gcs:jediholo-net-gamerepo-jedi-skins --checksum
+      s3:jediholo-net-gamerepo-jedi-skins/assets/ /srv/www/sd/files/htdocs/repos/jedi-skins/assets/
+
+schedules:
+  files: "15 5 * * *"
+  mysql: "0 5 * * *"
+  skinpack: "0 6 * * *"
+  sync: "30 5 * * *"
 
 volumes:
   domain:

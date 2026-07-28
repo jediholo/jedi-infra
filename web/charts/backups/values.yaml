@@ -41,18 +41,41 @@ tolerations: []
 
 affinity: {}
 
-env: {}
-  # BACKUP_BACKEND: multi
-  # BACKUP_BACKENDS: swift,gcs,ftp
-  # BACKUP_FTP_HOST: ftpbackup.example.org
-  # BACKUP_FTP_DIR: example.org
-  # BACKUP_GCS_BUCKET: example-org-backups
-  # BACKUP_S3_BUCKET: example-org-backups
-  # BACKUP_S3_PROVIDER: OVH
-  # BACKUP_S3_REGION: rbx
-  # BACKUP_SYNC_BACKENDS: swift,gcs
-  # BACKUP_SYNC_ARGS: pcs:container gcs:bucket
-  # MYSQL_HOST: mysql-slave
+backends:
+  ftp:
+    host: ""      # ftpbackup.example.org
+    dir: ""       # example
+  gcs:
+    bucket: ""    # example-org-backups
+  s3:
+    provider: ""  # OVH
+    region: ""    # rbx
+    bucket: ""    # example-org-backups
+  swift:
+    container: "" # example-org-backups
+
+backups:
+  files:
+    backends: ""  # swift,gcs,ftp
+    subdir: ""    # files
+  ldap:
+    backends: ""  # swift,gcs,ftp
+    subdir: ""    # ldap
+  mysql:
+    backends: ""  # swift,gcs,ftp
+    subdir: ""    # mysql
+    host: ""      # mysql-slave
+    port: ""      # 3306
+  skinpack:
+    backends: ""  # fs
+    subdir: ""    # downloads
+    basename: ""  # JEDI_Skins
+    sourceDir: "" # /srv/www/sd/files/htdocs/repos/jedi-skins/assets
+    targetDir: "" # /srv/www/sd/files/htdocs
+    filePattern: "*.pk3"
+  sync:
+    backends: ""  # swift,gcs
+    args: ""      # pcs:container gcs:bucket
 
 schedules: {}
   # files: "30 5 * * *"
@@ -75,6 +98,8 @@ secrets:
   mysql:
     username: ""
     password: ""
+
+env: {}
 
 volumes:
   domain: {}

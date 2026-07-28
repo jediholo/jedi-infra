@@ -34,6 +34,22 @@ spec:
                 - name: "{{ tpl $key $ }}"
                   value: "{{ tpl (print $value) $ }}"
                 {{- end }}
+                - name: BACKUP_BACKEND
+                  value: multi
+                - name: BACKUP_BACKENDS
+                  value: {{ .Values.backups.mysql.backends | quote }}
+                {{- with .Values.backups.mysql.subdir }}
+                - name: BACKUP_SUBDIR
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backends.ftp.host }}
+                - name: BACKUP_FTP_HOST
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backends.ftp.dir }}
+                - name: BACKUP_FTP_DIR
+                  value: {{ . | quote }}
+                {{- end }}
                 {{- if .Values.secrets.ftp.username }}
                 - name: BACKUP_FTP_USER
                   valueFrom:
@@ -45,6 +61,34 @@ spec:
                     secretKeyRef:
                       key: password
                       name: {{ include "backups.fullname" . }}-ftp-user
+                {{- end }}
+                {{- with .Values.backends.gcs.bucket }}
+                - name: BACKUP_GCS_BUCKET
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backends.s3.provider }}
+                - name: BACKUP_S3_PROVIDER
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backends.s3.region }}
+                - name: BACKUP_S3_REGION
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backends.s3.bucket }}
+                - name: BACKUP_S3_BUCKET
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backends.swift.container }}
+                - name: BACKUP_SWIFT_CONTAINER
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backups.mysql.host }}
+                - name: MYSQL_HOST
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.backups.mysql.port }}
+                - name: MYSQL_PORT
+                  value: {{ . | quote }}
                 {{- end }}
                 {{- if .Values.secrets.mysql.username }}
                 - name: MYSQL_USER
