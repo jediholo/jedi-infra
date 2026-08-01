@@ -312,6 +312,15 @@ resource "helm_release" "web_n8n" {
   values = [file("${path.module}/web/values/n8n.values.yaml")]
 }
 
+// Qdrant
+resource "helm_release" "web_qdrant" {
+  name      = "qdrant"
+  chart     = "${path.module}/web/charts/qdrant"
+  namespace = kubernetes_namespace.web_ns.metadata[0].name
+
+  values = [file("${path.module}/web/values/qdrant.values.yaml")]
+}
+
 // Redis cache server
 resource "helm_release" "web_redis" {
   name      = "redis"

@@ -1,0 +1,23 @@
+fullnameOverride: qdrant
+
+image:
+  repository: docker.io/qdrant/qdrant
+  tag: "v1.18.3"
+
+podSecurityContext:
+  runAsUser: 1004
+  runAsGroup: 1005
+
+nodeSelector:
+  server-role-web: "true"
+  domain-jediholo-net: "true"
+
+volumes:
+  data:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/qdrant/data
+      type: DirectoryOrCreate
+  snapshots:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/qdrant/snapshots
+      type: DirectoryOrCreate
