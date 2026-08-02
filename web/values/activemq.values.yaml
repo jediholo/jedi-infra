@@ -2,7 +2,7 @@ fullnameOverride: activemq
 
 image:
   repository: ghcr.io/fab-infra/activemq
-  tag: 6.2-20260202-2323-24853a7
+  tag: 6.2-2026.08.02-24853a7
 
 podSecurityContext:
   runAsUser: 1004
