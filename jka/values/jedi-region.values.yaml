@@ -1,18 +1,26 @@
-fullnameOverride: jedi-demo
+fullnameOverride: jedi-region
 
 image:
   repository: ghcr.io/jediholo/jka-server
   tag: master-20251023-2231-1a8e192
 
 service:
-  port: 29074
-  nodePort: 30074
-  alternatePort: 29174
-  alternateNodePort: 30174
+  port: 29072
+  nodePort: 30072
+  alternatePort: 29172
+  alternateNodePort: 30172
 
 podSecurityContext:
   runAsUser: 1100
   runAsGroup: 1100
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 1000m
+    memory: 512Mi
 
 volumes:
   - name: dumps
@@ -23,17 +31,16 @@ volumeMounts:
     name: dumps
 
 jka:
-  homepath: /home/jka/jedi-demo
+  homepath: /home/jka/jedi-region
   cvars:
-    sv_hostname: "^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net"
-    sv_maxclients: "64"
-    g_motd: "Welcome to the ::JEDI:: Demo Server"
-    rp_motd: "^5::^7JEDI^5:: ^7Demo\\nwww.jediholo.net\\n\\n^1Demo Server Only\\n^7Please be ^3respectful^7,\\ndownload the ^3RPMod Client^7\\nand have fun!\\n\\nThe ^5::^7JEDI^5::^7 Temple can be found at\\n^5 temple.jediholo.net:29070"
+    sv_hostname: "^7The ^5::^7JEDI^5:: ^7Region - www.jediholo.net"
+    g_motd: "Welcome to the ::JEDI:: Region"
+    rp_motd: "^5::^7JEDI^5:: ^7Region\\nwww.jediholo.net\\n\\n^1Strict Roleplaying Environment\\n^7Please respect the ^3rules^7, be ^3respectful^7,\\ndownload the ^3RPMod Client^7\\nand have fun!\\n\\nThe ^5::^7JEDI^5::^7 Temple can be found at\\n^5 temple.jediholo.net:29070"
     rp_accounts_AM_enabled: "1"
-    rp_accounts_AM_serviceUsername: "demo.jediholo.net@29074"
+    rp_accounts_AM_serviceUsername: "region.jediholo.net@29072"
     # Admin commands bitvalues: https://rpmod.jediholo.net/tools/bitvalues
-    rp_adminRank_cmds1: "35269399021697" # Instructor
-    rp_adminRank_cmds2: "60043068112839" # Watchman
+    rp_adminRank_cmds1: "35269667457153" # Instructor
+    rp_adminRank_cmds2: "60317946019783" # Watchman
     rp_adminRank_cmds3: "70368169557959" # Mission Director
     rp_adminRank_cmds4: "70368169557959" # Department Head
     rp_adminRank_cmds5: "70368152780679" # Honorary Admin
@@ -47,6 +54,7 @@ jka:
     rp_adminRank_name6: "Council"
     rp_adminRank_name7: "^1God"
     rp_adminRank_god: "7"   
+    g_privateDuel: "0"
 
 logrotate:
   enabled: true
@@ -62,12 +70,14 @@ mock:
     tag: master-20230115-2237-5944272
   args: [
     "-i", "game=rpmod",
-    "-i", "hostname=^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net",
+    "-i", "mapname=simulator",
+    "-i", "hostname=^7The ^5::^7JEDI^5:: ^7Region - www.jediholo.net",
     "-s", "gamename=RPMod 0.5.1c",
-    "-s", "sv_hostname=^7The ^5::^7JEDI^5:: ^7Demo - www.jediholo.net",
-    "-m", "The JEDI Demo server has moved to 94.23.252.71:29074",
+    "-s", "mapname=simulator",
+    "-s", "sv_hostname=^7The ^5::^7JEDI^5:: ^7Region - www.jediholo.net",
+    "-m", "The JEDI Region server has moved to 94.23.252.71:29072",
   ]
-  hostPort: 29074
+  hostPort: 29072
   nodeSelector:
     kubernetes.io/hostname: ks13
 
@@ -79,4 +89,4 @@ exporter:
   args: ["-enable-rpmetrics", "-exporter", "otlphttp", "-log-format", "json", "-log-level", "debug"]
   env:
     OTEL_EXPORTER_OTLP_ENDPOINT: "http://${HOST_IP}:4318"
-    OTEL_RESOURCE_ATTRIBUTES: "service.instance.id=jedi-demo"
+    OTEL_RESOURCE_ATTRIBUTES: "service.instance.id=jedi-region"
