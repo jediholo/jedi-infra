@@ -2,7 +2,7 @@ fullnameOverride: wordpress
 
 image:
   repository: docker.io/wordpress
-  tag: "7.0.2-php8.4"
+  tag: "7.0.3-php8.4"
 
 nodeSelector:
   server-role-web: "true"
