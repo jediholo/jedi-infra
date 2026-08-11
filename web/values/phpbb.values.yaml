@@ -55,7 +55,7 @@ config:
       RewriteEngine On
       RewriteOptions InheritDownBefore
       RewriteCond %{HTTP_REFERER} ^$
-      RewriteCond %{QUERY_STRING} (?:^|&)sid=[^&]+(?:&|$)
+      RewriteCond %{QUERY_STRING} (?:^|&|&amp;|&amp%3B)sid=[^&]+(?:&|$)
       RewriteRule ^.*$ - [F]
     </Directory>
 
