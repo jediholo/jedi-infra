@@ -6,7 +6,9 @@ updates:
   - package-ecosystem: "docker"
     directory: "/jka/values"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+      day: "sunday"
+      time: "04:00"
     commit-message:
       prefix: "jka"
     ignore:
@@ -15,7 +17,9 @@ updates:
   - package-ecosystem: "docker"
     directory: "/web/values"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+      day: "sunday"
+      time: "04:00"
     commit-message:
       prefix: "web"
     ignore:
