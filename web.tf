@@ -319,6 +319,11 @@ resource "helm_release" "web_qdrant" {
   namespace = kubernetes_namespace.web_ns.metadata[0].name
 
   values = [file("${path.module}/web/values/qdrant.values.yaml")]
+
+  set_sensitive {
+    name  = "env.QDRANT__SERVICE__API_KEY"
+    value = var.web_qdrant_api_key
+  }
 }
 
 // Redis cache server

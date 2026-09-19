@@ -207,6 +207,10 @@ variable "web_phpbb_db_password" {
   description = "phpBB database password"
   sensitive   = true
 }
+variable "web_qdrant_api_key" {
+  description = "Qdrant API key"
+  sensitive   = true
+}
 variable "web_rpmod_db_url" {
   description = "RPMod Web database URL (e.g. mysql://user:pass@dbhost/dbname)"
   sensitive   = true
