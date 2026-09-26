@@ -123,6 +123,11 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          {{- if .Values.env }}
+          envFrom:
+            - secretRef:
+                name: {{ include "matomo.fullname" . }}-env
+          {{- end }}
           livenessProbe:
             initialDelaySeconds: 3
             periodSeconds: 10

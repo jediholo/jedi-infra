@@ -94,6 +94,9 @@ tolerations: []
 
 affinity: {}
 
+env: {}
+  # PHP_MEMORY_LIMIT: 256M
+
 config:
   apache: ""
   php: {}

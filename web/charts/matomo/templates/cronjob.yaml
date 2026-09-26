@@ -43,7 +43,15 @@ spec:
                 {{- toYaml .Values.securityContext | nindent 16 }}
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               args: ['/usr/local/bin/php', '/var/www/html/console', 'core:archive']
+              {{- if .Values.env }}
+              envFrom:
+                - secretRef:
+                    name: {{ include "matomo.fullname" . }}-env
+              {{- end }}
               volumeMounts:
+                - mountPath: /usr/local/etc/php/conf.d/custom.ini
+                  name: config
+                  subPath: php.ini
                 - mountPath: /var/www/html
                   name: www
               {{- if .Values.volumes.misc }}
