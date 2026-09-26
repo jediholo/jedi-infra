@@ -49,6 +49,9 @@ config:
       port: 587
       host: mailserver
 
+env:
+  PHP_MEMORY_LIMIT: 512M
+
 volumes:
   misc:
     hostPath:
