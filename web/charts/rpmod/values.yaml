@@ -126,3 +126,4 @@ config:
 cron:
   enabled: true
   schedule: "*/5 * * * *"
+  concurrencyPolicy: Allow
