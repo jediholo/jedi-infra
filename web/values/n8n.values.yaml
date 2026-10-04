@@ -2,7 +2,7 @@ fullnameOverride: n8n
 
 image:
   repository: ghcr.io/n8n-io/n8n
-  tag: "2.40.7"
+  tag: "2.41.6"
 
 nodeSelector:
   server-role-web: "true"
