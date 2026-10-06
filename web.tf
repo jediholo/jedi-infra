@@ -379,6 +379,10 @@ resource "helm_release" "web_rpmod" {
     name  = "certificates.oidc.publicKey"
     value = var.web_rpmod_oidc_public_key
   }
+  set_sensitive {
+    name  = "anubis.privateKey"
+    value = var.web_rpmod_anubis_private_key
+  }
 }
 
 // Wordpress
