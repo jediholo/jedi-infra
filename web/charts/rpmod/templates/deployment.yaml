@@ -73,6 +73,44 @@ spec:
             - mountPath: /srv/www/apps/RPMod-Web/public/downloads
               name: downloads
             {{- end }}
+        {{- if .Values.anubis.enabled }}
+        - name: anubis
+          securityContext:
+            {{- toYaml .Values.anubis.securityContext | nindent 12 }}
+          image: "{{ .Values.anubis.image.repository }}:{{ .Values.anubis.image.tag }}"
+          imagePullPolicy: {{ .Values.anubis.image.pullPolicy }}
+          ports:
+            - name: anubis
+              containerPort: {{ .Values.anubis.port }}
+          env:
+            - name: BIND
+              value: ":{{ .Values.anubis.port }}"
+            - name: TARGET
+              value: "http://localhost:8080"
+            - name: POLICY_FNAME
+              value: "/data/cfg/botPolicy.yaml"
+            {{- if .Values.anubis.privateKey }}
+            - name: ED25519_PRIVATE_KEY_HEX
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "rpmod.fullname" . }}-anubis-private-key
+                  key: ED25519_PRIVATE_KEY_HEX
+            {{- end }}
+            {{- with .Values.anubis.redirectDomains }}
+            - name: REDIRECT_DOMAINS
+              value: "{{ . }}"
+            {{- end }}
+          resources:
+            {{- toYaml .Values.anubis.resources | nindent 12 }}
+          volumeMounts:
+            - name: anubis-config
+              mountPath: /data/cfg
+              readOnly: true
+            {{- if .Values.volumes.anubis }}
+            - name: anubis-data
+              mountPath: /data
+            {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -99,4 +137,13 @@ spec:
         {{- with .Values.volumes.downloads }}
         - name: downloads
           {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- if .Values.anubis.enabled }}
+        - name: anubis-config
+          secret:
+            secretName: {{ include "rpmod.fullname" . }}-anubis-config
+        {{- with .Values.volumes.anubis }}
+        - name: anubis-data
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         {{- end }}

@@ -11,5 +11,11 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    {{- if .Values.anubis.enabled }}
+    - port: {{ .Values.anubis.port }}
+      targetPort: anubis
+      protocol: TCP
+      name: anubis
+    {{- end }}
   selector:
     {{- include "rpmod.selectorLabels" . | nindent 4 }}

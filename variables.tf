@@ -211,6 +211,10 @@ variable "web_qdrant_api_key" {
   description = "Qdrant API key"
   sensitive   = true
 }
+variable "web_rpmod_anubis_private_key" {
+  description = "RPMod Anubis ed25519 private key (hex-encoded)"
+  sensitive   = true
+}
 variable "web_rpmod_db_url" {
   description = "RPMod Web database URL (e.g. mysql://user:pass@dbhost/dbname)"
   sensitive   = true

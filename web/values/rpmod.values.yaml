@@ -38,6 +38,10 @@ volumes:
     hostPath:
       path: /home/domains/jediholo.net/apps/RPMod-Web/public/downloads
       type: DirectoryOrCreate
+  anubis:
+    hostPath:
+      path: /home/domains/jediholo.net/apps/RPMod-Web/data/anubis
+      type: DirectoryOrCreate
 
 config:
   application:
@@ -45,3 +49,13 @@ config:
     production:
       passwordPolicy.enforceOnLogin: true
       passwordPolicy.minScore: 1
+
+anubis:
+  enabled: true
+  image:
+    repository: ghcr.io/techarohq/anubis
+    tag: v1.27.0
+  redirectDomains: rpmod.jediholo.net
+  securityContext:
+    runAsUser: 1004
+    runAsGroup: 1005

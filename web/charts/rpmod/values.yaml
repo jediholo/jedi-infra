@@ -103,6 +103,10 @@ volumes:
     # hostPath:
     #   path: /home/domains/example.org/apps/RPMod-Web/public/downloads
     #   type: DirectoryOrCreate
+  anubis: {}
+    # hostPath:
+    #   path: /home/domains/example.org/apps/RPMod-Web/data/anubis
+    #   type: DirectoryOrCreate
 
 certificates:
   gameasset:
@@ -127,3 +131,49 @@ cron:
   enabled: true
   schedule: "*/5 * * * *"
   concurrencyPolicy: Allow
+
+anubis:
+  enabled: false
+  image:
+    repository: ghcr.io/techarohq/anubis
+    pullPolicy: IfNotPresent
+    tag: latest
+  port: 8923
+  config:
+    bots:
+      - import: (data)/meta/default-config.yaml
+      - name: assets
+        path_regex: '^/(css|img|js)/.*$'
+        action: ALLOW
+      - name: files
+        path_regex: ^/(downloads|files|repos)/.*$
+        action: ALLOW
+      - name: icons
+        path_regex: '^/(android-chrome|apple-touch-icon)[^/]*\.png$'
+        action: ALLOW
+      - name: webmanifest
+        path_regex: '^/site\.webmanifest$'
+        action: ALLOW
+      - name: ws
+        path_regex: ^/ws/.*$
+        action: ALLOW
+    openGraph:
+      passthrough: true
+      ttl: 24h
+    store:
+      backend: bbolt
+      parameters:
+        path: /data/anubis.bdb
+  # privateKey: hex-encoded ed25519 private key (openssl rand -hex 32)
+  # redirectDomains: example.org
+  resources: {}
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault

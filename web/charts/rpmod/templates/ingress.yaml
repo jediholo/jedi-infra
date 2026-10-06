@@ -37,7 +37,11 @@ spec:
               service:
                 name: {{ include "rpmod.fullname" $ }}
                 port:
+                  {{- if $.Values.anubis.enabled }}
+                  number: {{ $.Values.anubis.port }}
+                  {{- else }}
                   number: {{ $.Values.service.port }}
+                  {{- end }}
           {{- end }}
     {{- end }}
 {{- end }}
