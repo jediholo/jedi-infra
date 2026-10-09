@@ -164,8 +164,10 @@ anubis:
       backend: bbolt
       parameters:
         path: /data/anubis.bdb
-  # privateKey: hex-encoded ed25519 private key (openssl rand -hex 32)
-  # redirectDomains: example.org
+  env: {}
+    # MAXMIND_LICENSE_KEY: "toComplete"
+    # ED25519_PRIVATE_KEY_HEX: "toComplete" # hex-encoded ed25519 private key (openssl rand -hex 32)
+    # REDIRECT_DOMAINS: example.org
   resources: {}
   securityContext:
     runAsUser: 1000

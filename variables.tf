@@ -215,6 +215,10 @@ variable "web_rpmod_anubis_private_key" {
   description = "RPMod Anubis ed25519 private key (hex-encoded)"
   sensitive   = true
 }
+variable "web_rpmod_anubis_maxmind_license_key" {
+  description = "RPMod Anubis MaxMind license key"
+  sensitive   = true
+}
 variable "web_rpmod_db_url" {
   description = "RPMod Web database URL (e.g. mysql://user:pass@dbhost/dbname)"
   sensitive   = true

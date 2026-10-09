@@ -54,8 +54,19 @@ anubis:
   enabled: true
   image:
     repository: ghcr.io/techarohq/anubis
-    tag: v1.27.0
-  redirectDomains: rpmod.jediholo.net
+    tag: v1.28.1
+  config:
+    geoip:
+      asn:
+        path: /data/geoip/GeoLite2-ASN.mmdb
+      country:
+        path: /data/geoip/GeoLite2-Country.mmdb
+      auto_update:
+        account_id: 678615
+        license_key_env: MAXMIND_LICENSE_KEY
+        interval: 24h
+  env:
+    REDIRECT_DOMAINS: rpmod.jediholo.net
   securityContext:
     runAsUser: 1004
     runAsGroup: 1005

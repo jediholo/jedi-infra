@@ -380,8 +380,12 @@ resource "helm_release" "web_rpmod" {
     value = var.web_rpmod_oidc_public_key
   }
   set_sensitive {
-    name  = "anubis.privateKey"
+    name  = "anubis.env.ED25519_PRIVATE_KEY_HEX"
     value = var.web_rpmod_anubis_private_key
+  }
+  set_sensitive {
+    name  = "anubis.env.MAXMIND_LICENSE_KEY"
+    value = var.web_rpmod_anubis_maxmind_license_key
   }
 }
 
