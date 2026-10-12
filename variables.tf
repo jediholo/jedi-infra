@@ -200,6 +200,14 @@ variable "web_mysql_root_password" {
   description = "MySQL root password"
   sensitive   = true
 }
+variable "web_phpbb_anubis_private_key" {
+  description = "phpBB Anubis ed25519 private key (hex-encoded)"
+  sensitive   = true
+}
+variable "web_phpbb_anubis_maxmind_license_key" {
+  description = "phpBB Anubis MaxMind license key"
+  sensitive   = true
+}
 variable "web_phpbb_db_username" {
   description = "phpBB database username"
 }

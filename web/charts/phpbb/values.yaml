@@ -124,3 +124,46 @@ volumes:
     # hostPath:
     #   path: /home/domains/example.org/apps/phpbb/store
     #   type: DirectoryOrCreate
+  anubis: {}
+    # hostPath:
+    #   path: /home/domains/example.org/apps/phpbb/anubis
+    #   type: DirectoryOrCreate
+
+anubis:
+  enabled: false
+  image:
+    repository: ghcr.io/techarohq/anubis
+    pullPolicy: IfNotPresent
+    tag: latest
+  port: 8923
+  config:
+    bots:
+      - import: (data)/meta/default-config.yaml
+      - name: assets
+        path_regex: '^/(assets|images|styles)/.*$'
+        action: ALLOW
+      - name: files
+        path_regex: ^/download/.*$
+        action: ALLOW
+    openGraph:
+      passthrough: true
+      ttl: 24h
+    store:
+      backend: bbolt
+      parameters:
+        path: /data/anubis.bdb
+  env: {}
+    # MAXMIND_LICENSE_KEY: "toComplete"
+    # ED25519_PRIVATE_KEY_HEX: "toComplete" # hex-encoded ed25519 private key (openssl rand -hex 32)
+    # REDIRECT_DOMAINS: example.org
+  resources: {}
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault

@@ -73,6 +73,38 @@ spec:
             - mountPath: /srv/www/apps/phpbb/store
               name: store
           {{- end }}
+        {{- if .Values.anubis.enabled }}
+        - name: anubis
+          securityContext:
+            {{- toYaml .Values.anubis.securityContext | nindent 12 }}
+          image: "{{ .Values.anubis.image.repository }}:{{ .Values.anubis.image.tag }}"
+          imagePullPolicy: {{ .Values.anubis.image.pullPolicy }}
+          ports:
+            - name: anubis
+              containerPort: {{ .Values.anubis.port }}
+          env:
+            - name: BIND
+              value: ":{{ .Values.anubis.port }}"
+            - name: TARGET
+              value: "http://127.0.0.1:8080"
+            - name: POLICY_FNAME
+              value: "/data/cfg/botPolicy.yaml"
+          {{- if .Values.anubis.env }}
+          envFrom:
+            - secretRef:
+                name: {{ include "phpbb.fullname" . }}-anubis-env
+          {{- end }}
+          resources:
+            {{- toYaml .Values.anubis.resources | nindent 12 }}
+          volumeMounts:
+            - name: anubis-config
+              mountPath: /data/cfg
+              readOnly: true
+            {{- if .Values.volumes.anubis }}
+            - name: anubis-data
+              mountPath: /data
+            {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -89,15 +121,24 @@ spec:
         - name: config
           configMap:
             name: {{ include "phpbb.fullname" . }}-config
-      {{- with .Values.volumes.files }}
+        {{- with .Values.volumes.files }}
         - name: files
           {{- toYaml . | nindent 10 }}
-      {{- end }}
-      {{- with .Values.volumes.images }}
+        {{- end }}
+        {{- with .Values.volumes.images }}
         - name: images
           {{- toYaml . | nindent 10 }}
-      {{- end }}
-      {{- with .Values.volumes.store }}
+        {{- end }}
+        {{- with .Values.volumes.store }}
         - name: store
           {{- toYaml . | nindent 10 }}
-      {{- end }}
+        {{- end }}
+        {{- if .Values.anubis.enabled }}
+        - name: anubis-config
+          secret:
+            secretName: {{ include "phpbb.fullname" . }}-anubis-config
+        {{- with .Values.volumes.anubis }}
+        - name: anubis-data
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- end }}

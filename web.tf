@@ -292,6 +292,14 @@ resource "helm_release" "web_phpbb" {
     name  = "env.PHPBB_DATABASE_PASSWORD"
     value = var.web_phpbb_db_password
   }
+  set_sensitive {
+    name  = "anubis.env.ED25519_PRIVATE_KEY_HEX"
+    value = var.web_phpbb_anubis_private_key
+  }
+  set_sensitive {
+    name  = "anubis.env.MAXMIND_LICENSE_KEY"
+    value = var.web_phpbb_anubis_maxmind_license_key
+  }
 }
 
 // phpMyAdmin
