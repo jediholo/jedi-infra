@@ -47,11 +47,6 @@ spec:
               value: "{{ tpl (print $value) $ }}"
             {{- end }}
           {{- end }}
-          {{- if .Values.envFromSecret }}
-          envFrom:
-            - secretRef:
-                name: {{ tpl .Values.envFromSecret . }}
-          {{- end }}
           startupProbe:
             initialDelaySeconds: 10
             periodSeconds: 10

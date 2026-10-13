@@ -1,8 +1,8 @@
 fullnameOverride: jedi-grounds
 
 image:
-  repository: ghcr.io/jediholo/jka-server
-  tag: master-2026.08.02-40a0624
+  repository: ghcr.io/jediholo/rpmod-game
+  tag: 0.5.1-20261012-2045-197bae4
 
 service:
   port: 29071
@@ -34,6 +34,7 @@ jka:
   homepath: /home/jka/jedi-grounds
   cvars:
     sv_hostname: "^7The ^5::^7JEDI^5:: ^7Grounds - www.jediholo.net"
+    sv_maxclients: "64"
     g_motd: "Welcome to the ::JEDI:: Grounds"
     rp_motd: "^5::^7JEDI^5:: ^7Grounds\\nwww.jediholo.net\\n\\n^1Strict Roleplaying Environment\\n^7Please respect the ^3rules^7, be ^3respectful^7,\\ndownload the ^3RPMod Client^7\\nand have fun!\\n\\nThe ^5::^7JEDI^5::^7 Temple can be found at\\n^5 temple.jediholo.net:29070"
     rp_accounts_AM_enabled: "1"

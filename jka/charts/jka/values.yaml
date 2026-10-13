@@ -6,7 +6,7 @@ replicaCount: 1
 strategy: Recreate
 
 image:
-  repository: ghcr.io/jediholo/jka-server
+  repository: ghcr.io/jediholo/rpmod-game
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -67,8 +67,8 @@ tolerations:
 affinity: {}
 
 # Environment variables
-env: {}
-envFromSecret: ""
+env:
+  OJK_OPTS: "+set fs_basegame JEDI +exec server.cfg"
 
 # Volumes
 volumes: []
