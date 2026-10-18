@@ -82,6 +82,38 @@ spec:
             - mountPath: /var/www/html/wp-content
               name: content
           {{- end }}
+        {{- if .Values.anubis.enabled }}
+        - name: anubis
+          securityContext:
+            {{- toYaml .Values.anubis.securityContext | nindent 12 }}
+          image: "{{ .Values.anubis.image.repository }}:{{ .Values.anubis.image.tag }}"
+          imagePullPolicy: {{ .Values.anubis.image.pullPolicy }}
+          ports:
+            - name: anubis
+              containerPort: {{ .Values.anubis.port }}
+          env:
+            - name: BIND
+              value: ":{{ .Values.anubis.port }}"
+            - name: TARGET
+              value: "http://127.0.0.1:80"
+            - name: POLICY_FNAME
+              value: "/data/cfg/botPolicy.yaml"
+          {{- if .Values.anubis.env }}
+          envFrom:
+            - secretRef:
+                name: {{ include "wordpress.fullname" . }}-anubis-env
+          {{- end }}
+          resources:
+            {{- toYaml .Values.anubis.resources | nindent 12 }}
+          volumeMounts:
+            - name: anubis-config
+              mountPath: /data/cfg
+              readOnly: true
+            {{- if .Values.volumes.anubis }}
+            - name: anubis-data
+              mountPath: /data
+            {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -100,7 +132,16 @@ spec:
             name: {{ include "wordpress.fullname" . }}-config
         - name: www
           emptyDir: {}
-      {{- with .Values.volumes.content }}
+        {{- with .Values.volumes.content }}
         - name: content
           {{- toYaml . | nindent 10 }}
-      {{- end }}
+        {{- end }}
+        {{- if .Values.anubis.enabled }}
+        - name: anubis-config
+          secret:
+            secretName: {{ include "wordpress.fullname" . }}-anubis-config
+        {{- with .Values.volumes.anubis }}
+        - name: anubis-data
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- end }}

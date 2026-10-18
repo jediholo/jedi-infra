@@ -445,4 +445,12 @@ resource "helm_release" "web_wordpress" {
     name  = "env.WORDPRESS_NONCE_SALT"
     value = var.web_wordpress_nonce_salt
   }
+  set_sensitive {
+    name  = "anubis.env.ED25519_PRIVATE_KEY_HEX"
+    value = var.web_wordpress_anubis_private_key
+  }
+  set_sensitive {
+    name  = "anubis.env.MAXMIND_LICENSE_KEY"
+    value = var.web_wordpress_anubis_maxmind_license_key
+  }
 }

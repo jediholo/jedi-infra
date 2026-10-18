@@ -263,6 +263,14 @@ variable "web_rpmod_recaptcha_privkey" {
   description = "RPMod Web reCAPTCHA private key"
   sensitive   = true
 }
+variable "web_wordpress_anubis_private_key" {
+  description = "Wordpress Anubis ed25519 private key (hex-encoded)"
+  sensitive   = true
+}
+variable "web_wordpress_anubis_maxmind_license_key" {
+  description = "Wordpress Anubis MaxMind license key"
+  sensitive   = true
+}
 variable "web_wordpress_db_username" {
   description = "Wordpress database username"
 }
