@@ -9,7 +9,7 @@ nodeSelector:
   domain-jediholo-net: "true"
 
 ingress:
-  enabled: true
+  enabled: false
   annotations:
     nginx.ingress.kubernetes.io/default-backend: default-backend
   hosts:
