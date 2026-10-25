@@ -76,7 +76,7 @@ anubis:
   enabled: false
   image:
     repository: ghcr.io/techarohq/anubis
-    tag: v1.28.1
+    tag: v1.28.2
   config:
     geoip:
       asn:
