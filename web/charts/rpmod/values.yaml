@@ -141,6 +141,9 @@ anubis:
   port: 8923
   config:
     bots:
+      - name: ws
+        path_regex: ^/ws/.*$
+        action: ALLOW
       - import: (data)/meta/default-config.yaml
       - name: assets
         path_regex: '^/(css|img|js)/.*$'
@@ -153,9 +156,6 @@ anubis:
         action: ALLOW
       - name: webmanifest
         path_regex: '^/site\.webmanifest$'
-        action: ALLOW
-      - name: ws
-        path_regex: ^/ws/.*$
         action: ALLOW
     openGraph:
       passthrough: true
