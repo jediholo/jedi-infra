@@ -113,6 +113,7 @@ env:
   SFTPGO_DEFAULT_ADMIN_PASSWORD: admin
   SFTPGO_LOADDATA_FROM: /etc/sftpgo/initdata.json
   SFTPGO_LOADDATA_MODE: 0
+  SFTPGO_LOG_LEVEL: info
   SFTPGO_GRACE_TIME: 10
 
 # Volumes
