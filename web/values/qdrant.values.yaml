@@ -2,7 +2,7 @@ fullnameOverride: qdrant
 
 image:
   repository: docker.io/qdrant/qdrant
-  tag: "v1.20.0"
+  tag: "v1.20.2"
 
 podSecurityContext:
   runAsUser: 1004
