@@ -2,7 +2,7 @@ fullnameOverride: rpmod
 
 image:
   repository: ghcr.io/jediholo/rpmod-web
-  tag: master-2026.11.17-512e7fc
+  tag: master-2026.11.24-71dbc82
 
 podSecurityContext:
   runAsUser: 1004
